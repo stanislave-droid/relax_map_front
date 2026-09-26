@@ -9,7 +9,7 @@
 
   transition:
     border-color var(--transition),
-    background var(--transition),
+    background-color var(--transition),
     color var(--transition);
 
   display: block;
@@ -18,7 +18,7 @@
   padding: 8px;
   border: 1px solid var(--border);
   border-radius: 6px;
-  background: var(--background);
+  background-color: var(--background);
 
   font-family: inherit;
   font-weight: 400;
