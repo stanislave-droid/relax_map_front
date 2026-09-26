@@ -51,11 +51,11 @@
 
   --color-red: #b00101;
 
-  --transition: 0 ease-out;
+  --transition: 100ms ease-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: reduce) {
   :root {
-    --transition: 100ms ease-out;
+    --transition: 0 ease-out;
   }
 }
