@@ -12,6 +12,7 @@ const Footer = () => {
             </svg>
             <span>Relax Map</span>
           </Link>
+
           <div className={css.socialLinks}>
             <a
               href="https://www.facebook.com/"
@@ -20,9 +21,10 @@ const Footer = () => {
               aria-label="Facebook"
             >
               <svg className={css.socialIcon} aria-hidden="true">
-                <use href="/icons/sprite.svg#icon-facebook" />
+                <use href="/icons/sprite.svg#facebook" />
               </svg>
             </a>
+
             <a
               href="https://www.instagram.com/"
               target="_blank"
@@ -30,9 +32,10 @@ const Footer = () => {
               aria-label="Instagram"
             >
               <svg className={css.socialIcon} aria-hidden="true">
-                <use href="/icons/sprite.svg#icon-instagram" />
+                <use href="/icons/sprite.svg#instagram" />
               </svg>
             </a>
+
             <a
               href="https://x.com/"
               target="_blank"
@@ -55,6 +58,7 @@ const Footer = () => {
               </svg>
             </a>
           </div>
+
           <nav aria-label="Footer navigation">
             <ul className={css.navList}>
               <li>
@@ -66,6 +70,7 @@ const Footer = () => {
             </ul>
           </nav>
         </div>
+
         <div className={css.copyright}>
           <p className={css.copyrightText}>
             © {new Date().getFullYear()} Природні Мандри. Усі права захищені.
