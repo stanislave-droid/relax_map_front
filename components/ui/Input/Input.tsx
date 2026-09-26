@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import clsx from "clsx";
+
 import "../common.module.css";
 import css from "./Input.module.css";
-import { useState } from "react";
 
 // Since interface would be empty, I just use type alias
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
