@@ -1,0 +1,58 @@
+.wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 8px;
+}
+
+.textarea {
+  --border: var(--opacity-neutral-darkest-15);
+  --background: var(--color-scheme-2-foreground);
+  --text: var(--color-scheme-2-text);
+
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    color var(--transition);
+
+  display: block;
+  width: 100%;
+  resize: none; /* TODO: maybe allow vertical */
+
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--background);
+
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  color: var(--text);
+
+  &::placeholder {
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 27px;
+    color: var(--opacity-neutral-darkest-60);
+  }
+
+  &:hover,
+  &:focus,
+  &:focus-within,
+  &:active {
+    --border: var(--color-scheme-1-accent);
+  }
+
+  &:user-invalid {
+    --border: var(--color-red);
+    --text: var(--color-red);
+  }
+}
+
+.validity {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-red);
+}
