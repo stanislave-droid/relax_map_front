@@ -1,6 +1,8 @@
+"use client";
 import clsx from "clsx";
 import css from "./page.module.css";
 import Button from "@/components/ui/Button/Button";
+import Input from "@/components/ui/Input/Input";
 
 export default function Home() {
   return (
@@ -55,6 +57,18 @@ export default function Home() {
           {/* <li>
             <Button size="lg">Large Button</Button>
           </li> */}
+        </ul>
+        <p></p>
+        <ul>
+          <li>
+            <form action={() => {}}>
+              <label>
+                Search:
+                <Input type="search" placeholder="Search..." required pattern="\d{1,3}\w+"/>
+              </label>
+              <Button type="submit">Submit</Button>
+            </form>
+          </li>
         </ul>
       </div>
     </main>
