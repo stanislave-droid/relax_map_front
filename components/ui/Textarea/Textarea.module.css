@@ -1,7 +1,5 @@
 .wrapper {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 8px;
+  position: relative;
 }
 
 .textarea {
@@ -50,6 +48,8 @@
 }
 
 .validity {
+  position: absolute;
+  bottom: -20px;
   margin: 0;
   padding: 0;
   font-size: 12px;
