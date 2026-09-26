@@ -11,7 +11,10 @@ export default function Home() {
     <main className={css.main}>
       <div className={clsx("container")}>
         <h1 className={clsx("main-headding")}>Markup</h1>
-        <ul style={{display: "flex"}}>
+        <ul style={{ display: "flex" }}>
+          <li>
+            <Icon name="logo" width={129} height={36} />
+          </li>
           <li>
             <Icon name="youtube" />
           </li>
@@ -125,9 +128,12 @@ export default function Home() {
           <li>
             <Button size="md">Medium Button</Button>
           </li>
-          {/* <li>
-            <Button size="lg">Large Button</Button>
-          </li> */}
+          <li>
+            <Button size="icon-sm"><Icon name="bookmark"/></Button>
+          </li>
+          <li>
+            <Button size="icon-md"><Icon name="bookmark"/></Button>
+          </li>
         </ul>
         <p></p>
         <ul>
