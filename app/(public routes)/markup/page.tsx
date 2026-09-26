@@ -1,6 +1,9 @@
+"use client";
 import clsx from "clsx";
 import css from "./page.module.css";
 import Button from "@/components/ui/Button/Button";
+import Input from "@/components/ui/Input/Input";
+import Textarea from "@/components/ui/Textarea/Textarea";
 
 export default function Home() {
   return (
@@ -55,6 +58,22 @@ export default function Home() {
           {/* <li>
             <Button size="lg">Large Button</Button>
           </li> */}
+        </ul>
+        <p></p>
+        <ul>
+          <li>
+            <form action={() => {}}>
+              <label>
+                Email:
+                <Input type="Email" placeholder="user@example.com" required />
+              </label>
+              <label>
+                Comment:
+                <Textarea placeholder="Comment here ..." minLength={2} maxLength={256} />
+              </label>
+              <Button type="submit">Submit</Button>
+            </form>
+          </li>
         </ul>
       </div>
     </main>
