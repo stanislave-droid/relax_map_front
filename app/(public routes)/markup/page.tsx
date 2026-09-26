@@ -5,6 +5,7 @@ import Button from "@/components/ui/Button/Button";
 import Input from "@/components/ui/Input/Input";
 import Textarea from "@/components/ui/Textarea/Textarea";
 import Icon from "@/components/ui/Icon/Icon";
+import Link from "@/components/ui/Link/Link";
 
 export default function Home() {
   return (
@@ -133,6 +134,21 @@ export default function Home() {
           </li>
           <li>
             <Button size="icon-md"><Icon name="bookmark"/></Button>
+          </li>
+        </ul>
+        <p></p>
+        <ul>
+          <li>
+            <Link href="" size="sm">Small Button</Link>
+          </li>
+          <li>
+            <Link href="" size="md">Medium Button</Link>
+          </li>
+          <li>
+            <Link href="" size="icon-sm"><Icon name="bookmark"/></Link>
+          </li>
+          <li>
+            <Link href="" size="icon-md"><Icon name="bookmark"/></Link>
           </li>
         </ul>
         <p></p>
