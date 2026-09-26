@@ -6,6 +6,7 @@ import Input from "@/components/ui/Input/Input";
 import Textarea from "@/components/ui/Textarea/Textarea";
 import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
+import Select from "@/components/ui/Select/Select";
 
 export default function Home() {
   return (
@@ -154,19 +155,37 @@ export default function Home() {
         <p></p>
         <ul>
           <li>
-            <form action={() => {}}>
-              <label>
-                Email:
-                <Input type="Email" placeholder="user@example.com" required />
-              </label>
-              <label>
-                Comment:
-                <Textarea placeholder="Comment here ..." minLength={2} maxLength={256} />
-              </label>
-              <Button type="submit">Submit</Button>
-            </form>
+            <Link href="" size="sm">Small Button</Link>
+          </li>
+          <li>
+            <Link href="" size="md">Medium Button</Link>
+          </li>
+          <li>
+            <Link href="" size="icon-sm"><Icon name="bookmark"/></Link>
+          </li>
+          <li>
+            <Link href="" size="icon-md"><Icon name="bookmark"/></Link>
           </li>
         </ul>
+        <p></p>
+        <form action={() => {}}>
+          <label>
+            Email:
+            <Input type="Email" placeholder="user@example.com" required />
+          </label>
+          <label>
+            Comment:
+            <Textarea placeholder="Comment here ..." minLength={2} maxLength={256} />
+          </label>
+          <Button type="submit">Submit</Button>
+        </form>
+        <p></p>
+        <Select>
+          <option>Apple</option>
+          <option>Banana</option>
+          <option>Lime</option>
+          <option>Orange</option>
+        </Select>
       </div>
     </main>
   );
