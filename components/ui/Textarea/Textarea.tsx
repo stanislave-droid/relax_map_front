@@ -6,6 +6,7 @@ import clsx from "clsx";
 import "../common.module.css";
 import css from "./Textarea.module.css";
 
+// Since interface would be empty, I just use type alias
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export default function Textarea({ onInput, className, ...props }: TextareaProps): React.ReactNode {
