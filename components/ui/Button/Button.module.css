@@ -16,8 +16,14 @@
   font-family: inherit;
   font-weight: 500;
   font-size: 20px;
-  line-height: 30px;
+  line-height: 1.5;
   color: var(--text);
+
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
 }
 
 .button--variant-primary {
