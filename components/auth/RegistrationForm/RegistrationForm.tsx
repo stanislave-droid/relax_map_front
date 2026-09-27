@@ -8,6 +8,7 @@ import {useId} from "react";
 import css from "./RegistrationForm.module.css"
 import Input from "@/components/ui/Input/Input";
 import clsx from "clsx";
+import Spinner from "@/components/ui/Spinner/Spinner"
 
 type RegisterFormValues = {
     name: string,
@@ -123,7 +124,7 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
                             disabled={isLoading}
                             className={clsx(css["submitButton"])}
                         >
-                            {isLoading ? "Реєстрація..." : "Зареєструватись"}
+                            {isLoading ? <Spinner /> : "Зареєструватись"}
 
                         </Button>
                     </div>

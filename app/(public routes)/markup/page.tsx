@@ -7,14 +7,14 @@ import Textarea from "@/components/ui/Textarea/Textarea";
 import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
 import Select from "@/components/ui/Select/Select";
-import RegistrationForm from "@/components/auth/RegistrationForm/RegistrationForm"
+import RegistrationForm, {type RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
+
 
 export default function Home() {
 
-  const handleSubmit = async (values: RegisterSchema) => {
+  const handleSubmit = async (values: RegisterSchema): Promise<void> => {
     console.log("submit values:", values);
   };
-
 
   return (
     <main className={css.main}>
@@ -186,7 +186,7 @@ export default function Home() {
           <Button type="submit">Submit</Button>
         </form>
         <div>
-          <RegistrationForm onSubmit={handleSubmit} ></RegistrationForm>
+          <RegistrationForm onSubmit={handleSubmit}></RegistrationForm>
         </div>
 
       </div>
