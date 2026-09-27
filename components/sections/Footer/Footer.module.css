@@ -1,0 +1,141 @@
+.footer {
+  padding: 48px 0;
+  background-color: #ffe5d9;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-third);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.logoIcon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 64px;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-third);
+}
+
+.socialIcon {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.socialLinks {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: 16px;
+}
+
+.copyright {
+  margin-top: 32px;
+  padding-top: 32px;
+  text-align: center;
+  color: var(--text-third);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.copyrightText {
+  max-width: 239px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+  .footer {
+    padding: 48px 32px;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    row-gap: 24px;
+    align-items: center;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .navList {
+    flex-direction: row;
+    height: 40px;
+  }
+
+  .socialLinks {
+    justify-self: end;
+  }
+
+  .socialIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .content nav {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .copyright {
+    margin-top: 24px;
+    padding-top: 32px;
+  }
+
+  .copyrightText {
+    max-width: none;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .footer {
+    padding: 80px 0;
+  }
+
+  .content {
+    width: 100%;
+    grid-template-columns: 1fr auto 1fr;
+    row-gap: 0;
+  }
+
+  .socialLinks {
+    justify-self: center;
+  }
+
+  .content nav {
+    grid-column: auto;
+    justify-self: end;
+  }
+
+  .copyright {
+    margin-top: 32px;
+  }
+}
