@@ -157,21 +157,6 @@ export default function Home() {
           </li>
         </ul>
         <p></p>
-        <ul>
-          <li>
-            <Link href="" size="sm">Small Button</Link>
-          </li>
-          <li>
-            <Link href="" size="md">Medium Button</Link>
-          </li>
-          <li>
-            <Link href="" size="icon-sm"><Icon name="bookmark"/></Link>
-          </li>
-          <li>
-            <Link href="" size="icon-md"><Icon name="bookmark"/></Link>
-          </li>
-        </ul>
-        <p></p>
         <form action={() => {}}>
           <label>
             Email:
