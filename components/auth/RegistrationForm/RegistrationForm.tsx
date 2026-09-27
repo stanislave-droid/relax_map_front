@@ -45,7 +45,7 @@ const registerValidationSchema = Yup.object().shape({
 export type RegisterSchema = Yup.InferType<typeof registerValidationSchema>;
 
 export interface RegistrationFormProps {
-    onSubmit: (value: RegisterSchema) => Promise<void>,
+    onSubmit: (value: RegisterSchema) => Promise<void> | void,
     isLoading?: boolean,
     errorMessage?: string | null;
 }

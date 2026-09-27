@@ -17,6 +17,10 @@
     gap: 24px;
 }
 
+.field {
+    position: relative;
+}
+
 .inputForm {
     width: 335px;
     margin-top: 8px;
@@ -30,7 +34,12 @@
 .error {
     color: #dc3545;
     font-size: 12px;
-    margin-top: 4px;
+    margin: 0;
+    bottom: -20px;
+
+    position: absolute;
+    left: 0;
+
 }
 
 .submitButton {
