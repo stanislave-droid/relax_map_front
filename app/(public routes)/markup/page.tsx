@@ -131,10 +131,14 @@ export default function Home() {
             <Button size="md">Medium Button</Button>
           </li>
           <li>
-            <Button size="icon-sm"><Icon name="bookmark"/></Button>
+            <Button size="icon-sm">
+              <Icon name="bookmark" />
+            </Button>
           </li>
           <li>
-            <Button size="icon-md"><Icon name="bookmark"/></Button>
+            <Button size="icon-md">
+              <Icon name="bookmark" />
+            </Button>
           </li>
         </ul>
         <p></p>
@@ -180,12 +184,15 @@ export default function Home() {
           <Button type="submit">Submit</Button>
         </form>
         <p></p>
-        <Select>
-          <option>Apple</option>
-          <option>Banana</option>
-          <option>Lime</option>
-          <option>Orange</option>
-        </Select>
+        <form action={(d) => console.log(d)} id="form-1">
+          <Select name="answer">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>D</option>
+          </Select>
+          <Button type="submit">Submit</Button>
+        </form>
       </div>
     </main>
   );
