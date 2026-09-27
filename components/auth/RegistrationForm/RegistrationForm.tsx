@@ -2,14 +2,12 @@
 
 import * as Yup from "yup";
 import {EMAIL_REGEX} from "@/utils/emailRegex";
+import Button from "@/components/ui/Button/Button";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useId} from "react";
 import css from "./RegistrationForm.module.css"
 import Input from "@/components/ui/Input/Input";
 import clsx from "clsx";
-import Button from "@/components/ui/Button/Button";
-import LoadingPage from "@/app/loading";
-
 
 type RegisterFormValues = {
     name: string,
@@ -122,9 +120,10 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
                     <div>
                         <Button
                             type={"submit"}
-                            className={css.submitButton}
+                            disabled={isLoading}
+                            className={clsx(css["submitButton"])}
                         >
-                            {isLoading ? <LoadingPage /> : "Зареєструватись"}
+                            {isLoading ? "Реєстрація..." : "Зареєструватись"}
 
                         </Button>
                     </div>
