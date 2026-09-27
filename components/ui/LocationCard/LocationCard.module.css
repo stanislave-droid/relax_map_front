@@ -102,8 +102,6 @@
 }
 
 .locationLink:active,
-.locationLink:active,
-.editLink:active,
 .editLink:active {
   color: var(--color-white);
   border: 1px solid var(--opacity-transparent);
@@ -111,8 +109,6 @@
 }
 
 .locationLink:disabled,
-.locationLink:disabled,
-.editLink:disabled,
 .editLink:disabled {
   color: var(--color-scheme-2-text);
   border: 1px solid var(--opacity-transparent);
@@ -122,6 +118,7 @@
 
 @media (min-width: 768px) {
   .locationCard {
+    width: 340px;
     max-width: 340px;
     height: 525px;
   }
@@ -134,6 +131,7 @@
 
 @media (min-width: 1440px) {
   .locationCard {
+    width: 421px;
     max-width: 421px;
     height: 624px;
   }
