@@ -1,9 +1,9 @@
 import "../common.module.css";
-import css from "./LocationCard.module.css";
 import { Location } from "@/types/location";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "../Link/Link";
 import Icon from "../Icon/Icon";
+import css from "./LocationCard.module.css";
 
 interface LocationCardProps {
   location: Location;

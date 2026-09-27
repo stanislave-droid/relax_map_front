@@ -19,6 +19,7 @@
 }
 
 .locationType {
+  margin-top: 0;
   margin-bottom: 12px;
   font-weight: 600;
   font-size: 12px;
@@ -27,14 +28,20 @@
 }
 
 .locationRate {
+  margin-top: 0;
   margin-bottom: 12px;
   padding: 0;
   height: 24px;
-  font-size: 10px;
+  font-size: 16px;
   color: #000;
 }
 
+.locationRate > p {
+    margin: 0;
+}
+
 .locationCardName {
+  margin-top: 0;
   margin-bottom: 12px;
   padding: 0;
   font-weight: 700;
