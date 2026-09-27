@@ -7,6 +7,7 @@ import Textarea from "@/components/ui/Textarea/Textarea";
 import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
 import RatingStars from "@/components/ui/RatingStars/RatingStars";
+import Select from "@/components/ui/Select/Select";
 
 export default function Home() {
   return (
@@ -188,21 +189,27 @@ export default function Home() {
           </li>
         </ul>
         <p></p>
-        <ul>
-          <li>
-            <form action={() => {}}>
-              <label>
-                Email:
-                <Input type="Email" placeholder="user@example.com" required />
-              </label>
-              <label>
-                Comment:
-                <Textarea placeholder="Comment here ..." minLength={2} maxLength={256} />
-              </label>
-              <Button type="submit">Submit</Button>
-            </form>
-          </li>
-        </ul>
+        <form action={() => {}}>
+          <label>
+            Email:
+            <Input type="Email" placeholder="user@example.com" required />
+          </label>
+          <label>
+            Comment:
+            <Textarea placeholder="Comment here ..." minLength={2} maxLength={256} />
+          </label>
+          <Button type="submit">Submit</Button>
+        </form>
+        <p></p>
+        <form action={(d) => console.log(d)} id="form-1">
+          <Select name="answer">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>D</option>
+          </Select>
+          <Button type="submit">Submit</Button>
+        </form>
       </div>
     </main>
   );
