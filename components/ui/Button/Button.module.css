@@ -21,6 +21,15 @@
 
   cursor: pointer;
 
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    outline: none;
+  }
+
   &:disabled {
     cursor: default;
   }
