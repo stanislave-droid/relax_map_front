@@ -6,10 +6,7 @@ export default function Home() {
   return (
     <main className={css.main}>
       <div className={clsx("container")}>
-        <h1 className={clsx("main-headding")}>
-          <Icon name="logo" width={129} height={36} />
-          Hello world
-        </h1>
+        <h1 className={clsx("main-headding")}>Hello world</h1>
       </div>
     </main>
   );

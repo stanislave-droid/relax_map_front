@@ -1,0 +1,141 @@
+.header {
+  border-bottom: var(--border-primary);
+  position: relative;
+  background: var(--background);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 16px 64px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.navLink {
+  white-space: nowrap;
+  color: var(--text-third);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.nav {
+  display: none;
+}
+
+.burger {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+
+  fill: #000;
+}
+.burger:hover {
+  background: #cc6534;
+  border: 1px solid rgba(255, 255, 255, 0);
+  /* stroke: #fff;
+  fill: #fff; */
+}
+.burger:active {
+  background: #254c24;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.loginLink {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+  width: 65px;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-third);
+}
+.loginLink:hover {
+  background: #cc6534;
+  border: 1px solid rgba(255, 255, 255, 0);
+  color: #fff;
+}
+
+.registerLink {
+  padding: 4px 10px;
+  width: 137px;
+  height: 38px;
+}
+.loginLink:active {
+  background: #254c24;
+  color: #fff;
+}
+
+.actions > :not(.burger) {
+  display: none;
+}
+
+.mobileNav {
+  display: none;
+}
+
+/* .mobileNav.isOpen {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  background: var(--background);
+  border-bottom: var(--border-primary);
+} */
+
+@media screen and (min-width: 768px) {
+  .actions > :not(.burger) {
+    display: inline-flex;
+  }
+  .loginLink {
+    width: 56px;
+    height: 32px;
+    font-size: 16px;
+  }
+  .registerLink {
+    width: 114px;
+    height: 32px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 32px;
+    flex: 1;
+  }
+
+  .burger {
+    display: none;
+  }
+
+  .mobileNav,
+  .mobileNav.isOpen {
+    display: none;
+  }
+}
