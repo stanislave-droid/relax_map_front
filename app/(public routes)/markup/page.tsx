@@ -6,6 +6,7 @@ import Input from "@/components/ui/Input/Input";
 import Textarea from "@/components/ui/Textarea/Textarea";
 import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
+import RatingStars from "@/components/ui/RatingStars/RatingStars";
 
 export default function Home() {
   return (
@@ -130,25 +131,60 @@ export default function Home() {
             <Button size="md">Medium Button</Button>
           </li>
           <li>
-            <Button size="icon-sm"><Icon name="bookmark"/></Button>
+            <Button size="icon-sm">
+              <Icon name="bookmark" />
+            </Button>
           </li>
           <li>
-            <Button size="icon-md"><Icon name="bookmark"/></Button>
+            <Button size="icon-md">
+              <Icon name="bookmark" />
+            </Button>
           </li>
         </ul>
         <p></p>
         <ul>
           <li>
-            <Link href="" size="sm">Small Button</Link>
+            <Link href="" size="sm">
+              Small Button
+            </Link>
           </li>
           <li>
-            <Link href="" size="md">Medium Button</Link>
+            <Link href="" size="md">
+              Medium Button
+            </Link>
           </li>
           <li>
-            <Link href="" size="icon-sm"><Icon name="bookmark"/></Link>
+            <Link href="" size="icon-sm">
+              <Icon name="bookmark" />
+            </Link>
           </li>
           <li>
-            <Link href="" size="icon-md"><Icon name="bookmark"/></Link>
+            <Link href="" size="icon-md">
+              <Icon name="bookmark" />
+            </Link>
+          </li>
+        </ul>
+        <p></p>
+        <ul>
+          <li>
+            <p className={css["rating-label"]}>0.1:</p>
+            <RatingStars value={0.1} />
+          </li>
+          <li>
+            <p className={css["rating-label"]}>1.4:</p>
+            <RatingStars value={1.4} />
+          </li>
+          <li>
+            <p className={css["rating-label"]}>2.6:</p>
+            <RatingStars value={2.6} />
+          </li>
+          <li>
+            <p className={css["rating-label"]}>3.8:</p>
+            <RatingStars value={3.8} />
+          </li>
+          <li>
+            <p className={css["rating-label"]}>4.9:</p>
+            <RatingStars value={4.9} />
           </li>
         </ul>
         <p></p>
