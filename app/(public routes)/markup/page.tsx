@@ -9,7 +9,7 @@ import Link from "@/components/ui/Link/Link";
 import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
 import RegistrationForm, {type RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
-
+import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 
 export default function Home() {
 
@@ -219,6 +219,9 @@ export default function Home() {
         </form>
         <div>
           <RegistrationForm onSubmit={handleSubmit}></RegistrationForm>
+        </div>
+        <div>
+          <LoginForm onSubmit={handleSubmit}/>
         </div>
 
       </div>
