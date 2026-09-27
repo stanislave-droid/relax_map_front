@@ -8,8 +8,15 @@ import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
 import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
+import RegistrationForm, {type RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
+
 
 export default function Home() {
+
+  const handleSubmit = async (values: RegisterSchema): Promise<void> => {
+    console.log("submit values:", values);
+  };
+
   return (
     <main className={css.main}>
       <div className={clsx("container")}>
@@ -210,6 +217,10 @@ export default function Home() {
           </Select>
           <Button type="submit">Submit</Button>
         </form>
+        <div>
+          <RegistrationForm onSubmit={handleSubmit}></RegistrationForm>
+        </div>
+
       </div>
     </main>
   );
