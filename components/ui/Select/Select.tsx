@@ -16,6 +16,8 @@ const slimSelectStyles = {
 
   content: css["select-content"],
   contentOpen: css["select-content--open"],
+  dirAbove: css["select-content--above"],
+  dirBelow: css["select-content--below"],
 
   list: css["select-list"],
 
