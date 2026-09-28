@@ -138,4 +138,37 @@
   .mobileNav.isOpen {
     display: none;
   }
+
+  /* ---------------------auth---------------- */
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .userName {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-third);
+  }
+
+  .logoutButton {
+    fill: var(--text-third);
+    background-color: transparent;
+    border: none;
+  }
+  .logoutButton::before {
+    /* content: "";
+    margin-left: 8px;
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    width: 29px;
+    height: 0;
+    rotate: 90deg; */
+  }
 }
