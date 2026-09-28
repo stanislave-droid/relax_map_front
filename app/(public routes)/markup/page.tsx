@@ -11,6 +11,9 @@ import Select from "@/components/ui/Select/Select";
 import RegistrationForm, {type RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
 import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { useState } from "react";
+import { Location } from "@/types/location";
+import LocationCard from "@/components/ui/LocationCard/LocationCard";
+
 
 export default function Home() {
 
@@ -30,6 +33,16 @@ export default function Home() {
       setIsLoading(false);
       setErrorMessage("Невірний email або пароль");
     };
+
+  const location: Location = {
+    image: "https://ftp.goit.study/img/relax-map/68d568270e6bcc357e9833e8.webp",
+    name: "Сонячна Рів'єра",
+    locationType: "Море",
+    region: "chornomorske-uzberezhzhya",
+    rate: 4.5,
+    ownerId: '6881563901add19ee16fcff5',
+    description: "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль."
+  }
 
   return (
     <main className={css.main}>
@@ -241,6 +254,7 @@ export default function Home() {
               errorMessage={errorMessage}
           ></LoginForm>
         </div>
+        <LocationCard location={location} locationLink="#" editLink="#" />
 
       </div>
     </main>

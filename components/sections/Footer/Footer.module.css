@@ -17,6 +17,7 @@
 .logoIcon {
   width: 24px;
   height: 24px;
+  color: #000;
   fill: currentColor;
   flex-shrink: 0;
 }
@@ -45,6 +46,7 @@
   width: 32px;
   height: 32px;
   display: block;
+  color: #4c2613;
 }
 
 .socialLinks {
