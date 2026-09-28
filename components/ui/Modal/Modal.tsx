@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Icon from "@/components/ui/Icon/Icon";
 import css from "./Modal.module.css";
@@ -12,6 +12,20 @@ interface ModalProps {
 }
 
 const Modal = ({ children, onClose, className }: ModalProps) => {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
   return createPortal(
     <div className={css.backdrop} onClick={onClose}>
       <div
