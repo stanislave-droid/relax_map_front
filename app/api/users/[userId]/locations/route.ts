@@ -1,27 +1,13 @@
 import { api } from "@/app/api/api";
 import { logErrorResponse } from "@/app/api/auth/_utils/utils";
+import { Location } from "@/types/location";
 import { isAxiosError } from "axios";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
   params: Promise<{ userId: string }>;
 };
-
-interface Location {
-  name: string;
-  description: string;
-  image: string;
-  locationType: string;
-  region: string;
-  ownerId: string;
-  feedbacksId: string[];
-  rate?: number | null | undefined;
-  coordinates?: {
-    lat: number;
-    lon: number;
-  };
-}
 
 interface LocationsApiResponse {
   locations: Location[];
@@ -31,14 +17,20 @@ interface LocationsApiResponse {
   totalLocations: number;
 }
 
-export async function GET(request: Request, { params }: Props) {
+export async function GET(request: NextRequest, { params }: Props) {
   try {
     const cookieStore = await cookies();
     const { userId } = await params;
+    const limit = request.nextUrl.searchParams.get("limit");
+    const page = request.nextUrl.searchParams.get("page");
 
     const locationsResponse = await api<LocationsApiResponse>(`/api/users/${userId}/locations`, {
       headers: {
         Cookie: cookieStore.toString(),
+      },
+      params: {
+        limit,
+        page,
       },
     });
 
