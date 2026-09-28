@@ -2,6 +2,9 @@
     position: relative;
     height: 708px;
     overflow: hidden;
+    max-width: 375px;
+    height: 708px;
+    margin: 0 auto;
 
 }
 
@@ -94,6 +97,7 @@
 
     .hero {
         height: 580px;
+        max-width: 768px;
     }
     .content {
         height: 580px;
@@ -146,6 +150,7 @@
 
     .hero {
         height: 724px;
+        max-width: 1440px;
     }
 
     .content {
