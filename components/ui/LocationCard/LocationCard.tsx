@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "../Link/Link";
 import Icon from "../Icon/Icon";
 import css from "./LocationCard.module.css";
+import RatingStars from "../RatingStars/RatingStars";
 
 interface LocationCardProps {
   location: Location;
@@ -29,7 +30,7 @@ export default function LocationCard({
       <div className={css.locationCardContent}>
         <p className={css.locationType}>{location.locationType}</p>
         <div className={css.locationRate}>
-          <p>{location.rate}</p>
+          <RatingStars value={location.rate} />
         </div>
         <p className={css.locationCardName}>{location.name}</p>
         <div className={css.locationCardLinks}>

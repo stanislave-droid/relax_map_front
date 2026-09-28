@@ -9,13 +9,40 @@ import Link from "@/components/ui/Link/Link";
 import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
 import RegistrationForm, {type RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
+import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
+import { useState } from "react";
+import { Location } from "@/types/location";
+import LocationCard from "@/components/ui/LocationCard/LocationCard";
 
 
 export default function Home() {
 
-  const handleSubmit = async (values: RegisterSchema): Promise<void> => {
+  const handleSubmitR = async (values: RegisterSchema): Promise<void> => {
     console.log("submit values:", values);
   };
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const handleSubmit = async (values: LoginSchema) => {
+      setErrorMessage(null);
+      setIsLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // імітація запиту
+
+      setIsLoading(false);
+      setErrorMessage("Невірний email або пароль");
+    };
+
+  const location: Location = {
+    image: "https://ftp.goit.study/img/relax-map/68d568270e6bcc357e9833e8.webp",
+    name: "Сонячна Рів'єра",
+    locationType: "Море",
+    region: "chornomorske-uzberezhzhya",
+    rate: 4.5,
+    ownerId: '6881563901add19ee16fcff5',
+    description: "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль."
+  }
 
   return (
     <main className={css.main}>
@@ -218,8 +245,16 @@ export default function Home() {
           <Button type="submit">Submit</Button>
         </form>
         <div>
-          <RegistrationForm onSubmit={handleSubmit}></RegistrationForm>
+          <RegistrationForm onSubmit={handleSubmitR}></RegistrationForm>
         </div>
+        <div>
+          <LoginForm
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
+              errorMessage={errorMessage}
+          ></LoginForm>
+        </div>
+        <LocationCard location={location} locationLink="#" editLink="#" />
 
       </div>
     </main>
