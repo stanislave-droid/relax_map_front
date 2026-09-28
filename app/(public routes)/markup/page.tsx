@@ -6,9 +6,17 @@ import Input from "@/components/ui/Input/Input";
 import Textarea from "@/components/ui/Textarea/Textarea";
 import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
+import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
+import RegistrationForm, {type RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
+
 
 export default function Home() {
+
+  const handleSubmit = async (values: RegisterSchema): Promise<void> => {
+    console.log("submit values:", values);
+  };
+
   return (
     <main className={css.main}>
       <div className={clsx("container")}>
@@ -144,16 +152,47 @@ export default function Home() {
         <p></p>
         <ul>
           <li>
-            <Link href="" size="sm">Small Button</Link>
+            <Link href="" size="sm">
+              Small Button
+            </Link>
           </li>
           <li>
-            <Link href="" size="md">Medium Button</Link>
+            <Link href="" size="md">
+              Medium Button
+            </Link>
           </li>
           <li>
-            <Link href="" size="icon-sm"><Icon name="bookmark"/></Link>
+            <Link href="" size="icon-sm">
+              <Icon name="bookmark" />
+            </Link>
           </li>
           <li>
-            <Link href="" size="icon-md"><Icon name="bookmark"/></Link>
+            <Link href="" size="icon-md">
+              <Icon name="bookmark" />
+            </Link>
+          </li>
+        </ul>
+        <p></p>
+        <ul>
+          <li>
+            <p className={css["rating-label"]}>0.1:</p>
+            <RatingStars value={0.1} />
+          </li>
+          <li>
+            <p className={css["rating-label"]}>1.4:</p>
+            <RatingStars value={1.4} />
+          </li>
+          <li>
+            <p className={css["rating-label"]}>2.6:</p>
+            <RatingStars value={2.6} />
+          </li>
+          <li>
+            <p className={css["rating-label"]}>3.8:</p>
+            <RatingStars value={3.8} />
+          </li>
+          <li>
+            <p className={css["rating-label"]}>4.9:</p>
+            <RatingStars value={4.9} />
           </li>
         </ul>
         <p></p>
@@ -178,6 +217,10 @@ export default function Home() {
           </Select>
           <Button type="submit">Submit</Button>
         </form>
+        <div>
+          <RegistrationForm onSubmit={handleSubmit}></RegistrationForm>
+        </div>
+
       </div>
     </main>
   );
