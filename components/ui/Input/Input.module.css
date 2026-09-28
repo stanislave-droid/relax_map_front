@@ -38,6 +38,7 @@
   &:focus-within,
   &:active {
     --border: var(--color-scheme-1-accent);
+    outline: none;
   }
 
   &:user-invalid {
