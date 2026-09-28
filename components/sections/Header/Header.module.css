@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  padding: 16px 64px;
+  padding: 16px 20px;
 }
 
 .logo {
@@ -39,16 +39,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   cursor: pointer;
-
-  fill: #000;
 }
 .burger:hover {
   background: #cc6534;
   border: 1px solid rgba(255, 255, 255, 0);
-  /* stroke: #fff;
-  fill: #fff; */
 }
 .burger:active {
   background: #254c24;
@@ -106,8 +102,62 @@
   border-bottom: var(--border-primary);
 } */
 
+/* ------------------auth---------------- */
+
+.userInfo {
+  align-items: center;
+  gap: 8px;
+}
+.textDesktop {
+  display: none;
+}
+
+.textTablet {
+  display: inline;
+}
+.addLocationLink {
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+.userName {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-third);
+}
+
+.divider {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  width: 29px;
+  height: 0;
+  rotate: 90deg;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+.logoutButton {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.logoutIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-third);
+}
+
 @media screen and (min-width: 768px) {
-  .actions > :not(.burger) {
+  .container {
+    padding: 16px 32px;
+  }
+  .actions > :not(.burger):not(.userInfo) {
     display: inline-flex;
   }
   .loginLink {
@@ -120,14 +170,40 @@
     height: 32px;
     font-size: 16px;
   }
+  .addLocationLink {
+    width: 196px;
+    height: 32px;
+    font-size: 16px;
+  }
 }
 
 @media screen and (min-width: 1440px) {
+  .container {
+    padding: 16px 64px;
+  }
+
   .nav {
     display: flex;
     justify-content: flex-end;
     gap: 32px;
     flex: 1;
+  }
+
+  .actions > .userInfo {
+    display: flex;
+  }
+  .addLocationLink {
+    width: 245px;
+    height: 38px;
+    font-size: 20px;
+  }
+
+  .textTablet {
+    display: none;
+  }
+
+  .textDesktop {
+    display: inline;
   }
 
   .burger {
@@ -137,38 +213,5 @@
   .mobileNav,
   .mobileNav.isOpen {
     display: none;
-  }
-
-  /* ---------------------auth---------------- */
-  .userInfo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .userName {
-    font-size: 16px;
-    line-height: 1.5;
-    color: var(--text-third);
-  }
-
-  .logoutButton {
-    fill: var(--text-third);
-    background-color: transparent;
-    border: none;
-  }
-  .logoutButton::before {
-    /* content: "";
-    margin-left: 8px;
-    display: inline-block;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    width: 29px;
-    height: 0;
-    rotate: 90deg; */
   }
 }
