@@ -1,16 +1,18 @@
-import clsx from "clsx";
+"use client";
+
 import css from "./page.module.css";
-import Icon from "@/components/ui/Icon/Icon";
+import AdvantagesBlock from "@/components/sections/AdvantagesBlock/AdvantagesBlock";
+import HeroBlock from "../components/sections/HeroBlock/HeroBlock";
 
 export default function Home() {
+  const handleSearch = (searchQuery: string) => {
+    console.log("Пошуковий запит:", searchQuery);
+  };
+
   return (
     <main className={css.main}>
-      <div className={clsx("container")}>
-        <h1 className={clsx("main-headding")}>
-          <Icon name="logo" width={129} height={36} />
-          Hello world
-        </h1>
-      </div>
+      <HeroBlock onSearch={handleSearch} />
+      <AdvantagesBlock />
     </main>
   );
 }
