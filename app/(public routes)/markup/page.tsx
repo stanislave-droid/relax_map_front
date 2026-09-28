@@ -13,6 +13,7 @@ import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginFo
 import { useState } from "react";
 import { Location } from "@/types/location";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
+import Spinner from "@/components/ui/Spinner/Spinner";
 
 
 export default function Home() {
@@ -255,7 +256,7 @@ export default function Home() {
           ></LoginForm>
         </div>
         <LocationCard location={location} locationLink="#" editLink="#" />
-
+        <Spinner />
       </div>
     </main>
   );
