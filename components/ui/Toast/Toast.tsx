@@ -39,5 +39,5 @@ export default function showToast(message: string, icon?: IconName, style?: Toas
 }
 
 export function showError(message: string) {
-  showToast(message, "close", "error");
+  showToast(message, "error", "error");
 }
