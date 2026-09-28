@@ -10,12 +10,26 @@ import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
 import RegistrationForm, {type RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
 import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
+import { useState } from "react";
 
 export default function Home() {
 
-  const handleSubmit = async (values: RegisterSchema): Promise<void> => {
+  const handleSubmitR = async (values: RegisterSchema): Promise<void> => {
     console.log("submit values:", values);
   };
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const handleSubmit = async (values: LoginSchema) => {
+      setErrorMessage(null);
+      setIsLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // імітація запиту
+
+      setIsLoading(false);
+      setErrorMessage("Невірний email або пароль");
+    };
 
   return (
     <main className={css.main}>
@@ -218,10 +232,14 @@ export default function Home() {
           <Button type="submit">Submit</Button>
         </form>
         <div>
-          <RegistrationForm onSubmit={handleSubmit}></RegistrationForm>
+          <RegistrationForm onSubmit={handleSubmitR}></RegistrationForm>
         </div>
         <div>
-          <LoginForm onSubmit={handleSubmit}/>
+          <LoginForm
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
+              errorMessage={errorMessage}
+          ></LoginForm>
         </div>
 
       </div>

@@ -3,13 +3,13 @@
 import Button from "@/components/ui/Button/Button";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
+import {useId} from "react";
 import {EMAIL_REGEX} from "@/utils/emailRegex";
 import Input from "@/components/ui/Input/Input";
 import clsx from "clsx";
 import Spinner from "@/components/ui/Spinner/Spinner"
-
-
 import css from "./LoginForm.module.css"
+import Icon from "@/components/ui/Icon/Icon"
 
 
 type LoginFormValues = {
@@ -49,6 +49,7 @@ export interface LoginFormProps {
 export default function LoginForm({onSubmit, isLoading, errorMessage}: LoginFormProps) {
 
     const fieldId = useId();
+
     const emailId = `${fieldId}-email`;
     const passwordId = `${fieldId}-password`;
 
@@ -99,12 +100,14 @@ export default function LoginForm({onSubmit, isLoading, errorMessage}: LoginForm
                             disabled={isLoading}
                             className={clsx(css["submitButton"])}
                         >
-                            { isLoading ? <Spinner /> : "Вхід"}
+                            { isLoading ? <Spinner /> : "Увійти"}
                         </Button>
                     </div>
                     {errorMessage && (
-                        <p role="alert">
-                            {errorMessage}</p>
+                        <div className={css.serverError} role="alert">
+                            <Icon className={css.serverErrorIcon} name="error" aria-hidden="true" />
+                            <span>{errorMessage}</span>
+                        </div>
                     )}
                 </Form>
             </Formik>
