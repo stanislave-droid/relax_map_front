@@ -1,0 +1,150 @@
+.locationCard {
+  width: 100%;
+  max-width: 335px;
+  height: 520px;
+  border: 0px solid var(--color-scheme-1-border);
+  border-radius: 12px;
+  background-color: var(--color-scheme-2-foreground);
+  overflow: hidden;
+}
+
+.locationCardImage {
+  width: 100%;
+  max-width: 335px;
+  height: 335px;
+}
+
+.locationCardContent {
+  padding: 16px;
+}
+
+.locationType {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text);
+}
+
+.locationRate {
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding: 0;
+  height: 24px;
+  color: #000;
+}
+
+.locationCardName {
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding: 0;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.5;
+  overflow: hidden;
+  color: var(--color-scheme-2-text);
+}
+
+.locationCardLinks {
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  column-gap: 16px;
+}
+
+.locationLink {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-scheme-2-border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  width: 100%;
+  height: 48px;
+  background-color: var(--opacity-neutral-darkest-5);
+  transition-property: color, border, background-color, opacity;
+  transition-duration: 200ms;
+}
+
+.editLink {
+  color: var(--color-neutral-darkest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--color-scheme-2-border);
+  border-radius: 6px;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  background-color: var(--opacity-neutral-darkest-5);
+  transition-property: color, border, background-color, opacity;
+  transition-duration: 200ms;
+}
+
+.locationLink:hover,
+.locationLink:focus,
+.editLink:hover,
+.editLink:focus {
+  color: var(--color-white);
+  border: 1px solid var(--opacity-neutral-darkest-5);
+  background-color: var(--color-coral-dark);
+}
+
+.locationLink:active,
+.editLink:active {
+  color: var(--color-white);
+  border: 1px solid var(--opacity-transparent);
+  background-color: var(--color-coral-darker);
+}
+
+.locationLink:disabled,
+.editLink:disabled {
+  color: var(--color-scheme-2-text);
+  border: 1px solid var(--opacity-transparent);
+  background-color: var(--opacity-neutral-darkest-5);
+  opacity: 0.3;
+}
+
+@media (min-width: 768px) {
+  .locationCard {
+    width: 340px;
+    max-width: 340px;
+    height: 525px;
+  }
+
+  .locationCardImage {
+    max-width: 340px;
+    height: 340px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .locationCard {
+    width: 421px;
+    max-width: 421px;
+    height: 624px;
+  }
+
+  .locationCardImage {
+    max-width: 421px;
+    height: 421px;
+  }
+
+  .locationType {
+    font-size: 16px;
+  }
+
+  .locationCardName {
+    font-size: 26x;
+  }
+
+  .locationLink {
+    font-size: 20px;
+  }
+}

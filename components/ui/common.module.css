@@ -51,11 +51,11 @@
 
   --color-red: #b00101;
 
-  --transition: 100ms ease-out;
+  --transition: 200ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --transition: 0 ease-out;
+    --transition: 0 cubic-bezier(0.23, 1, 0.32, 1);
   }
 }
