@@ -1,20 +1,38 @@
-import {create} from "zustand";
-import {User} from "@/types/user";
+import { User } from "@/types/user";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-type AuthStore = {
-    user: User | null,
-    isAuthenticated: boolean,
-    setUser: (user: User) => void,
-    clearIsAuthenticated: () => void,
+interface AuthStore {
+  user: User;
+  isAuthenticated: boolean;
+  setUser: (user: User) => void;
+  clearIsAuthenticated: () => void;
+}
+
+const initialUser: User = {
+  _id: "",
+  name: "",
+  avatarUrl: "",
+  articlesAmount: 0,
 };
 
-export const useAuthStore = create<AuthStore>()((set) => ({
-    user: null,
-    isAuthenticated: false,
-    setUser: (user: User) => {
-        set(() => ({user, isAuthenticated: true}))
+export const useAuthStore = create<AuthStore>()(
+  persist(
+    (set) => {
+      return {
+        user: initialUser,
+        isAuthenticated: false,
+        setUser: (user) => set({ user, isAuthenticated: true }),
+        clearIsAuthenticated: () =>
+          set({ user: initialUser, isAuthenticated: false }),
+      };
     },
-    clearIsAuthenticated: () => {
-        set(() => ({user: null, isAuthenticated: false}))
+    {
+      name: "authentication",
+      partialize: (state) => ({
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
     },
-}));
+  ),
+);
