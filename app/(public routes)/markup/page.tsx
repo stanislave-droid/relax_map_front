@@ -14,6 +14,7 @@ import RegistrationForm, { type RegisterSchema } from "@/components/auth/Registr
 import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { Location } from "@/types/location";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
+import Spinner from "@/components/ui/Spinner/Spinner";
 
 import showToast, { showError } from "@/components/ui/Toast/Toast";
 
@@ -261,6 +262,7 @@ export default function Home() {
             <Button onClick={() => showError("Something went oops")}>Error Toast</Button>
           </li>
         </ul>
+        <Spinner />
       </div>
     </main>
   );
