@@ -7,6 +7,9 @@ interface SpinnerProps {
   color?: string;
 }
 
-export default function Spinner({size = 48, color = "var(--color-coral)" }: SpinnerProps): React.ReactNode {
-  return <SpinnerDotted color={color} size={size}/>;
+export default function Spinner({
+  size = 48,
+  color = "var(--color-coral)",
+}: SpinnerProps): React.ReactNode {
+  return <SpinnerDotted color={color} size={size} />;
 }
