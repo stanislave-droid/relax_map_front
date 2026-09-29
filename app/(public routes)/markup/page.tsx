@@ -10,13 +10,19 @@ import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
 
 import { useState } from "react";
-import RegistrationForm, { type RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
-import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
+import RegistrationForm, {
+  type RegisterSchema,
+} from "@/components/auth/RegistrationForm/RegistrationForm";
+import LoginForm, {
+  type LoginSchema,
+} from "@/components/auth/LoginForm/LoginForm";
 import { Location } from "@/types/location";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
 import Spinner from "@/components/ui/Spinner/Spinner";
 
 import showToast, { showError } from "@/components/ui/Toast/Toast";
+
+import AddReviewBlock from "@/components/AddReviewBlock/AddReviewBlock";
 
 export default function Home() {
   const handleSubmitR = async (values: RegisterSchema): Promise<void> => {
@@ -43,7 +49,8 @@ export default function Home() {
     region: "chornomorske-uzberezhzhya",
     rate: 4.5,
     ownerId: "6881563901add19ee16fcff5",
-    description: "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль.",
+    description:
+      "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль.",
   };
 
   return (
@@ -232,7 +239,11 @@ export default function Home() {
           </label>
           <label>
             Comment:
-            <Textarea placeholder="Comment here ..." minLength={2} maxLength={256} />
+            <Textarea
+              placeholder="Comment here ..."
+              minLength={2}
+              maxLength={256}
+            />
           </label>
           <Button type="submit">Submit</Button>
         </form>
@@ -250,19 +261,31 @@ export default function Home() {
           <RegistrationForm onSubmit={handleSubmitR}></RegistrationForm>
         </div>
         <div>
-          <LoginForm onSubmit={handleSubmit} isLoading={isLoading} errorMessage={errorMessage}></LoginForm>
+          <LoginForm
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+            errorMessage={errorMessage}
+          ></LoginForm>
         </div>
         <LocationCard location={location} locationLink="#" editLink="#" />
         <p> </p>
         <ul>
           <li>
-            <Button onClick={() => showToast("You pressed the 'Info Toast' button")}>Info Toast</Button>
+            <Button
+              onClick={() => showToast("You pressed the 'Info Toast' button")}
+            >
+              Info Toast
+            </Button>
           </li>
           <li>
-            <Button onClick={() => showError("Something went oops")}>Error Toast</Button>
+            <Button onClick={() => showError("Something went oops")}>
+              Error Toast
+            </Button>
           </li>
         </ul>
         <Spinner />
+        {/* MODAL FOR CREATE NEW FEEDBACK */}
+        <AddReviewBlock onClose={() => console.log("Modal closed")} />
       </div>
     </main>
   );
