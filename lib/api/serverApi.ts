@@ -1,6 +1,9 @@
 import { fetchLocationsProps } from "@/types/location";
 import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
+import { User } from "@/types/user";
+import { Location } from "@/types/location";
+import { FeedbacksResponse } from "@/types/feedback";
 
 export async function fetchLocations({
   page = 1,
@@ -25,11 +28,6 @@ export async function fetchLocations({
 
   return data;
 }
-
-import { User } from "@/types/user";
-import { axiosClient as api } from "./api";
-import { Location } from "@/types/location";
-import { FeedbacksResponse } from "@/types/feedback";
 
 export const getUserById = async (userId: string): Promise<User> => {
   const { data } = await api.get<User>(`/users/${userId}`);

@@ -4,6 +4,7 @@ import { fetchLocationsProps } from "@/types/location";
 import { User } from "@/types/user";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
+import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 
 export interface ApiErrorResponse {
   message: string;
@@ -18,8 +19,8 @@ export const register = async (userData: RegisterSchema): Promise<User> => {
 };
 
 export const login = async (userData: LoginSchema): Promise<User> => {
-    const { data } = await axiosClient.post<User>("/auth/login", userData);
-    return data;
+  const { data } = await api.post<User>("/auth/login", userData);
+  return data;
 };
 
 export const getMe = async (): Promise<User> => {
