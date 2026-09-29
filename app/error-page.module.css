@@ -1,0 +1,30 @@
+.wrapper {
+  margin: 0 auto;
+  width: fit-content;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorText {
+  display: block;
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #000;
+}
+
+.errorMessage {
+  color: rgb(196, 64, 64);
+}
+
+.errorIcon {
+  width: 48px;
+  height: 48px;
+}
