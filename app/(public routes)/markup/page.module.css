@@ -1,0 +1,11 @@
+.main {
+  width: 100%;
+}
+
+.rating-label {
+  display: inline-block;
+  min-width: 30px;
+  margin: 0;
+  padding: 0;
+  vertical-align: center;
+}

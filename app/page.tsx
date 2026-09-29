@@ -1,16 +1,16 @@
-import clsx from "clsx";
+// "use client";
+
 import css from "./page.module.css";
-import Icon from "@/components/ui/Icon/Icon";
+import AdvantagesBlock from "@/components/sections/AdvantagesBlock/AdvantagesBlock";
+import HeroBlock from "../components/sections/HeroBlock/HeroBlock";
+import ReviewsBlock from "@/components/sections/ReviewsBlock/ReviewsBlock";
 
 export default function Home() {
   return (
     <main className={css.main}>
-      <div className={clsx("container")}>
-        <h1 className={clsx("main-headding")}>
-          <Icon name="icon-logo" size={240} />
-          Hello world
-        </h1>
-      </div>
+      <HeroBlock />
+      <AdvantagesBlock />
+      <ReviewsBlock title="Останні відгуки" />
     </main>
   );
 }
