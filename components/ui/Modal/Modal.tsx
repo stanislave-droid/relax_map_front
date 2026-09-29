@@ -12,7 +12,11 @@ interface ModalProps {
 }
 
 const Modal = ({ children, onClose, className }: ModalProps) => {
-  const container = document.body;
+  let container;
+
+  if (typeof window !== "undefined") {
+    container = document.body;
+  }
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -28,25 +32,28 @@ const Modal = ({ children, onClose, className }: ModalProps) => {
     };
   }, [onClose]);
 
-  return createPortal(
-    <div className={css.backdrop} onClick={onClose}>
-      <div
-        className={`${css.modal} ${className ?? ""}`}
-        onClick={(event) => event.stopPropagation()}
-      >
-        <button
-          type="button"
-          className={css.closeButton}
-          onClick={onClose}
-          aria-label="Закрити"
+  return (
+    container &&
+    createPortal(
+      <div className={css.backdrop} onClick={onClose}>
+        <div
+          className={`${css.modal} ${className ?? ""}`}
+          onClick={(event) => event.stopPropagation()}
         >
-          <Icon name="close" />
-        </button>
+          <button
+            type="button"
+            className={css.closeButton}
+            onClick={onClose}
+            aria-label="Закрити"
+          >
+            <Icon name="close" />
+          </button>
 
-        {children}
-      </div>
-    </div>,
-    container,
+          {children}
+        </div>
+      </div>,
+      container,
+    )
   );
 };
 
