@@ -1,6 +1,7 @@
 import Button from "@/components/ui/Button/Button";
 import css from "./PopularLocationsBlock.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import LocationCard from "@/components/ui/LocationCard/LocationCard";
 type PopularLocationsBlockProps = {
   locations: Array<LocationCardData>;
   isLoading?: boolean;
@@ -24,7 +25,9 @@ const PopularLocationsBlock = ({ locations }: PopularLocationsBlockProps) => {
             }}
           >
             {locations.map((location) => (
-              <SwiperSlide key={location._}></SwiperSlide>
+              <SwiperSlide key={location.id}>
+                <LocationCard location={location} locationLink={} />
+              </SwiperSlide>
             ))}
           </Swiper>
         </div>
