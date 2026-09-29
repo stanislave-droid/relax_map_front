@@ -1,254 +1,58 @@
-// // "use client";
+"use client";
 
-// // import { useState } from "react";
-// // import Link from "@/components/ui/Link/Link";
-// // import Icon from "@/components/ui/Icon/Icon";
-// // import css from "./Header.module.css";
-
-// // const Header = () => {
-// //   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-// //   const closeMenu = () => setIsMenuOpen(false);
-
-// //   return (
-// //     <header className={css.header}>
-// //       <div className={css.container}>
-// //         <Link
-// //           href="/"
-// //           className={css.logo}
-// //           aria-label="На головну"
-// //           onClick={closeMenu}
-// //         >
-// //           <Icon name="logo" width={129} height={36} />
-// //         </Link>
-
-// //         <nav className={css.nav} aria-label="Основна навігація">
-// //           <Link href="/" className={css.navLink}>
-// //             Головна
-// //           </Link>
-// //           <Link href="/locations" className={css.navLink}>
-// //             Місця відпочинку
-// //           </Link>
-// //         </nav>
-
-// //         <div className={css.actions}>
-// //           <Link
-// //             href="/login"
-// //             variant="ghost"
-// //             size="md"
-// //             className={css.loginLink}
-// //           >
-// //             Вхід
-// //           </Link>
-// //           <Link
-// //             href="/register"
-// //             variant="primary"
-// //             size="md"
-// //             className={css.registerLink}
-// //           >
-// //             Реєстрація
-// //           </Link>
-
-// //           <button
-// //             type="button"
-// //             className={css.burger}
-// //             aria-label={isMenuOpen ? "Закрити меню" : "Відкрити меню"}
-// //             aria-expanded={isMenuOpen}
-// //             onClick={() => setIsMenuOpen((prev) => !prev)}
-// //           >
-// //             <Icon name={isMenuOpen ? "close" : "menu"} width={24} height={24} />
-// //           </button>
-// //         </div>
-
-// //         {isMenuOpen && (
-// //           <nav className={css.mobileNav} aria-label="Мобільна навігація">
-// //             <Link href="/" className={css.navLink} onClick={closeMenu}>
-// //               Головна
-// //             </Link>
-// //             <Link href="/locations" className={css.navLink} onClick={closeMenu}>
-// //               Місця відпочинку
-// //             </Link>
-// //           </nav>
-// //         )}
-// //       </div>
-// //     </header>
-// //   );
-// // };
-
-// // export default Header;
-
-// "use client";
-
-// import { useState } from "react";
-// import clsx from "clsx";
-// import Link from "@/components/ui/Link/Link";
-// import Icon from "@/components/ui/Icon/Icon";
-// import css from "./Header.module.css";
-// import Image from "next/image";
-
-// interface HeaderProps {
-//   user?: { id: string; name: string; avatarUrl: string | null } | null;
-//   isAuthenticated: boolean;
-//   onLogoutClick: () => void;
-// }
-
-// const Header = ({ user, isAuthenticated, onLogoutClick }: HeaderProps) => {
-//   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-//   const closeMenu = () => setIsMenuOpen(false);
-
-//   return (
-//     <header className={css.header}>
-//       <div className={clsx("container", css.container)}>
-//         <Link
-//           href="/"
-//           className={css.logo}
-//           aria-label="На головну"
-//           onClick={closeMenu}
-//         >
-//           <Icon name="logo" width={129} height={36} />
-//         </Link>
-
-//         <nav className={css.nav} aria-label="Основна навігація">
-//           {!isAuthenticated && (
-//             <Link href="/" className={css.navLink}>
-//               Головна
-//             </Link>
-//           )}
-//           <Link href="/locations" className={css.navLink}>
-//             Місця відпочинку
-//           </Link>
-//           {isAuthenticated && (
-//             <Link href={`/profile/${user?.id}`} className={css.navLink}>
-//               Мій Профіль
-//             </Link>
-//           )}
-//         </nav>
-
-//         <div className={css.actions}>
-//           {isAuthenticated ? (
-//             <>
-//               <Link
-//                 href="/locations/add"
-//                 variant="primary"
-//                 size="md"
-//                 className={css.addLocationLink}
-//               >
-//                 <span className={css.textTablet}>Опублікувати статтю</span>
-//                 <span className={css.textDesktop}>Поділитись локацією</span>
-//               </Link>
-
-//               <div className={css.userInfo}>
-//                 <Image
-//                   src={
-//                     user?.avatarUrl ??
-//                     "https://ac.goit.global/fullstack/react/default-avatar.jpg"
-//                   }
-//                   alt={user?.name ?? "Аватар користувача"}
-//                   width={32}
-//                   height={32}
-//                   className={css.avatar}
-//                   unoptimized
-//                 />
-//                 <span className={css.userName}>{user?.name}</span>
-
-//                 <span className={css.divider} aria-hidden="true" />
-//                 {/* TODO: замінити прямий виклик на відкриття модалки підтвердження виходу,
-//                   коли буде готовий компонент Modal.  onLogoutClick викликати
-//                   з кнопки підтвердження з модалки, а не звідси. */}
-//                 <button
-//                   type="button"
-//                   className={css.logoutButton}
-//                   aria-label="Вийти з акаунту"
-//                   onClick={onLogoutClick}
-//                 >
-//                   <Icon
-//                     name="logout"
-//                     width={24}
-//                     height={24}
-//                     className={css.logoutIcon}
-//                   />
-//                 </button>
-//               </div>
-//             </>
-//           ) : (
-//             <>
-//               <Link
-//                 href="/login"
-//                 variant="ghost"
-//                 size="md"
-//                 className={css.loginLink}
-//               >
-//                 Вхід
-//               </Link>
-//               <Link
-//                 href="/register"
-//                 variant="primary"
-//                 size="md"
-//                 className={css.registerLink}
-//               >
-//                 Реєстрація
-//               </Link>
-//             </>
-//           )}
-
-//           <button
-//             type="button"
-//             className={css.burger}
-//             aria-label={isMenuOpen ? "Закрити меню" : "Відкрити меню"}
-//             aria-expanded={isMenuOpen}
-//             onClick={() => setIsMenuOpen((prev) => !prev)}
-//           >
-//             <Icon name={isMenuOpen ? "close" : "menu"} width={24} height={24} />
-//           </button>
-//         </div>
-
-//         <nav
-//           className={clsx(css.mobileNav, isMenuOpen && css.isOpen)}
-//           aria-label="Мобільна навігація"
-//         >
-//           {!isAuthenticated && (
-//             <Link href="/" className={css.navLink} onClick={closeMenu}>
-//               Головна
-//             </Link>
-//           )}
-//           <Link href="/locations" className={css.navLink} onClick={closeMenu}>
-//             Місця відпочинку
-//           </Link>
-//           {isAuthenticated && (
-//             <Link
-//               href={`/profile/${user?.id}`}
-//               className={css.navLink}
-//               onClick={closeMenu}
-//             >
-//               Мій Профіль
-//             </Link>
-//           )}
-//         </nav>
-//       </div>
-//     </header>
-//   );
-// };
-
-// export default Header;
-
+import { useState, useEffect } from "react";
 import clsx from "clsx";
 import Link from "@/components/ui/Link/Link";
 import Icon from "@/components/ui/Icon/Icon";
 import Navigation from "@/components/sections/Header/Navigation";
+import MobileMenu from "@/components/sections/Header/MobileMenu";
+import { useAuthStore } from "@/lib/store/authStore";
 import css from "./Header.module.css";
+import LogoutModal from "@/components/auth/LogoutModal/LogoutModal";
 
 const Header = () => {
-  return (
-    <header className={css.header}>
-      <div className={clsx("container", css.container)}>
-        <Link href="/" className={css.logo} aria-label="На головну">
-          <Icon name="logo" width={129} height={36} />
-        </Link>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const user = useAuthStore((state) => state.user);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-        <Navigation />
-      </div>
-    </header>
+  const closeMenu = () => setIsMenuOpen(false);
+  const openLogoutModal = () => setIsLogoutModalOpen(true);
+  const closeLogoutModal = () => setIsLogoutModalOpen(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+  return (
+    <>
+      <header className={clsx(css.header, isMenuOpen && css.menuOpen)}>
+        <div className={clsx("container", css.container)}>
+          <Link href="/" className={css.logo} aria-label="На головну">
+            <Icon name="logo" width={129} height={36} />
+          </Link>
+
+          <Navigation
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+            onLogoutClick={openLogoutModal}
+          />
+        </div>
+      </header>
+
+      <MobileMenu
+        isMenuOpen={isMenuOpen}
+        closeMenu={closeMenu}
+        isAuthenticated={isAuthenticated}
+        user={user}
+        onLogoutClick={openLogoutModal}
+      />
+
+      {isLogoutModalOpen && <LogoutModal onClose={closeLogoutModal} />}
+    </>
   );
 };
 
