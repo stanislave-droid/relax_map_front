@@ -1,6 +1,7 @@
 import {axiosClient} from "./api";
 import {User} from "@/types/user";
 import {RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
+import type {AxiosError} from "axios";
 
 
 export interface ApiErrorResponse {
