@@ -10,8 +10,10 @@ import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
 
 import { useState } from "react";
-import SignUp from "@/app/(auth routes)/sign-up/page"
-import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
+import SignUp from "@/app/(auth routes)/sign-up/page";
+import LoginForm, {
+  type LoginSchema,
+} from "@/components/auth/LoginForm/LoginForm";
 import RegistrationForm, {
   type RegisterSchema,
 } from "@/components/auth/RegistrationForm/RegistrationForm";
@@ -25,8 +27,6 @@ import AddReviewBlock from "@/components/AddReviewBlock/AddReviewBlock";
 import { string } from "yup";
 
 export default function Home() {
-
-
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -41,6 +41,7 @@ export default function Home() {
   };
 
   const location: Location = {
+    _id: "dsadsadsa",
     image: "https://ftp.goit.study/img/relax-map/68d568270e6bcc357e9833e8.webp",
     name: "Сонячна Рів'єра",
     locationType: "Море",
@@ -52,8 +53,8 @@ export default function Home() {
     feedbacksId: [],
     coordinates: {
       lat: 0,
-      lon: 0
-    }
+      lon: 0,
+    },
   };
 
   return (

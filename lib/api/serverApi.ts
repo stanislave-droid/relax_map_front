@@ -1,7 +1,33 @@
-import { User } from "@/types/user";
+import { fetchLocationsProps } from "@/types/location";
 import { axiosClient as api } from "./api";
+import { LocationsResponse } from "@/app/api/locations/route";
+import { User } from "@/types/user";
 import { Location } from "@/types/location";
 import { FeedbacksResponse } from "@/types/feedback";
+
+export async function fetchLocations({
+  page = 1,
+  limit = 6,
+  region,
+  type,
+  search,
+  sortBy,
+  sortDirection,
+}: fetchLocationsProps) {
+  const { data } = await api.get<LocationsResponse>("/locations", {
+    params: {
+      page,
+      limit,
+      region,
+      type,
+      search,
+      sortBy,
+      sortDirection,
+    },
+  });
+
+  return data;
+}
 
 export const getUserById = async (userId: string): Promise<User> => {
   const { data } = await api.get<User>(`/users/${userId}`);
