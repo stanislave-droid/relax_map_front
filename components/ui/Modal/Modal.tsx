@@ -12,6 +12,8 @@ interface ModalProps {
 }
 
 const Modal = ({ children, onClose, className }: ModalProps) => {
+  const container = document.body;
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -44,7 +46,7 @@ const Modal = ({ children, onClose, className }: ModalProps) => {
         {children}
       </div>
     </div>,
-    document.body,
+    container,
   );
 };
 
