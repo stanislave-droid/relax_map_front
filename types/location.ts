@@ -6,8 +6,8 @@ export interface Location {
   region: string;
   rate: number;
   ownerId: string;
-  feedbacksId?: string[];
-  coordinates?: {
+  feedbacksId: string[];
+  coordinates: {
     lat: number;
     lon: number;
   };
