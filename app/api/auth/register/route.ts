@@ -1,14 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { api } from '../../api';
-import { cookies } from 'next/headers';
-import { parseSetCookie } from 'cookie';
-import { isAxiosError } from 'axios';
+import {NextRequest, NextResponse} from 'next/server';
+import {api} from '../../api';
+import {cookies} from 'next/headers';
+import {parseSetCookie} from 'cookie';
+import {isAxiosError} from 'axios';
+import {logErrorResponse} from "../../auth/_utils/utils"
 
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
+        console.log("BASE URL:", api.defaults.baseURL);
 
-        const apiRes = await api.post('/auth/register', body);
+        const apiRes = await api.post('/api/auth/register', body);
 
         const cookieStore = await cookies();
         const setCookie = apiRes.headers['set-cookie'];
@@ -21,19 +23,22 @@ export async function POST(req: NextRequest) {
                     cookieStore.set(parsed.name, parsed.value, parsed);
                 }
             }
+            return NextResponse.json(apiRes.data, {status: apiRes.status});
         }
 
-        return NextResponse.json(apiRes.data, { status: apiRes.status });
+        return NextResponse.json({error: 'Unauthorized'}, {status: 401});
     } catch (error) {
         if (isAxiosError(error)) {
+            logErrorResponse(error.response?.data);
             return NextResponse.json(
-                { message: error.response?.data?.message ?? error.message },
-                { status: error.response?.status ?? 500 }
+                {error: error.message, response: error.response?.data},
+                {status: error.status},
             );
         }
+        logErrorResponse({message: (error as Error).message});
         return NextResponse.json(
-            { message: 'Internal Server Error' },
-            { status: 500 }
+            {message: 'Internal Server Error'},
+            {status: 500}
         );
     }
-}
+};

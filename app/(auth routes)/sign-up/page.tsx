@@ -33,12 +33,12 @@ export const SignUp = () => {
         }
     }
     return (
-        <>
+        <div className={css.mainContent}>
             <RegistrationForm
                 onSubmit={handleSubmit}
                 isLoading={isLoading}
             />
-        </>
+        </div>
     )
 };
 

@@ -4,8 +4,9 @@ import { SpinnerDotted } from "spinners-react";
 
 interface SpinnerProps {
   size?: number;
+  color?: string;
 }
 
-export default function Spinner({size = 48}: SpinnerProps): React.ReactNode {
-  return <SpinnerDotted color="var(--color-coral)" size={size}/>;
+export default function Spinner({size = 48, color = "var(--color-coral)" }: SpinnerProps): React.ReactNode {
+  return <SpinnerDotted color={color} size={size}/>;
 }
