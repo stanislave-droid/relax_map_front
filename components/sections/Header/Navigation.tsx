@@ -6,29 +6,16 @@ import Link from "@/components/ui/Link/Link";
 import Icon from "@/components/ui/Icon/Icon";
 import css from "./Header.module.css";
 import Image from "next/image";
+import LogoutModal from "@/components/auth/LogoutModal/LogoutModal";
+import { useAuthStore } from "@/lib/store/authStore";
 
-// тут буде хук з AuthProvider, коли він буде готовий
-
-// const useAuth = () => ({
-//   user: null as { id: string; name: string; avatarUrl: string | null } | null,
-//   isAuthenticated: false,
-//   logout: () => console.log("logout"),
-// });
-
-const MOCK_AUTHENTICATED = true;
-
-const useAuth = () => ({
-  user: MOCK_AUTHENTICATED
-    ? { id: "1", name: "Олена Коваленко", avatarUrl: null }
-    : null,
-  isAuthenticated: MOCK_AUTHENTICATED,
-  logout: () => console.log("logout"),
-});
-
+const DEFAULT_AVATAR =
+  "https://ac.goit.global/fullstack/react/default-avatar.jpg";
 const Navigation = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+  const user = useAuthStore((state) => state.user);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
@@ -43,7 +30,7 @@ const Navigation = () => {
           Місця відпочинку
         </Link>
         {isAuthenticated && (
-          <Link href={`/profile/${user?.id}`} className={css.navLink}>
+          <Link href={`/profile/${user._id}`} className={css.navLink}>
             Мій Профіль
           </Link>
         )}
@@ -64,10 +51,7 @@ const Navigation = () => {
 
             <div className={css.userInfo}>
               <Image
-                src={
-                  user?.avatarUrl ??
-                  "https://ac.goit.global/fullstack/react/default-avatar.jpg"
-                }
+                src={user?.avatarUrl || DEFAULT_AVATAR}
                 alt={user?.name ?? "Аватар користувача"}
                 width={32}
                 height={32}
@@ -81,7 +65,7 @@ const Navigation = () => {
                 type="button"
                 className={css.logoutButton}
                 aria-label="Вийти з акаунту"
-                onClick={logout}
+                onClick={() => setIsLogoutModalOpen(true)}
               >
                 <Icon
                   name="logout"
@@ -139,7 +123,7 @@ const Navigation = () => {
         </Link>
         {isAuthenticated && (
           <Link
-            href={`/profile/${user?.id}`}
+            href={`/profile/${user._id}`}
             className={css.navLink}
             onClick={closeMenu}
           >
@@ -147,6 +131,9 @@ const Navigation = () => {
           </Link>
         )}
       </nav>
+      {isLogoutModalOpen && (
+        <LogoutModal onClose={() => setIsLogoutModalOpen(false)} />
+      )}
     </>
   );
 };

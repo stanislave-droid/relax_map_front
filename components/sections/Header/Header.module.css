@@ -1,5 +1,4 @@
 .header {
-  border-bottom: var(--border-primary);
   position: relative;
   background: var(--background);
 }
