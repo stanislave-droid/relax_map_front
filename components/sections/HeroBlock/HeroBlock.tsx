@@ -5,43 +5,30 @@ import Button from "../../ui/Button/Button";
 import Input from "../../ui/Input/Input";
 import css from "./HeroBlock.module.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-interface HeroBlockProps {
-  onSearch: (searchQuery: string) => void;
-}
-
-const HeroBlock = ({ onSearch }: HeroBlockProps) => {
+const HeroBlock = () => {
   const [query, setQuery] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSearch(query);
+
+    const search = query.trim();
+
+    if (search) {
+      router.push(`/locations?search=${encodeURIComponent(search)}`);
+    }
   };
 
   return (
     <section className={css.hero}>
       <Image
-        src="/opengraph-image-mob.jpg"
-        alt=""
-        fill
-        priority
-        className={`${css.backgroundImage} ${css.mobileImage}`}
-      />
-
-      <Image
-        src="/opengraph-image-tab.jpg"
-        alt=""
-        fill
-        priority
-        className={`${css.backgroundImage} ${css.tabletImage}`}
-      />
-
-      <Image
         src="/opengraph-image.jpg"
         alt=""
         fill
         priority
-        className={`${css.backgroundImage} ${css.desktopImage}`}
+        className={css.backgroundImage}
       />
       <div className="container">
         <div className={css.content}>
@@ -61,12 +48,6 @@ const HeroBlock = ({ onSearch }: HeroBlockProps) => {
               className={css.searchInput}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  onSearch(query);
-                }
-              }}
             />
 
             <Button

@@ -5,7 +5,6 @@
     max-width: 375px;
     height: 708px;
     margin: 0 auto;
-
 }
 
 .hero::after {
@@ -19,16 +18,8 @@
 
 .backgroundImage {
     object-position: center;
-    object-fit: nonecover;
+    object-fit: cover;
     z-index: 0;
-}
-
-.mobileImage {
-    display: block;
-}
-
-.desktopImage {
-    display: none;
 }
 
 .content {
@@ -76,25 +67,8 @@
     font-size: 16px;
 }
 
-.mobileImage {
-    display: block;
-}
-
-.tabletImage,
-.desktopImage {
-    display: none;
-}
-
 @media screen and (min-width: 768px) {
-    .mobileImage {
-        display: none;
-    }
-    
-    .tabletImage {
-        display: block;
-        object-position: center top;
-    }
-
+   
     .hero {
         height: 580px;
         max-width: 768px;
@@ -139,15 +113,7 @@
 }
 
 @media screen and (min-width: 1440px) {
-    .tabletImage {
-        display: none;
-    }
-    
-    .desktopImage {
-        display: block;
-        
-    }
-
+  
     .hero {
         height: 724px;
         max-width: 1440px;
