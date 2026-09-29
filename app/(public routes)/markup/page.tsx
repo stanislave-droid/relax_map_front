@@ -22,6 +22,7 @@ import Spinner from "@/components/ui/Spinner/Spinner";
 import showToast, { showError } from "@/components/ui/Toast/Toast";
 
 import AddReviewBlock from "@/components/AddReviewBlock/AddReviewBlock";
+import { string } from "yup";
 
 export default function Home() {
 
@@ -48,6 +49,11 @@ export default function Home() {
     ownerId: "6881563901add19ee16fcff5",
     description:
       "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль.",
+    feedbacksId: [],
+    coordinates: {
+      lat: 0,
+      lon: 0
+    }
   };
 
   return (
