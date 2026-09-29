@@ -9,6 +9,7 @@ import MobileMenu from "@/components/sections/Header/MobileMenu";
 import { useAuthStore } from "@/lib/store/authStore";
 import css from "./Header.module.css";
 import LogoutModal from "@/components/auth/LogoutModal/LogoutModal";
+import { createPortal } from "react-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,9 +22,19 @@ const Header = () => {
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    if (!isMenuOpen) return;
+
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = "";
+      html.style.overflow = previousHtmlOverflow;
+      body.style.overflow = previousBodyOverflow;
     };
   }, [isMenuOpen]);
 
@@ -43,13 +54,17 @@ const Header = () => {
         </div>
       </header>
 
-      <MobileMenu
-        isMenuOpen={isMenuOpen}
-        closeMenu={closeMenu}
-        isAuthenticated={isAuthenticated}
-        user={user}
-        onLogoutClick={openLogoutModal}
-      />
+      {typeof document !== "undefined" &&
+        createPortal(
+          <MobileMenu
+            isMenuOpen={isMenuOpen}
+            closeMenu={closeMenu}
+            isAuthenticated={isAuthenticated}
+            user={user}
+            onLogoutClick={openLogoutModal}
+          />,
+          document.body,
+        )}
 
       {isLogoutModalOpen && <LogoutModal onClose={closeLogoutModal} />}
     </>
