@@ -14,17 +14,17 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     (state) => state.clearIsAuthenticated,
   );
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = await getMe();
-      if (user) {
-        setUser(user);
-      } else {
-        clearIsAuthenticated();
-      }
-    };
-    fetchUser();
-  }, [setUser, clearIsAuthenticated]);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const user = await getMe();
+  //     if (user) {
+  //       setUser(user);
+  //     } else {
+  //       clearIsAuthenticated();
+  //     }
+  //   };
+  //   fetchUser();
+  // }, [setUser, clearIsAuthenticated]);
 
   return children;
 };

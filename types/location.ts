@@ -12,3 +12,16 @@ export interface Location {
     lon: number;
   };
 }
+
+export type SortBy = "rate" | "updatedAt";
+export type SortDirection = "asc" | "desc";
+
+export interface fetchLocationsProps {
+  page?: number;
+  limit?: number;
+  region?: string;
+  type?: string;
+  search?: string;
+  sortBy?: SortBy;
+  sortDirection?: SortDirection;
+}
