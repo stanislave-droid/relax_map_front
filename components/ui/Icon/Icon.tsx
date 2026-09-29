@@ -1,14 +1,16 @@
-export type IconName = "logo" | "youtube" | "twitter" | "star_empty" | "star_half" | "star_filled" | "select_check_box" | "menu" | "map_search" | "logout" | "keyboard_arrow_up" | "keyboard_arrow_down" | "instagram" | "filter_alt" | "facebook" | "edit" | "communication" | "close" | "chevron_right" | "chevron_left" | "bookmark" | "arrow_forward" | "arrow_back" | "error";
-
 interface IconProps extends React.SVGProps<SVGSVGElement> {
-  name: IconName;
-  width?: number;
-  height?: number;
+  name: string;
+  size?: number;
 }
 
-export default function Icon({ name, width = 24, height = width, className, ...props }: IconProps) {
+export default function Icon({
+  name,
+  size = 24,
+  className,
+  ...props
+}: IconProps) {
   return (
-    <svg width={width} height={height} className={className} {...props}>
+    <svg width={size} height={size} className={className} {...props}>
       <use href={`/icons/sprite.svg#${name}`}></use>
     </svg>
   );
