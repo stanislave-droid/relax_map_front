@@ -1,11 +1,10 @@
 import { fetchLocationsProps } from "@/types/location";
 import { axiosClient as api } from "./api";
-import { cookies } from "next/headers";
 import { LocationsResponse } from "@/app/api/locations/route";
 
 export async function fetchLocations({
   page = 1,
-  limit = 10,
+  limit = 6,
   region,
   type,
   search,
@@ -26,3 +25,15 @@ export async function fetchLocations({
 
   return data;
 }
+
+import { FeedbacksResponse } from "@/types/feedback";
+
+export const getAllFeedbacks = async (
+  page = 1,
+  limit = 10,
+): Promise<FeedbacksResponse> => {
+  const { data } = await api.get<FeedbacksResponse>("/feedbacks", {
+    params: { page, limit },
+  });
+  return data;
+};

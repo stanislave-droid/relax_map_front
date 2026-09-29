@@ -9,9 +9,10 @@ import LocationsClient from "./Locations.client";
 export default async function Locations() {
   const queryClient = new QueryClient();
 
-  await queryClient.query({
+  await queryClient.infiniteQuery({
     queryKey: ["locations"],
     queryFn: () => fetchLocations({}),
+    initialPageParam: 1,
   });
 
   return (
