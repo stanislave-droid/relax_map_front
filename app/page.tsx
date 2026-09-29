@@ -5,13 +5,9 @@ import AdvantagesBlock from "@/components/sections/AdvantagesBlock/AdvantagesBlo
 import HeroBlock from "../components/sections/HeroBlock/HeroBlock";
 
 export default function Home() {
-  const handleSearch = (searchQuery: string) => {
-    console.log("Пошуковий запит:", searchQuery);
-  };
-
   return (
     <main className={css.main}>
-      <HeroBlock onSearch={handleSearch} />
+      <HeroBlock />
       <AdvantagesBlock />
     </main>
   );

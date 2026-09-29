@@ -8,31 +8,33 @@ import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
 import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
-import RegistrationForm, {type RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
-import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
+
 import { useState } from "react";
+import RegistrationForm, { type RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
+import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { Location } from "@/types/location";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
+import Spinner from "@/components/ui/Spinner/Spinner";
 
+import showToast, { showError } from "@/components/ui/Toast/Toast";
 
 export default function Home() {
-
   const handleSubmitR = async (values: RegisterSchema): Promise<void> => {
     console.log("submit values:", values);
   };
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const handleSubmit = async (values: LoginSchema) => {
-      setErrorMessage(null);
-      setIsLoading(true);
+  const handleSubmit = async (values: LoginSchema) => {
+    setErrorMessage(null);
+    setIsLoading(true);
 
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // імітація запиту
+    await new Promise((resolve) => setTimeout(resolve, 1500)); // імітація запиту
 
-      setIsLoading(false);
-      setErrorMessage("Невірний email або пароль");
-    };
+    setIsLoading(false);
+    setErrorMessage("Невірний email або пароль");
+  };
 
   const location: Location = {
     image: "https://ftp.goit.study/img/relax-map/68d568270e6bcc357e9833e8.webp",
@@ -40,9 +42,9 @@ export default function Home() {
     locationType: "Море",
     region: "chornomorske-uzberezhzhya",
     rate: 4.5,
-    ownerId: '6881563901add19ee16fcff5',
-    description: "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль."
-  }
+    ownerId: "6881563901add19ee16fcff5",
+    description: "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль.",
+  };
 
   return (
     <main className={css.main}>
@@ -248,14 +250,19 @@ export default function Home() {
           <RegistrationForm onSubmit={handleSubmitR}></RegistrationForm>
         </div>
         <div>
-          <LoginForm
-              onSubmit={handleSubmit}
-              isLoading={isLoading}
-              errorMessage={errorMessage}
-          ></LoginForm>
+          <LoginForm onSubmit={handleSubmit} isLoading={isLoading} errorMessage={errorMessage}></LoginForm>
         </div>
         <LocationCard location={location} locationLink="#" editLink="#" />
-
+        <p> </p>
+        <ul>
+          <li>
+            <Button onClick={() => showToast("You pressed the 'Info Toast' button")}>Info Toast</Button>
+          </li>
+          <li>
+            <Button onClick={() => showError("Something went oops")}>Error Toast</Button>
+          </li>
+        </ul>
+        <Spinner />
       </div>
     </main>
   );
