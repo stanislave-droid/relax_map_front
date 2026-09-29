@@ -83,7 +83,7 @@ const Navigation = ({
         ) : (
           <>
             <Link
-              href="/login"
+              href="/sign-in"
               variant="ghost"
               size="md"
               className={css.loginLink}
@@ -91,7 +91,7 @@ const Navigation = ({
               Вхід
             </Link>
             <Link
-              href="/register"
+              href="/sign-up"
               variant="primary"
               size="md"
               className={css.registerLink}

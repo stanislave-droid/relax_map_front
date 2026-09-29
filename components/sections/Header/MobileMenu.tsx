@@ -103,7 +103,7 @@ const MobileMenu = ({
           ) : (
             <div className={clsx(css.mobileAuthButtons, css.mobileDrawerExtra)}>
               <Link
-                href="/login"
+                href="/sign-in"
                 variant="ghost"
                 size="md"
                 className={css.mobileLoginLink}
@@ -112,7 +112,7 @@ const MobileMenu = ({
                 Вхід
               </Link>
               <Link
-                href="/register"
+                href="/sign-up"
                 variant="primary"
                 size="md"
                 className={css.mobileRegisterLink}
