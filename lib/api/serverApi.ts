@@ -1,6 +1,7 @@
 import { User } from "@/types/user";
 import { axiosClient as api } from "./api";
 import { Location } from "@/types/location";
+import { FeedbacksResponse } from "@/types/feedback";
 
 export const getUserById = async (userId: string): Promise<User> => {
   const { data } = await api.get<User>(`/users/${userId}`);
@@ -24,5 +25,15 @@ export const getUserLocations = async (
   const { data } = await api.get<UserLocationsResponse>(
     `/users/${userId}/locations`,
   );
+  return data;
+};
+
+export const getAllFeedbacks = async (
+  page = 1,
+  limit = 10,
+): Promise<FeedbacksResponse> => {
+  const { data } = await api.get<FeedbacksResponse>("/feedbacks", {
+    params: { page, limit },
+  });
   return data;
 };
