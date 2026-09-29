@@ -5,10 +5,10 @@ import {EMAIL_REGEX} from "@/utils/emailRegex";
 import Button from "@/components/ui/Button/Button";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useId} from "react";
-import css from "./RegistrationForm.module.css"
 import Input from "@/components/ui/Input/Input";
 import clsx from "clsx";
 import Spinner from "@/components/ui/Spinner/Spinner"
+import css from "./RegistrationForm.module.css"
 
 type RegisterFormValues = {
     name: string,
@@ -124,7 +124,9 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
                             disabled={isLoading}
                             className={clsx(css["submitButton"])}
                         >
-                            {isLoading ? <Spinner /> : "Зареєструватись"}
+                            {isLoading
+                                ? <Spinner color="white"/>
+                                : "Зареєструватись"}
 
                         </Button>
                     </div>
