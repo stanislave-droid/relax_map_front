@@ -10,7 +10,7 @@ import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select from "@/components/ui/Select/Select";
 
 import { useState } from "react";
-import RegistrationForm, { type RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
+import SignUp from "@/app/(auth routes)/sign-up/page"
 import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { Location } from "@/types/location";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
@@ -19,9 +19,7 @@ import Spinner from "@/components/ui/Spinner/Spinner";
 import showToast, { showError } from "@/components/ui/Toast/Toast";
 
 export default function Home() {
-  const handleSubmitR = async (values: RegisterSchema): Promise<void> => {
-    console.log("submit values:", values);
-  };
+
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -247,7 +245,7 @@ export default function Home() {
           <Button type="submit">Submit</Button>
         </form>
         <div>
-          <RegistrationForm onSubmit={handleSubmitR}></RegistrationForm>
+          <SignUp />
         </div>
         <div>
           <LoginForm onSubmit={handleSubmit} isLoading={isLoading} errorMessage={errorMessage}></LoginForm>

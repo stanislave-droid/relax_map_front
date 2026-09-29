@@ -1,1 +1,39 @@
-export async function POST() {}
+import { NextRequest, NextResponse } from 'next/server';
+import { api } from '../../api';
+import { cookies } from 'next/headers';
+import { parseSetCookie } from 'cookie';
+import { isAxiosError } from 'axios';
+
+export async function POST(req: NextRequest) {
+    try {
+        const body = await req.json();
+
+        const apiRes = await api.post('/auth/register', body);
+
+        const cookieStore = await cookies();
+        const setCookie = apiRes.headers['set-cookie'];
+
+        if (setCookie) {
+            const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
+            for (const cookieStr of cookieArray) {
+                const parsed = parseSetCookie(cookieStr);
+                if (parsed.value) {
+                    cookieStore.set(parsed.name, parsed.value, parsed);
+                }
+            }
+        }
+
+        return NextResponse.json(apiRes.data, { status: apiRes.status });
+    } catch (error) {
+        if (isAxiosError(error)) {
+            return NextResponse.json(
+                { message: error.response?.data?.message ?? error.message },
+                { status: error.response?.status ?? 500 }
+            );
+        }
+        return NextResponse.json(
+            { message: 'Internal Server Error' },
+            { status: 500 }
+        );
+    }
+}

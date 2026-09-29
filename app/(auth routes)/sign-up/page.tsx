@@ -4,9 +4,10 @@ import css from "./Sign-up.module.css";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
 import {useAuthStore} from "@/lib/store/authStore";
-import {AuthResponce, register, ApiError} from "@/lib/api/clientApi";
+import {register, ApiError} from "@/lib/api/clientApi";
 import RegistrationForm from "@/components/auth/RegistrationForm/RegistrationForm";
-import type RegisterSchema from "@/components/auth/RegistrationForm/RegistrationForm";
+import type {RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
+import toast from "react-hot-toast";
 
 
 export const SignUp = () => {
@@ -21,23 +22,22 @@ export const SignUp = () => {
 
         try {
             const user = await register(values);
-          setUser(user);
-          router.push(`/profile/${user._id}`);
+            setUser(user);
+            router.push(`/profile/${user._id}`);
         } catch (error) {
             const apiError = error as ApiError;
-            toast.error(
-                apiError.response?.data?.message ?? apiError.message ?? "Не вдалося зареєструватися"
-            );
+            const message = apiError.response?.data?.message ?? apiError.message ?? "Не вдалося зареєструватися";
+            toast.error(message);
         } finally {
-          setIsLoading(false);
+            setIsLoading(false);
         }
     }
     return (
         <>
-          <RegistrationForm
-              onSubmit={handleSubmit}
-              isLoading={isLoading}
-          />
+            <RegistrationForm
+                onSubmit={handleSubmit}
+                isLoading={isLoading}
+            />
         </>
     )
 };

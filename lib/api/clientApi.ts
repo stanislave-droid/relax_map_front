@@ -3,6 +3,13 @@ import {User} from "@/types/user";
 import {RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
 
 
+export interface ApiErrorResponse {
+    message: string;
+    error?: string;
+}
+
+export type ApiError = AxiosError<ApiErrorResponse>;
+
 
 export const register = async (userData: RegisterSchema): Promise<User> => {
     const { data } = await axiosClient.post<User>("/auth/register", userData);
@@ -10,6 +17,6 @@ export const register = async (userData: RegisterSchema): Promise<User> => {
 };
 
 export const getMe = async (): Promise<User> => {
-  const { data } = await api.get<User>("/users/current");
+  const { data } = await axiosClient.get<User>("/users/current");
   return data;
 };
