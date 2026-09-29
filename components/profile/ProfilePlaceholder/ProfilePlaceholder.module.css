@@ -20,8 +20,9 @@
   color: var(--color-scheme-2-text);
 }
 
-.placeholder button {
+.actionLink {
   width: 100%;
+  text-align: center;
 }
 
 @media screen and (min-width: 768px) {
