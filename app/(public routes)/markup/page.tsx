@@ -24,6 +24,7 @@ import Spinner from "@/components/ui/Spinner/Spinner";
 import showToast, { showError } from "@/components/ui/Toast/Toast";
 
 import AddReviewBlock from "@/components/AddReviewBlock/AddReviewBlock";
+import { string } from "yup";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
