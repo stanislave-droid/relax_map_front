@@ -8,7 +8,6 @@ import {logErrorResponse} from "../../auth/_utils/utils"
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        console.log("BASE URL:", api.defaults.baseURL);
 
         const apiRes = await api.post('/api/auth/register', body);
 
