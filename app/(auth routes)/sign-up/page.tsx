@@ -12,13 +12,12 @@ import toast from "react-hot-toast";
 
 export const SignUp = () => {
     const router = useRouter();
-    const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const setUser = useAuthStore((state) => state.setUser);
 
     const handleSubmit = async (values: RegisterSchema) => {
-      setIsLoading(true);
+        setIsLoading(true);
 
         try {
             const user = await register(values);
