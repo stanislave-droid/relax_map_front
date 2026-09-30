@@ -18,6 +18,8 @@
   transition:
     background-color 250ms ease,
     border-color 250ms ease;
+
+  cursor: pointer;
 }
 .arrowButton:hover,
 .arrowButton:focus {
