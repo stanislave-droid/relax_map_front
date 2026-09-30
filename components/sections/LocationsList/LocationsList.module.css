@@ -1,0 +1,11 @@
+.locationsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+@media screen and (min-width: 1440px) {
+  .locationsList {
+  }
+}

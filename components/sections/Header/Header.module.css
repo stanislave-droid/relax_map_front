@@ -1,0 +1,327 @@
+.header {
+  position: relative;
+  background: var(--background);
+}
+.header.menuOpen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 16px 20px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.navLink {
+  white-space: nowrap;
+  color: var(--text-third);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.navLinkMenu {
+  color: var(--text-primary);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.nav {
+  display: none;
+}
+
+.burger {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+.burger:hover {
+  background: #cc6534;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+.burger:active {
+  background: #254c24;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.loginLink {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+  width: 65px;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-third);
+}
+.loginLink:hover {
+  background: #cc6534;
+  border: 1px solid rgba(255, 255, 255, 0);
+  color: #fff;
+}
+
+.registerLink {
+  padding: 4px 10px;
+  width: 137px;
+  height: 38px;
+}
+.loginLink:active {
+  background: #254c24;
+  color: #fff;
+}
+
+.actions > :not(.burger) {
+  display: none;
+}
+
+/* ------------------auth---------------- */
+
+.textDesktop {
+  display: none;
+}
+
+.textTablet {
+  display: inline;
+}
+.addLocationLink {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.5;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.addLocationLinkMenu {
+  width: 335px;
+  padding: 4px 10px;
+  font-size: 16px;
+  text-align: center;
+  height: 32px;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+.userName {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-third);
+}
+.userNameMenu {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.divider {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  width: 29px;
+  height: 0;
+  rotate: 90deg;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+.logoutButton {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.logoutIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-third);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobileNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: var(--background);
+  overflow-y: auto;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-16px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s;
+}
+
+.mobileNav.isOpen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mobileNavInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100%;
+  min-width: 320px;
+  max-width: 335px;
+  margin: 0 auto;
+  padding: 96px 20px 92px;
+  gap: 32px;
+}
+
+.mobileNavLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.mobileNavBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.mobileDrawerExtra {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mobileAuthButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  /* max-width: 320px; */
+}
+
+.mobileLoginLink {
+  max-width: 335px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-third);
+  padding: 4px 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.mobileRegisterLink {
+  max-width: 335px;
+  text-align: center;
+  font-size: 16px;
+  padding: 4px 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 16px 32px;
+  }
+  .mobileNav {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  .mobileNavInner {
+    max-width: 704px;
+  }
+  .actions > :not(.burger):not(.userInfo) {
+    display: inline-flex;
+  }
+  .loginLink {
+    width: 56px;
+    height: 32px;
+    font-size: 16px;
+  }
+  .registerLink {
+    width: 114px;
+    height: 32px;
+    font-size: 16px;
+  }
+  .addLocationLink {
+    width: 196px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .mobileDrawerExtra {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    padding: 16px 64px;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 32px;
+    flex: 1;
+  }
+
+  .actions > .userInfo {
+    display: flex;
+  }
+  .addLocationLink {
+    width: 245px;
+    height: 38px;
+    font-size: 20px;
+  }
+
+  .textTablet {
+    display: none;
+  }
+
+  .textDesktop {
+    display: inline;
+  }
+
+  .burger {
+    display: none;
+  }
+
+  .mobileNav,
+  .mobileNav.isOpen {
+    display: none;
+  }
+}

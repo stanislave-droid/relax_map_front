@@ -12,7 +12,7 @@ const AuthNav = ({ activeTab }: AuthNavProps) => {
       <ul className={css.list}>
         <li className={css.item}>
           <Link
-            href="/register"
+            href="/sign-up"
             className={clsx(css.link, activeTab === "register" && css.active)}
           >
             Реєстрація
@@ -20,7 +20,7 @@ const AuthNav = ({ activeTab }: AuthNavProps) => {
         </li>
         <li className={css.item}>
           <Link
-            href="/login"
+              href="/sign-in"
             className={clsx(css.link, activeTab === "login" && css.active)}
           >
             Вхід
