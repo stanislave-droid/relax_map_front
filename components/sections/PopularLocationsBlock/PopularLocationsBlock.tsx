@@ -1,4 +1,4 @@
-import Button from "@/components/ui/Button/Button";
+"use client";
 import css from "./PopularLocationsBlock.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef } from "react";
@@ -6,6 +6,7 @@ import { Swiper as SwiperType } from "swiper";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
 import { Location } from "@/types/location";
 import SliderArrows from "@/components/ui/SliderArrows/SliderArrows";
+import Link from "@/components/ui/Link/Link";
 type PopularLocationsBlockProps = {
   locations: Array<Location>;
   isLoading?: boolean;
@@ -15,8 +16,16 @@ const PopularLocationsBlock = ({ locations }: PopularLocationsBlockProps) => {
   return (
     <section className={css.popularLocations}>
       <div className="container">
-        <h2 className="secondary-headding">Популярні локації</h2>
-        <Button className={css.popularLocationsBtn}>Всі локації</Button>
+        <div className={css.headingPopularLocations}>
+          <h2 className="secondary-headding">Популярні локації</h2>
+          <Link
+            href="/locations"
+            variant="primary"
+            className={css.linkAllLocations}
+          >
+            Всі локації
+          </Link>
+        </div>
         <div className={css.locationsSwiper}>
           <Swiper
             onSwiper={(swiper) => {
@@ -35,14 +44,19 @@ const PopularLocationsBlock = ({ locations }: PopularLocationsBlockProps) => {
           >
             {locations.map((location) => (
               <SwiperSlide key={location._id}>
-                <LocationCard location={location} locationLink={} />
+                <LocationCard
+                  location={location}
+                  locationLink={`${process.env.NEXT_PUBLIC_SITE_URL}/locations/${location._id}`}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
-          <SliderArrows
-            onPrev={() =>swiperRef.current?.slidePrev()}
-            onNext={() => swiperRef.current?.slideNext()}
-          />
+          <div className={css.navigationBtns}>
+            <SliderArrows
+              onPrev={() => swiperRef.current?.slidePrev()}
+              onNext={() => swiperRef.current?.slideNext()}
+            />
+          </div>
         </div>
       </div>
     </section>
