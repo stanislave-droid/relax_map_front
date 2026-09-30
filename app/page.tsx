@@ -8,17 +8,17 @@ import PopularLocationsBlock from "@/components/sections/PopularLocationsBlock/P
 import { fetchLocations } from "@/lib/api/serverApi";
 
 export default async function Home() {
-  // const response = await fetchLocations({
-  //   limit: 9,
-  //   sortBy: "rate",
-  //   sortDirection: "desc",
-  // });
+  const response = await fetchLocations({
+    limit: 9,
+    sortBy: "rate",
+    sortDirection: "desc",
+  });
 
   return (
     <main className={css.main}>
       <HeroBlock />
       <AdvantagesBlock />
-      <PopularLocationsBlock locations={[]} />
+      <PopularLocationsBlock locations={response.locations} />
       <ReviewsBlock title="Останні відгуки" />
     </main>
   );
