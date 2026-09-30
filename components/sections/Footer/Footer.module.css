@@ -72,6 +72,22 @@
   margin: 0 auto;
 }
 
+.authFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 27px 0;
+  text-align: center;
+}
+
+.authCopyright {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
 @media screen and (min-width: 768px) {
   .footer {
     padding: 48px 32px;
@@ -139,5 +155,9 @@
 
   .copyright {
     margin-top: 32px;
+  }
+
+  .authFooter {
+    padding: 24px 0;
   }
 }

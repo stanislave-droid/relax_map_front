@@ -1,69 +1,61 @@
-import { api } from "@/app/api/api";
-import { logErrorResponse } from "@/app/api/auth/_utils/utils";
-import { Location } from "@/types/location";
-import { isAxiosError } from "axios";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { api } from "../api";
+import { isAxiosError } from "axios";
+import { logErrorResponse } from "../auth/_utils/utils";
+import { Location } from "@/types/location";
 
-interface LocationsApiResponse {
-  locations: Location[];
+export interface LocationsResponse {
   page: number;
   limit: number;
   totalPages: number;
   totalLocations: number;
+  locations: Location[];
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const cookieStore = await cookies();
+    const searchParams = req.nextUrl.searchParams;
+    const page = Number(searchParams.get("page") ?? 1);
+    const limit = Number(searchParams.get("limit") ?? 5);
+    const region = searchParams.get("region");
+    const type = searchParams.get("type");
+    const search = searchParams.get("search");
+    const sortBy = searchParams.get("sortBy");
+    const sortDirection = searchParams.get("sortDirection");
 
-    const limit = request.nextUrl.searchParams.get("limit");
-    const page = request.nextUrl.searchParams.get("page");
-
-    const locationsResponse = await api<LocationsApiResponse>(
+    const locationsResponse = await api.get<LocationsResponse>(
       "/api/locations",
       {
-        headers: {
-          Cookie: cookieStore.toString(),
-        },
         params: {
-          limit,
           page,
+          limit,
+          ...(region !== "" && { region }),
+          ...(type !== "" && { type }),
+          ...(search !== "" && { search }),
+          ...(sortBy !== "" && { sortBy }),
+          ...(sortDirection !== "" && { sortDirection }),
         },
       },
     );
 
-    const { locations, totalLocations } = locationsResponse.data;
-
-    return NextResponse.json(
-      {
-        locations,
-        total: totalLocations,
-        isEmpty: totalLocations === 0,
-      },
-      { status: locationsResponse.status },
-    );
+    return NextResponse.json(locationsResponse, {
+      status: locationsResponse.status,
+    });
   } catch (error) {
-    console.error(error);
-
     if (isAxiosError(error)) {
-      logErrorResponse(error.response?.data);
-
+      logErrorResponse(error);
       return NextResponse.json(
         {
           error: error.message,
-          response: error.response?.data,
+          response: error?.response?.data,
         },
-        {
-          status: error.response?.status || 500,
-        },
+        { status: error.status },
       );
     }
 
-    logErrorResponse({ message: (error as Error).message });
-
+    logErrorResponse(error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

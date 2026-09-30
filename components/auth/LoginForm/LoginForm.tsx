@@ -100,12 +100,14 @@ export default function LoginForm({onSubmit, isLoading, errorMessage}: LoginForm
                             disabled={isLoading}
                             className={clsx(css["submitButton"])}
                         >
-                            { isLoading ? <Spinner /> : "Увійти"}
+                            {isLoading
+                                ? <Spinner color="white"/>
+                                : "Увійти"}
                         </Button>
                     </div>
                     {errorMessage && (
                         <div className={css.serverError} role="alert">
-                            <Icon className={css.serverErrorIcon} name="error" aria-hidden="true" />
+                            <Icon className={css.serverErrorIcon} name="error" aria-hidden="true"/>
                             <span>{errorMessage}</span>
                         </div>
                     )}

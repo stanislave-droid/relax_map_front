@@ -1,18 +1,15 @@
 export interface Feedback {
   _id: string;
-  ownerId: string;
+  userName: string;
   rate: number;
   description: string;
-  userName: string;
-  locationId: {
+  locationId?: {
     _id: string;
     name: string;
   };
-  createdAt: string;
-  updatedAt: string;
 }
 
-export interface FeedbacksApiResponse {
+export interface FeedbacksResponse {
   page: number;
   limit: number;
   totalFeedbacks: number;

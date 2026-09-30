@@ -1,0 +1,154 @@
+.reviews {
+  padding: 64px 0;
+}
+
+.title {
+  margin: 0 0 40px;
+  color: var(--color-scheme-2-text);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.slider {
+  margin-bottom: 40px;
+}
+
+.slider .slide {
+  height: auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: var(--color-scheme-2-foreground);
+}
+
+.text {
+  flex-grow: 1;
+  margin: 0;
+  color: var(--color-scheme-2-text);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.author {
+  margin: 0;
+  color: var(--color-scheme-2-text);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.type {
+  margin: 0;
+  color: var(--color-scheme-2-text);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.controls {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px 10px 10px 0;
+}
+
+.pagination {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  border: 1px solid var(--color-scheme-1-border);
+  border-radius: 8px;
+  background-color: var(--color-coral-lighter);
+  color: var(--color-scheme-2-text);
+  cursor: pointer;
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease;
+}
+
+.navBtn:hover,
+.navBtn:focus-visible {
+  border-color: var(--color-coral-light);
+  background-color: var(--color-neutral-lightest);
+}
+
+.navBtn:active {
+  border-color: var(--color-coral-light);
+  background-color: var(--color-coral-light);
+}
+
+.navBtn:global(.swiper-button-disabled) {
+  border-color: var(--color-scheme-1-border);
+  background-color: var(--color-scheme-1-foreground);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.prevBtn,
+.nextBtn {
+  flex-shrink: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 44px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .reviews {
+    padding: 72px 0;
+  }
+
+  .title {
+    font-size: 52px;
+  }
+
+  .text {
+    font-size: 20px;
+  }
+
+  .author {
+    font-size: 18px;
+  }
+
+  .type {
+    font-size: 12px;
+  }
+}
