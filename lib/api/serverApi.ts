@@ -1,9 +1,13 @@
 import { fetchLocationsProps } from "@/types/location";
-import { axiosClient as api } from "./api";
+import {
+  axiosClient as api,
+  axiosClientWithCredentials as authApi,
+} from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
 import { User } from "@/types/user";
 import { Location } from "@/types/location";
 import { FeedbacksResponse } from "@/types/feedback";
+import { cookies } from "next/headers";
 
 export async function fetchLocations({
   page = 1,
@@ -35,7 +39,12 @@ export const getUserById = async (userId: string): Promise<User> => {
 };
 
 export const getMe = async (): Promise<User> => {
-  const { data } = await api.get<User>("/users/current");
+  const cookieStore = await cookies;
+  const { data } = await authApi.get<User>("/users/current", {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
   return data;
 };
 
