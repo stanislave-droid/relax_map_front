@@ -6,7 +6,7 @@ import { Location } from "@/types/location";
 import { FeedbacksResponse } from "@/types/feedback";
 import { cookies } from "next/headers";
 
-export async function fetchLocations({
+export const fetchLocations = async ({
   page = 1,
   limit = 6,
   region,
@@ -14,12 +14,8 @@ export async function fetchLocations({
   search,
   sortBy,
   sortDirection,
-}: fetchLocationsProps) {
-  const cookieStore = await cookies;
+}: fetchLocationsProps) => {
   const { data } = await api.get<LocationsResponse>("/locations", {
-    headers: {
-      Cookie: cookieStore.toString(),
-    },
     params: {
       page,
       limit,
@@ -32,7 +28,7 @@ export async function fetchLocations({
   });
 
   return data;
-}
+};
 
 export const getUserById = async (userId: string): Promise<User> => {
   const { data } = await api.get<User>(`/users/${userId}`);

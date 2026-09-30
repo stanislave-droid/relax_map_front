@@ -3,7 +3,6 @@ import { api } from "../api";
 import { isAxiosError } from "axios";
 import { logErrorResponse } from "../auth/_utils/utils";
 import { Location } from "@/types/location";
-import { cookies } from "next/headers";
 
 export interface LocationsResponse {
   page: number;
@@ -15,7 +14,6 @@ export interface LocationsResponse {
 
 export async function GET(req: NextRequest) {
   try {
-    const cookieStore = await cookies;
     const searchParams = req.nextUrl.searchParams;
     const page = Number(searchParams.get("page") ?? 1);
     const limit = Number(searchParams.get("limit") ?? 5);
@@ -31,19 +29,16 @@ export async function GET(req: NextRequest) {
         params: {
           page,
           limit,
-          ...(region !== "" && { region }),
-          ...(type !== "" && { type }),
-          ...(search !== "" && { search }),
-          ...(sortBy !== "" && { sortBy }),
-          ...(sortDirection !== "" && { sortDirection }),
-        },
-        headers: {
-          Cookie: cookieStore.toString(),
+          region,
+          type,
+          search,
+          sortBy,
+          sortDirection,
         },
       },
     );
 
-    return NextResponse.json(locationsResponse, {
+    return NextResponse.json(locationsResponse.data, {
       status: locationsResponse.status,
     });
   } catch (error) {

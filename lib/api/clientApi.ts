@@ -28,7 +28,7 @@ export const getMe = async (): Promise<User> => {
   return data;
 };
 
-export async function fetchLocations({
+export const fetchLocations = async ({
   page = 1,
   limit = 10,
   region,
@@ -36,7 +36,7 @@ export async function fetchLocations({
   search,
   sortBy,
   sortDirection,
-}: fetchLocationsProps) {
+}: fetchLocationsProps) => {
   const { data } = await api.get<LocationsResponse>("/locations", {
     params: {
       page,
@@ -50,4 +50,4 @@ export async function fetchLocations({
   });
 
   return data;
-}
+};
