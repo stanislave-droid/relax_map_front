@@ -5,7 +5,7 @@ import AdvantagesBlock from "@/components/sections/AdvantagesBlock/AdvantagesBlo
 import HeroBlock from "../components/sections/HeroBlock/HeroBlock";
 import ReviewsBlock from "@/components/sections/ReviewsBlock/ReviewsBlock";
 import PopularLocationsBlock from "@/components/sections/PopularLocationsBlock/PopularLocationsBlock";
-import { fetchLocations } from "@/lib/api/clientApi";
+import { fetchLocations } from "@/lib/api/serverApi";
 
 export default async function Home() {
   const response = await fetchLocations({
