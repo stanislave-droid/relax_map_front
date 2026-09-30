@@ -1,7 +1,20 @@
 import Link from "next/link";
 import css from "./Footer.module.css";
 
-const Footer = () => {
+interface FooterProps {
+  isAuthRoute?: boolean;
+}
+
+const Footer = ({ isAuthRoute = false }: FooterProps) => {
+  if (isAuthRoute) {
+    return (
+      <footer className={css.authFooter}>
+        <p className={css.authCopyright}>
+          © {new Date().getFullYear()} Relax Map
+        </p>
+      </footer>
+    );
+  }
   return (
     <footer className={css.footer}>
       <div className="container">
