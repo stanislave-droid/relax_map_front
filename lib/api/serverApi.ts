@@ -1,8 +1,5 @@
 import { fetchLocationsProps } from "@/types/location";
-import {
-  axiosClient as api,
-  axiosClientWithCredentials as authApi,
-} from "./api";
+import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
 import { User } from "@/types/user";
 import { Location } from "@/types/location";
@@ -18,7 +15,11 @@ export async function fetchLocations({
   sortBy,
   sortDirection,
 }: fetchLocationsProps) {
+  const cookieStore = await cookies;
   const { data } = await api.get<LocationsResponse>("/locations", {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
     params: {
       page,
       limit,
@@ -40,7 +41,7 @@ export const getUserById = async (userId: string): Promise<User> => {
 
 export const getMe = async (): Promise<User> => {
   const cookieStore = await cookies;
-  const { data } = await authApi.get<User>("/users/current", {
+  const { data } = await api.get<User>("/users/current", {
     headers: {
       Cookie: cookieStore.toString(),
     },
