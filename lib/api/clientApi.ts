@@ -1,7 +1,4 @@
-import {
-  axiosClient as api,
-  axiosClientWithCredentials as authApi,
-} from "./api";
+import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
 import { fetchLocationsProps } from "@/types/location";
 import { User } from "@/types/user";
@@ -17,21 +14,21 @@ export interface ApiErrorResponse {
 export type ApiError = AxiosError<ApiErrorResponse>;
 
 export const register = async (userData: RegisterSchema): Promise<User> => {
-  const { data } = await authApi.post<User>("/auth/register", userData);
+  const { data } = await api.post<User>("/auth/register", userData);
   return data;
 };
 
 export const login = async (userData: LoginSchema): Promise<User> => {
-  const { data } = await authApi.post<User>("/auth/login", userData);
+  const { data } = await api.post<User>("/auth/login", userData);
   return data;
 };
 
 export const getMe = async (): Promise<User> => {
-  const { data } = await authApi.get<User>("/users/current");
+  const { data } = await api.get<User>("/users/current");
   return data;
 };
 
-export async function fetchLocations({
+export const fetchLocations = async ({
   page = 1,
   limit = 10,
   region,
@@ -39,7 +36,7 @@ export async function fetchLocations({
   search,
   sortBy,
   sortDirection,
-}: fetchLocationsProps) {
+}: fetchLocationsProps) => {
   const { data } = await api.get<LocationsResponse>("/locations", {
     params: {
       page,
@@ -53,4 +50,4 @@ export async function fetchLocations({
   });
 
   return data;
-}
+};

@@ -29,16 +29,16 @@ export async function GET(req: NextRequest) {
         params: {
           page,
           limit,
-          ...(region !== "" && { region }),
-          ...(type !== "" && { type }),
-          ...(search !== "" && { search }),
-          ...(sortBy !== "" && { sortBy }),
-          ...(sortDirection !== "" && { sortDirection }),
+          region,
+          type,
+          search,
+          sortBy,
+          sortDirection,
         },
       },
     );
 
-    return NextResponse.json(locationsResponse, {
+    return NextResponse.json(locationsResponse.data, {
       status: locationsResponse.status,
     });
   } catch (error) {
