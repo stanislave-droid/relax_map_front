@@ -33,6 +33,8 @@ const PopularLocationsBlock = ({ locations }: PopularLocationsBlockProps) => {
             }}
             loop
             slidesPerView={1}
+            spaceBetween={24}
+            slidesPerGroup={1}
             breakpoints={{
               768: {
                 slidesPerView: 2,
