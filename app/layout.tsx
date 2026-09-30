@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/sections/Header/Header";
-import Footer from "@/components/sections/Footer/Footer";
+import FooterWrapper from "@/components/sections/Footer/FooterWrapper";
 import { Toaster } from "react-hot-toast";
 import TanStackQueryProvider from "@/components/providers/TanStackQueryProvider/TanStackQueryProvider";
 import AuthProvider from "@/components/providers/AuthProvider/AuthProvider";
@@ -50,7 +50,7 @@ export default function RootLayout({
             <Header />
             {children}
             {modal}
-            <Footer />
+            <FooterWrapper />
           </AuthProvider>
         </TanStackQueryProvider>
       </body>
