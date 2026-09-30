@@ -1,0 +1,43 @@
+.popularLocations {
+  padding: 64px 0;
+  background-color: var(--color-scheme-2-background);
+}
+.headingPopularLocations {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+.linkAllLocations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--color-coral-dark);
+  border-radius: 6px;
+  padding: 6px 12px;
+  width: 114px;
+  height: 48px;
+  background-color: var(--color-coral-dark);
+
+  color: var(--color-white);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.navigationBtns {
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (min-width: 1440px) {
+  .popularLocations {
+    padding: 72px 0;
+  }
+}
+.linkAllLocations {
+  width: 136px;
+  height: 48px;
+}
