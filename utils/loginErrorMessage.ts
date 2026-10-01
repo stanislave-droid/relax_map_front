@@ -10,7 +10,7 @@ export const getLoginErrorMessage = (error: unknown): string => {
     const {status} = apiError.response;
 
     if (status === 401) {
-        return "Невірний email або пароль";
+        return "Неправильний email або пароль";
     }
 
     if (status >= 500) {

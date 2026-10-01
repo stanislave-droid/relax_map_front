@@ -27,7 +27,6 @@ export const SignIn = () => {
             toast.success("Ви успішно увійшли!");
             router.push(`/profile/${user._id}`);
         } catch (error) {
-            const apiError = error as ApiError;
             toast.error(getLoginErrorMessage(error));
         } finally {
             setIsLoading(false);
