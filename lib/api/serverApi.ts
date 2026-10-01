@@ -31,7 +31,7 @@ export const fetchLocations = async ({
 };
 
 export const getUserById = async (userId: string): Promise<User> => {
-  const { data } = await api.get<User>(`/users/${userId}`);
+  const { data } = await api.get<User>(`/users/user/${userId}`);
   return data;
 };
 
