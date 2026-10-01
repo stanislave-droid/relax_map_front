@@ -69,3 +69,15 @@ export const getAllFeedbacks = async (
   });
   return data;
 };
+
+export const checkSession = async () => {
+  const cookieStore = await cookies();
+  const response = await api.post<CheckSessionRequest>(
+      "/auth/refresh",
+      null, {
+    headers: {
+      Cookie: cookieStore.toString(),
+    }
+  });
+  return response;
+}
