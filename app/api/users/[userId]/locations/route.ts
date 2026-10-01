@@ -24,15 +24,18 @@ export async function GET(request: NextRequest, { params }: Props) {
     const limit = request.nextUrl.searchParams.get("limit");
     const page = request.nextUrl.searchParams.get("page");
 
-    const locationsResponse = await api<LocationsApiResponse>(`/api/users/${userId}/locations`, {
-      headers: {
-        Cookie: cookieStore.toString(),
+    const locationsResponse = await api<LocationsApiResponse>(
+      `/api/users/${userId}/locations`,
+      {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+        params: {
+          limit,
+          page,
+        },
       },
-      params: {
-        limit,
-        page,
-      },
-    });
+    );
 
     const { locations, totalLocations } = locationsResponse.data;
 
@@ -49,10 +52,16 @@ export async function GET(request: NextRequest, { params }: Props) {
 
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
-      return NextResponse.json({ error: error.message, response: error.response?.data }, { status: error.status });
+      return NextResponse.json(
+        { error: error.message, response: error.response?.data },
+        { status: error.status },
+      );
     }
 
     logErrorResponse({ message: (error as Error).message });
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }

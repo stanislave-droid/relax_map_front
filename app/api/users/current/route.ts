@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { api } from "@/app/api/api";
 import { logErrorResponse } from "@/app/api/auth/_utils/utils";
 import { User } from "@/types/user";
