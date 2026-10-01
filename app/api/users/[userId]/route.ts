@@ -1,5 +1,5 @@
 import { api } from "@/app/api/api";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { logErrorResponse } from "@/app/api/auth/_utils/utils";
 import { isAxiosError } from "axios";
 
@@ -7,7 +7,7 @@ type Props = {
   params: Promise<{ userId: string }>;
 };
 
-export async function GET({ params }: Props) {
+export async function GET(req: NextRequest, { params }: Props) {
   try {
     const { userId } = await params;
 
