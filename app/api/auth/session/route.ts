@@ -3,7 +3,7 @@ import {NextResponse} from 'next/server';
 import {parseSetCookie} from 'cookie';
 import {isAxiosError} from 'axios';
 import {logErrorResponse} from "../../auth/_utils/utils"
-import {axiosClient} from "@/lib/api/api"
+import {api} from "@/app/api/api"
 
 
 export async function GET() {
@@ -18,7 +18,8 @@ export async function GET() {
         }
 
         if (refreshToken) {
-            const apiRes = await axiosClient.post("/auth/refresh", null, {
+            const apiRes = await api.post(
+                "/api/auth/refresh", null, {
                     headers: {
                         Cookie: cookieStore.toString(),
                     }
