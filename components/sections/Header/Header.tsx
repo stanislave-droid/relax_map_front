@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import clsx from "clsx";
 import Link from "@/components/ui/Link/Link";
 import Icon from "@/components/ui/Icon/Icon";
@@ -11,12 +11,17 @@ import css from "./Header.module.css";
 import LogoutModal from "@/components/auth/LogoutModal/LogoutModal";
 import { createPortal } from "react-dom";
 
+const emptySubscribe = () => () => {};
 const Header = () => {
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true, // значення на клієнті
+    () => false, // значення на сервері та під час гідрації
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-
   const closeMenu = () => setIsMenuOpen(false);
   const openLogoutModal = () => setIsLogoutModalOpen(true);
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
@@ -54,7 +59,7 @@ const Header = () => {
         </div>
       </header>
 
-      {typeof document !== "undefined" &&
+      {isMounted &&
         createPortal(
           <MobileMenu
             isMenuOpen={isMenuOpen}
