@@ -4,10 +4,11 @@ import css from "./Sign-up.module.css";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
 import {useAuthStore} from "@/lib/store/authStore";
-import {register, ApiError} from "@/lib/api/clientApi";
+import {register} from "@/lib/api/clientApi";
 import RegistrationForm from "@/components/auth/RegistrationForm/RegistrationForm";
 import type {RegisterSchema} from "@/components/auth/RegistrationForm/RegistrationForm";
 import toast from "react-hot-toast";
+import {getRegisterErrorMessage} from "@/utils/registerErrorMessage";
 
 
 export const SignUp = () => {
@@ -22,11 +23,10 @@ export const SignUp = () => {
         try {
             const user = await register(values);
             setUser(user);
+            toast.success("Ви успішно зареєструвались!");
             router.push(`/profile/${user._id}`);
         } catch (error) {
-            const apiError = error as ApiError;
-            const message = apiError.response?.data?.message ?? apiError.message ?? "Не вдалося зареєструватися";
-            toast.error(message);
+            toast.error(getRegisterErrorMessage(error));
         } finally {
             setIsLoading(false);
         }
