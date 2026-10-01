@@ -5,9 +5,10 @@ import {useRouter} from "next/navigation";
 import {useState} from "react";
 import {useAuthStore} from "@/lib/store/authStore";
 import type {LoginSchema} from "@/components/auth/LoginForm/LoginForm";
-import {login, ApiError} from "@/lib/api/clientApi"
+import {login} from "@/lib/api/clientApi"
 import LoginForm from "@/components/auth/LoginForm/LoginForm";
 import toast from "react-hot-toast";
+import {getLoginErrorMessage} from "@/utils/loginErrorMessage";
 
 
 export const SignIn = () => {
@@ -23,13 +24,11 @@ export const SignIn = () => {
         try {
             const user = await login(values);
             setUser(user);
+            toast.success("Ви успішно увійшли!");
             router.push(`/profile/${user._id}`);
         } catch (error) {
             const apiError = error as ApiError;
-            const message = apiError.response?.status === 401
-                ? "Невірний email або пароль"
-                : apiError.response?.data?.message ?? apiError.message ?? "Не вдалось увійти";
-            toast.error(message);
+            toast.error(getLoginErrorMessage(error));
         } finally {
             setIsLoading(false);
         }
