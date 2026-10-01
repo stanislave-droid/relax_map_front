@@ -5,6 +5,7 @@ import {
 import { LocationsResponse } from "@/app/api/locations/route";
 import { fetchLocationsProps } from "@/types/location";
 import { User } from "@/types/user";
+import { Location } from "@/types/location";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
@@ -53,4 +54,10 @@ export async function fetchLocations({
   });
 
   return data;
+}
+
+export async function updateLocation(location: Location): Promise<Location> {
+  const response = await authApi.patch<Location>(`/locations/${location._id}`, location);
+
+  return response.data;
 }
