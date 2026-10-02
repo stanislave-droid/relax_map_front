@@ -1,6 +1,10 @@
 import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
-import { fetchLocationsProps, Location } from "@/types/location";
+import {
+  fetchLocationsProps,
+  Location,
+  UpdateLocationData,
+} from "@/types/location";
 import { User } from "@/types/user";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
@@ -64,3 +68,15 @@ export const checkSessionClient = async () => {
   const { data } = await api.get<CheckSessionRequest>("/auth/session");
   return data;
 };
+
+export async function updateLocation(
+  locationId: string,
+  location: UpdateLocationData,
+): Promise<Location> {
+  const response = await api.patch<Location>(
+    `/locations/${locationId}`,
+    location,
+  );
+
+  return response.data;
+}
