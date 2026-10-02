@@ -1,6 +1,10 @@
 import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
-import { fetchLocationsProps } from "@/types/location";
+import {
+  fetchLocationsProps,
+  Location,
+  UpdateLocationData,
+} from "@/types/location";
 import { User } from "@/types/user";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
@@ -21,6 +25,10 @@ export const register = async (userData: RegisterSchema): Promise<User> => {
 export const login = async (userData: LoginSchema): Promise<User> => {
   const { data } = await api.post<User>("/auth/login", userData);
   return data;
+};
+
+export const logout = async (): Promise<void> => {
+  await api.post("/auth/logout");
 };
 
 export const getMe = async (): Promise<User> => {
@@ -51,8 +59,30 @@ export const fetchLocations = async ({
 
   return data;
 };
+export const createLocation = async (formData: FormData): Promise<Location> => {
+  const { data } = await api.post<Location>("/locations", formData);
+  return data;
+};
 
 export const checkSessionClient = async () => {
   const { data } = await api.get<CheckSessionRequest>("/auth/session");
   return data;
 };
+
+export async function updateLocation(
+  locationId: string,
+  location: UpdateLocationData,
+): Promise<Location> {
+  const response = await api.patch<Location>(
+    `/locations/${locationId}`,
+    location,
+  );
+
+  return response.data;
+}
+
+export async function fetchLocationById(id: string): Promise<Location> {
+  const { data} = await api.get<Location>(`/locations/${id}`);
+
+  return data;
+}
