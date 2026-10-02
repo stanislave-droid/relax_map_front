@@ -51,3 +51,8 @@ export const fetchLocations = async ({
 
   return data;
 };
+
+export const checkSessionClient = async () => {
+  const { data } = await api.get<CheckSessionRequest>("/auth/session");
+  return data;
+};

@@ -1,6 +1,6 @@
 "use client";
 
-import { getMe } from "@/lib/api/clientApi";
+import { checkSessionClient, getMe } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 import { useEffect } from "react";
 
@@ -14,17 +14,19 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     (state) => state.clearIsAuthenticated,
   );
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const user = await getMe();
-  //     if (user) {
-  //       setUser(user);
-  //     } else {
-  //       clearIsAuthenticated();
-  //     }
-  //   };
-  //   fetchUser();
-  // }, [setUser, clearIsAuthenticated]);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const isSession = await checkSessionClient();
+
+      if (isSession.success) {
+        const user = await getMe();
+        setUser(user);
+      } else {
+        clearIsAuthenticated();
+      }
+    };
+    fetchUser();
+  }, [setUser, clearIsAuthenticated]);
 
   return children;
 };
