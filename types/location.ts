@@ -26,3 +26,11 @@ export interface fetchLocationsProps {
   sortBy?: SortBy;
   sortDirection?: SortDirection;
 }
+
+export interface UpdateLocationData {
+  image?: string;
+  name?: string;
+  description?: string;
+  locationType?: string;
+  region?: string;
+}
