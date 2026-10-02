@@ -77,10 +77,10 @@ export const getAllFeedbacks = async (
 
 export const checkSession = async () => {
   const cookieStore = await cookies();
-  const { data } = await api.get<CheckSessionRequest>("/auth/session", {
+  const response = await api.get<CheckSessionRequest>("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
-  return data;
+  return response;
 };
