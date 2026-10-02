@@ -3,26 +3,24 @@ import clsx from "clsx";
 import css from "./EditLocationPage.module.css";
 import { Metadata } from "next";
 
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: "Додати нову локацію — RelaxMap",
+export const metadata: Metadata = {
+  title: "Редагування місця — RelaxMap",
+  description: "Service for searching places to relax",
+  openGraph: {
+    title: "Редагування місця — RelaxMap",
     description: "Service for searching places to relax",
-    openGraph: {
-      title: "Додати нову локацію — RelaxMap",
-      description: "Service for searching places to relax",
-      images: [
-        {
-          url: "/opengraph-image.jpg",
-          height: 1200,
-          width: 630,
-          alt: "Relax Map",
-        },
-      ],
-      url: process.env.NEXT_PUBLIC_SITE_URL,
-      type: "article",
-    },
-  };
-}
+    images: [
+      {
+        url: "/opengraph-image.jpg",
+        height: 1200,
+        width: 630,
+        alt: "Relax Map",
+      },
+    ],
+    url: process.env.NEXT_PUBLIC_SITE_URL,
+    type: "article",
+  },
+};
 
 interface EditLocationProps {
   params: Promise<{ locationId: string }>;
