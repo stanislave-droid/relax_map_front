@@ -2,6 +2,7 @@ import "@/components/ui/common.module.css";
 import clsx from "clsx";
 import css from "./EditLocationPage.module.css";
 import { Metadata } from "next";
+import { fetchLocationById } from "@/lib/api/serverApi";
 
 export const metadata: Metadata = {
   title: "Редагування місця — RelaxMap",
@@ -28,6 +29,7 @@ interface EditLocationProps {
 
 export default async function EditLocation({ params }: EditLocationProps) {
   const { locationId } = await params;
+  const location = await fetchLocationById(locationId);
 
   return (
     <main className={css.main}>
