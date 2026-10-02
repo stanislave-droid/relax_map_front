@@ -1,0 +1,46 @@
+.profileInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .profileInfo {
+  }
+}
+@media screen and (min-width: 1440px) {
+  .profileInfo {
+  }
+}
+.avatar {
+}
+@media screen and (min-width: 768px) {
+  .avatar {
+  }
+}
+@media screen and (min-width: 1440px) {
+  .avatar {
+  }
+}
+.name {
+}
+@media screen and (min-width: 768px) {
+  .name {
+  }
+}
+@media screen and (min-width: 1440px) {
+  .name {
+  }
+}
+.articles {
+}
+@media screen and (min-width: 768px) {
+  .articles {
+  }
+}
+@media screen and (min-width: 1440px) {
+  .articles {
+  }
+}
