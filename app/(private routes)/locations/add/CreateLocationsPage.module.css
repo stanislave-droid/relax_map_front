@@ -1,0 +1,11 @@
+.title {
+  margin: 32px 0;
+}
+@media screen and (min-width: 1440px) {
+  .title {
+    margin: 48px 0;
+  }
+  .formWrapper {
+    padding: 0 285px 0 64px;
+  }
+}

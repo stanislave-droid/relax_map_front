@@ -3,6 +3,7 @@ import { api } from "../api";
 import { isAxiosError } from "axios";
 import { logErrorResponse } from "../auth/_utils/utils";
 import { Location } from "@/types/location";
+import { cookies } from "next/headers";
 
 export interface LocationsResponse {
   page: number;
@@ -29,16 +30,16 @@ export async function GET(req: NextRequest) {
         params: {
           page,
           limit,
-          ...(region !== "" && { region }),
-          ...(type !== "" && { type }),
-          ...(search !== "" && { search }),
-          ...(sortBy !== "" && { sortBy }),
-          ...(sortDirection !== "" && { sortDirection }),
+          region,
+          type,
+          search,
+          sortBy,
+          sortDirection,
         },
       },
     );
 
-    return NextResponse.json(locationsResponse, {
+    return NextResponse.json(locationsResponse.data, {
       status: locationsResponse.status,
     });
   } catch (error) {
@@ -56,6 +57,36 @@ export async function GET(req: NextRequest) {
     logErrorResponse(error);
     return NextResponse.json(
       { error: "Internal server error" },
+      { status: 500 },
+    );
+  }
+}
+export async function POST(request: NextRequest) {
+  try {
+    const formData = await request.formData();
+    const cookieStore = await cookies();
+    const response = await api.post("/api/locations", formData, {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    });
+    return NextResponse.json(response.data, {
+      status: response.status,
+    });
+  } catch (error) {
+    if (isAxiosError(error)) {
+      logErrorResponse(error);
+      return NextResponse.json(
+        {
+          error: error.message,
+          response: error.response?.data,
+        },
+        { status: error.status },
+      );
+    }
+    logErrorResponse({ message: (error as Error).message });
+    return NextResponse.json(
+      { error: "Internal error server" },
       { status: 500 },
     );
   }

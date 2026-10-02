@@ -1,11 +1,11 @@
-import {
-  axiosClient as api,
-  axiosClientWithCredentials as authApi,
-} from "./api";
+import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
-import { fetchLocationsProps } from "@/types/location";
+import {
+  fetchLocationsProps,
+  Location,
+  UpdateLocationData,
+} from "@/types/location";
 import { User } from "@/types/user";
-import { Location } from "@/types/location";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
@@ -18,21 +18,25 @@ export interface ApiErrorResponse {
 export type ApiError = AxiosError<ApiErrorResponse>;
 
 export const register = async (userData: RegisterSchema): Promise<User> => {
-  const { data } = await authApi.post<User>("/auth/register", userData);
+  const { data } = await api.post<User>("/auth/register", userData);
   return data;
 };
 
 export const login = async (userData: LoginSchema): Promise<User> => {
-  const { data } = await authApi.post<User>("/auth/login", userData);
+  const { data } = await api.post<User>("/auth/login", userData);
   return data;
+};
+
+export const logout = async (): Promise<void> => {
+  await api.post("/auth/logout");
 };
 
 export const getMe = async (): Promise<User> => {
-  const { data } = await authApi.get<User>("/users/current");
+  const { data } = await api.get<User>("/users/current");
   return data;
 };
 
-export async function fetchLocations({
+export const fetchLocations = async ({
   page = 1,
   limit = 10,
   region,
@@ -40,7 +44,7 @@ export async function fetchLocations({
   search,
   sortBy,
   sortDirection,
-}: fetchLocationsProps) {
+}: fetchLocationsProps) => {
   const { data } = await api.get<LocationsResponse>("/locations", {
     params: {
       page,
@@ -54,10 +58,25 @@ export async function fetchLocations({
   });
 
   return data;
-}
+};
+export const createLocation = async (formData: FormData): Promise<Location> => {
+  const { data } = await api.post<Location>("/locations", formData);
+  return data;
+};
 
-export async function updateLocation(location: Location): Promise<Location> {
-  const response = await authApi.patch<Location>(`/locations/${location._id}`, location);
+export const checkSessionClient = async () => {
+  const { data } = await api.get<CheckSessionRequest>("/auth/session");
+  return data;
+};
+
+export async function updateLocation(
+  locationId: string,
+  location: UpdateLocationData,
+): Promise<Location> {
+  const response = await api.patch<Location>(
+    `/locations/${locationId}`,
+    location,
+  );
 
   return response.data;
 }

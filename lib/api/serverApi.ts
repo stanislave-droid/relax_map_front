@@ -1,15 +1,12 @@
 import { fetchLocationsProps } from "@/types/location";
-import {
-  axiosClient as api,
-  axiosClientWithCredentials as authApi,
-} from "./api";
+import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
 import { User } from "@/types/user";
 import { Location } from "@/types/location";
 import { FeedbacksResponse } from "@/types/feedback";
 import { cookies } from "next/headers";
 
-export async function fetchLocations({
+export const fetchLocations = async ({
   page = 1,
   limit = 6,
   region,
@@ -17,7 +14,7 @@ export async function fetchLocations({
   search,
   sortBy,
   sortDirection,
-}: fetchLocationsProps) {
+}: fetchLocationsProps) => {
   const { data } = await api.get<LocationsResponse>("/locations", {
     params: {
       page,
@@ -31,16 +28,21 @@ export async function fetchLocations({
   });
 
   return data;
-}
+};
 
 export const getUserById = async (userId: string): Promise<User> => {
-  const { data } = await api.get<User>(`/users/${userId}`);
+  const cookieStore = await cookies;
+  const { data } = await api.get<User>(`/users/${userId}`, {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
   return data;
 };
 
 export const getMe = async (): Promise<User> => {
-  const cookieStore = await cookies;
-  const { data } = await authApi.get<User>("/users/current", {
+  const cookieStore = await cookies();
+  const { data } = await api.get<User>("/users/current", {
     headers: {
       Cookie: cookieStore.toString(),
     },
@@ -69,6 +71,16 @@ export const getAllFeedbacks = async (
 ): Promise<FeedbacksResponse> => {
   const { data } = await api.get<FeedbacksResponse>("/feedbacks", {
     params: { page, limit },
+  });
+  return data;
+};
+
+export const checkSession = async () => {
+  const cookieStore = await cookies();
+  const { data } = await api.get<CheckSessionRequest>("/auth/session", {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
   });
   return data;
 };
