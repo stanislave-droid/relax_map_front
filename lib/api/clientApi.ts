@@ -23,6 +23,10 @@ export const login = async (userData: LoginSchema): Promise<User> => {
   return data;
 };
 
+export const logout = async (): Promise<void> => {
+  await api.post("/auth/logout");
+};
+
 export const getMe = async (): Promise<User> => {
   const { data } = await api.get<User>("/users/current");
   return data;
