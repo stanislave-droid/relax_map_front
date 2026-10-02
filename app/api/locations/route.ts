@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const cookieStore = await cookies();
-    const response = await api.post("/locations", formData, {
+    const response = await api.post("/api/locations", formData, {
       headers: {
         Cookie: cookieStore.toString(),
       },
