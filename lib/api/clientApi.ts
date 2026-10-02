@@ -55,3 +55,8 @@ export const createLocation = async (formData: FormData): Promise<Location> => {
   const { data } = await api.post<Location>("/locations", formData);
   return data;
 };
+
+export const checkSessionClient = async () => {
+  const { data } = await api.get<CheckSessionRequest>("/auth/session");
+  return data;
+};

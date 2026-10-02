@@ -31,12 +31,17 @@ export const fetchLocations = async ({
 };
 
 export const getUserById = async (userId: string): Promise<User> => {
-  const { data } = await api.get<User>(`/users/${userId}`);
+  const cookieStore = await cookies;
+  const { data } = await api.get<User>(`/users/${userId}`, {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
   return data;
 };
 
 export const getMe = async (): Promise<User> => {
-  const cookieStore = await cookies;
+  const cookieStore = await cookies();
   const { data } = await api.get<User>("/users/current", {
     headers: {
       Cookie: cookieStore.toString(),
@@ -72,10 +77,10 @@ export const getAllFeedbacks = async (
 
 export const checkSession = async () => {
   const cookieStore = await cookies();
-  const response = await api.post<CheckSessionRequest>("/auth/refresh", null, {
+  const { data } = await api.get<CheckSessionRequest>("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
-  return response;
+  return data;
 };
