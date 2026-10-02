@@ -41,7 +41,7 @@ export const getUserById = async (userId: string): Promise<User> => {
 };
 
 export const getMe = async (): Promise<User> => {
-  const cookieStore = await cookies;
+  const cookieStore = await cookies();
   const { data } = await api.get<User>("/users/current", {
     headers: {
       Cookie: cookieStore.toString(),
