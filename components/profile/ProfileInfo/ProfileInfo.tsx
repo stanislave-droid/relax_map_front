@@ -16,8 +16,10 @@ export default function ProfileInfo({ user }: ProfileInfoProps) {
         width={145}
         height={145}
       />
-      <h1 className={css.name}>{user.name}</h1>
-      <p className={css.articles}>Статей: {user.articlesAmount}</p>
+      <div className={css.wrap}>
+        <h1 className={css.name}>{user.name}</h1>
+        <p className={css.articles}>Статей: {user.articlesAmount}</p>
+      </div>
     </div>
   );
 }

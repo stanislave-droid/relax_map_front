@@ -28,7 +28,7 @@ export default async function ProfilePage({ params }: Props) {
   const isOwner = userId === currentUser._id;
 
   return (
-    <main>
+    <main className="container">
       <ProfileInfo user={user} />
       {isEmpty && <ProfilePlaceholder isOwnProfile={isOwner} />}
       {!isEmpty && (
