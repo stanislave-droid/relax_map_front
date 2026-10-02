@@ -30,6 +30,12 @@ export const fetchLocations = async ({
   return data;
 };
 
+export const fetchLocationById = async(id: string): Promise<Location> => {
+  const { data} = await api.get<Location>(`/locations/${id}`);
+
+  return data;
+}
+
 export const getUserById = async (userId: string): Promise<User> => {
   const cookieStore = await cookies;
   const { data } = await api.get<User>(`/users/${userId}`, {

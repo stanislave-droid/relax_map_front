@@ -80,3 +80,9 @@ export async function updateLocation(
 
   return response.data;
 }
+
+export async function fetchLocationById(id: string): Promise<Location> {
+  const { data} = await api.get<Location>(`/locations/${id}`);
+
+  return data;
+}
