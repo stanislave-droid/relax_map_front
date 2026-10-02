@@ -1,6 +1,6 @@
 import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
-import { fetchLocationsProps } from "@/types/location";
+import { fetchLocationsProps, Location } from "@/types/location";
 import { User } from "@/types/user";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
@@ -49,5 +49,14 @@ export const fetchLocations = async ({
     },
   });
 
+  return data;
+};
+export const createLocation = async (formData: FormData): Promise<Location> => {
+  const { data } = await api.post<Location>("/locations", formData);
+  return data;
+};
+
+export const checkSessionClient = async () => {
+  const { data } = await api.get<CheckSessionRequest>("/auth/session");
   return data;
 };

@@ -7,7 +7,7 @@ type Props = {
   params: Promise<{ userId: string }>;
 };
 
-export async function GET(request: NextRequest, { params }: Props) {
+export async function GET(req: NextRequest, { params }: Props) {
   try {
     const { userId } = await params;
 
