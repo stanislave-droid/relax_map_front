@@ -9,6 +9,7 @@ import { User } from "@/types/user";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
+import { LocationType } from "@/types/locationType";
 
 export interface ApiErrorResponse {
   message: string;
@@ -69,6 +70,10 @@ export const checkSessionClient = async () => {
   return data;
 };
 
+export const fetchLocationTypes = async (): Promise<LocationType[]> => {
+  const { data } = await api.get<LocationType[]>("/types");
+  return data;
+};
 export async function updateLocation(
   locationId: string,
   location: UpdateLocationData,
@@ -82,7 +87,7 @@ export async function updateLocation(
 }
 
 export async function fetchLocationById(id: string): Promise<Location> {
-  const { data} = await api.get<Location>(`/locations/${id}`);
+  const { data } = await api.get<Location>(`/locations/${id}`);
 
   return data;
 }
