@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { api } from "../api";
+import axios from "axios";
+import { logErrorResponse } from "@/app/api/auth/_utils/utils";
 
 interface BackendRegion {
   _id: string;
@@ -32,7 +34,11 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Failed to fetch regions:", error);
+    if (axios.isAxiosError(error)) {
+      logErrorResponse(error.response?.data);
+    } else {
+      logErrorResponse({ message: (error as Error).message });
+    }
 
     return NextResponse.json([], { status: 500 });
   }
