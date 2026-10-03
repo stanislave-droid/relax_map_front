@@ -10,6 +10,7 @@ import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationF
 import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
+import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
 
 export interface ApiErrorResponse {
   message: string;
@@ -89,5 +90,13 @@ export async function updateLocation(
 export async function fetchLocationById(id: string): Promise<Location> {
   const { data } = await api.get<Location>(`/locations/${id}`);
 
+  return data;
+}
+
+export async function fetchCreatedReviews(
+  locationId: string,
+  feedback: AddReviewFormValues,
+) {
+  const { data } = await api.post(`/feedbacks/${locationId}`, feedback);
   return data;
 }
