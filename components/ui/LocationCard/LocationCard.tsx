@@ -1,10 +1,15 @@
+"use client";
+
 import "../common.module.css";
 import { Location } from "@/types/location";
+import { LocationType } from "@/types/locationType";
 import Image from "next/image";
 import Link from "../Link/Link";
 import Icon from "../Icon/Icon";
 import css from "./LocationCard.module.css";
 import RatingStars from "../RatingStars/RatingStars";
+import { fetchLocationTypes } from "@/lib/api/clientApi";
+import { useEffect, useState } from "react";
 
 interface LocationCardProps {
   location: Location;
@@ -17,6 +22,28 @@ export default function LocationCard({
   locationLink,
   editLink,
 }: LocationCardProps) {
+  const [types, setTypes] = useState<LocationType[] | null>(null);
+  const [locationTypeName, setLocationTypeName] = useState<string | null>(null);
+
+  if (types !== null) {
+    // const typesArray = [...types];
+    // console.log("types", types);
+    // for (const type of typesArray.data) {
+    //   if (type.slug === location.locationType) {
+    //     setLocationTypeName(type.name);
+    //   }
+    // }
+  }
+
+  useEffect(() => {
+    async function fetchTypes() {
+      // const response = await fetchLocationTypes();
+      // setTypes(response);
+    }
+
+    fetchTypes();
+  }, []);
+
   return (
     <div className={css.locationCard}>
       <Image
@@ -28,7 +55,9 @@ export default function LocationCard({
         className={css.locationCardImage}
       />
       <div className={css.locationCardContent}>
-        <p className={css.locationType}>{location.locationType}</p>
+        {locationTypeName !== null 
+        ? <p className={css.locationType}>{locationTypeName}</p> 
+        : <p className={css.locationType}>{location.locationType}</p>}
         <div className={css.locationRate}>
           <RatingStars value={location.rate} />
         </div>
