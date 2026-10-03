@@ -7,6 +7,8 @@ export default async function SearchBar() {
     fetchRegions(),
   ]);
 
+  console.log(types);
+
   return (
     <SearchBarClient
       types={types}
