@@ -5,6 +5,7 @@ import { User } from "@/types/user";
 import { Location } from "@/types/location";
 import { FeedbacksResponse } from "@/types/feedback";
 import { cookies } from "next/headers";
+import { LocationType } from "@/types/locationType";
 
 export const fetchLocations = async ({
   page = 1,
@@ -94,4 +95,9 @@ export const checkSession = async () => {
     },
   });
   return response;
+};
+
+export const fetchLocationTypes = async (): Promise<LocationType[]> => {
+  const { data } = await api.get<LocationType[]>("/types");
+  return data;
 };
