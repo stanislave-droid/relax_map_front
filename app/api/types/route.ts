@@ -1,12 +1,8 @@
 import { NextResponse } from "next/server";
 import { api } from "../api";
-
-interface LocationType {
-  id: string;
-  name: string;
-  slug: string;
-  iconName: string | null;
-}
+import axios from "axios";
+import { logErrorResponse } from "../../../app/api/auth/_utils/utils";
+import { LocationType } from "../../../types/locationType";
 
 const fallbackTypes: LocationType[] = [];
 
@@ -21,7 +17,11 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Failed to fetch types:", error);
+    if (axios.isAxiosError(error)) {
+      logErrorResponse(error.response?.data);
+    } else {
+      logErrorResponse({ message: (error as Error).message });
+    }
     return NextResponse.json(fallbackTypes, {
       status: 200,
       headers: {

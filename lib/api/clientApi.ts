@@ -5,6 +5,7 @@ import { User } from "@/types/user";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
+import { LocationType } from "@/types/locationType";
 
 export interface ApiErrorResponse {
   message: string;
@@ -58,5 +59,10 @@ export const createLocation = async (formData: FormData): Promise<Location> => {
 
 export const checkSessionClient = async () => {
   const { data } = await api.get<CheckSessionRequest>("/auth/session");
+  return data;
+};
+
+export const fetchLocationTypes = async (): Promise<LocationType[]> => {
+  const { data } = await api.get<LocationType[]>("/types");
   return data;
 };
