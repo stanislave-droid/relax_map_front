@@ -14,13 +14,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `Профіль ${user.name} — RelaxMap`,
+    description: `Профіль користувача ${user.name} у Relax Map`,
+    openGraph: {
+      title: `Профіль ${user.name} — RelaxMap`,
+      description: `Профіль користувача ${user.name} у Relax Map`,
+      images: [
+        {
+          url: "/opengraph-image.jpg",
+          height: 1200,
+          width: 630,
+          alt: "Relax Map",
+        },
+      ],
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/profile/${userId}`,
+      type: "website",
+    },
   };
 }
 
 export default async function ProfilePage({ params }: Props) {
   const { userId } = await params;
-  const user = await getUserById(userId);
-  const locationsData = await getUserLocations(userId);
+  const [user, locationsData] = await Promise.all([
+    getUserById(userId),
+    getUserLocations(userId),
+  ]);
   const isEmpty = locationsData.isEmpty;
 
   return (
