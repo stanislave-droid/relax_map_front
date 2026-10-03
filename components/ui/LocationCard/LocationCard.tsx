@@ -22,7 +22,7 @@ export default function LocationCard({
       <Image
         src={location.image}
         alt={location.name}
-        loading="eager"
+        loading="lazy"
         width={421}
         height={421}
         className={css.locationCardImage}
