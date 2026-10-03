@@ -5,6 +5,7 @@ import { User } from "@/types/user";
 import { Location } from "@/types/location";
 import { FeedbacksResponse } from "@/types/feedback";
 import { cookies } from "next/headers";
+import { LocationType } from "@/types/locationType";
 
 export const fetchLocations = async ({
   page = 1,
@@ -29,6 +30,17 @@ export const fetchLocations = async ({
 
   return data;
 };
+
+export const fetchLocationById = async(id: string): Promise<Location> => {
+  const cookieStore = await cookies();
+  const { data} = await api.get<Location>(`/locations/${id}`, {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+
+  return data;
+}
 
 export const getUserById = async (userId: string): Promise<User> => {
   const cookieStore = await cookies();
@@ -77,10 +89,15 @@ export const getAllFeedbacks = async (
 
 export const checkSession = async () => {
   const cookieStore = await cookies();
-  const { data } = await api.get<CheckSessionRequest>("/auth/session", {
+  const response = await api.get<CheckSessionRequest>("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
+  return response;
+};
+
+export const fetchLocationTypes = async (): Promise<LocationType[]> => {
+  const { data } = await api.get<LocationType[]>("/types");
   return data;
 };
