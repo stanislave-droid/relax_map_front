@@ -1,0 +1,9 @@
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.description p {
+  margin: 0;
+}
