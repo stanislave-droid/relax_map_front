@@ -1,0 +1,54 @@
+.maim {
+
+}
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px
+}
+
+.image {
+    width: 335px;
+
+}
+
+.locationInfo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rite {
+
+}
+
+.title {
+
+}
+
+.details {
+
+}
+
+.region {
+
+}
+
+
+
+.description{
+
+}
+
+
+@media screen and (min-width: 768px) {
+
+}
+
+
+@media screen and (min-width: 1440px) {
+
+}
