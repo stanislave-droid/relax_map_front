@@ -29,7 +29,7 @@ export default function LocationInfoBlock({
       <div className={css.content}>
         <div className={css.meta}>
           <div className={css.rating}>
-            <RatingStars value={rating} />
+            <RatingStars value={rating} className={css.ratingStars} />
             <span>{rating}</span>
           </div>
 
@@ -44,7 +44,7 @@ export default function LocationInfoBlock({
           </p>
 
           <div className={css.author}>
-            <span className={css.authorLabel}>Автор статті:</span>
+            <strong className={css.authorLabel}>Автор статті:</strong>
 
             <Link href={`/profile/${author.id}`} className={css.authorLink}>
               {author.avatarUrl && (
