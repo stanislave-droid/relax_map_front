@@ -23,12 +23,13 @@ import Spinner from "@/components/ui/Spinner/Spinner";
 
 import showToast, { showError } from "@/components/ui/Toast/Toast";
 
-import AddReviewBlock from "@/components/AddReviewBlock/AddReviewBlock";
+import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewModal";
 import { string } from "yup";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const handleSubmit = async (values: LoginSchema) => {
     setErrorMessage(null);
@@ -289,7 +290,13 @@ export default function Home() {
         </ul>
         <Spinner />
         {/* MODAL FOR CREATE NEW FEEDBACK */}
-        <AddReviewBlock onClose={() => console.log("Modal closed")} />
+        <Button onClick={() => setIsReviewOpen(true)}>Залишити відгук</Button>
+        <AddReviewBlock
+          isOpen={isReviewOpen}
+          locationId="68d568270e6bcc357e9833e9"
+          onClose={() => setIsReviewOpen(false)}
+        />
+        {/* -------------------------------------- */}
       </div>
     </main>
   );

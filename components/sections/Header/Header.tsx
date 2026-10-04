@@ -25,6 +25,14 @@ const Header = () => {
   const closeMenu = () => setIsMenuOpen(false);
   const openLogoutModal = () => setIsLogoutModalOpen(true);
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function setIsLoadingTrue() {
+      setIsLoading(true);
+    }
+    setIsLoadingTrue();
+  }, []);
 
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -51,11 +59,13 @@ const Header = () => {
             <Icon name="logo" width={129} height={36} />
           </Link>
 
-          <Navigation
-            isMenuOpen={isMenuOpen}
-            setIsMenuOpen={setIsMenuOpen}
-            onLogoutClick={openLogoutModal}
-          />
+          {isLoading && (
+            <Navigation
+              isMenuOpen={isMenuOpen}
+              setIsMenuOpen={setIsMenuOpen}
+              onLogoutClick={openLogoutModal}
+            />
+          )}
         </div>
       </header>
 
