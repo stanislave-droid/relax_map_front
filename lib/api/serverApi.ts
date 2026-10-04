@@ -6,6 +6,7 @@ import { Location } from "@/types/location";
 import { FeedbacksResponse } from "@/types/feedback";
 import { cookies } from "next/headers";
 import { LocationType } from "@/types/locationType";
+import { Region } from "@/types/region";
 
 export const fetchLocations = async ({
   page = 1,
@@ -31,19 +32,19 @@ export const fetchLocations = async ({
   return data;
 };
 
-export const fetchLocationById = async(id: string): Promise<Location> => {
+export const fetchLocationById = async (id: string): Promise<Location> => {
   const cookieStore = await cookies();
-  const { data} = await api.get<Location>(`/locations/${id}`, {
+  const { data } = await api.get<Location>(`/locations/${id}`, {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
 
   return data;
-}
+};
 
 export const getUserById = async (userId: string): Promise<User> => {
-  const cookieStore = await cookies;
+  const cookieStore = await cookies();
   const { data } = await api.get<User>(`/users/${userId}`, {
     headers: {
       Cookie: cookieStore.toString(),
@@ -99,5 +100,10 @@ export const checkSession = async () => {
 
 export const fetchLocationTypes = async (): Promise<LocationType[]> => {
   const { data } = await api.get<LocationType[]>("/types");
+  return data;
+};
+
+export const fetchRegions = async (): Promise<Region[]> => {
+  const { data } = await api.get<Region[]>("/regions");
   return data;
 };
