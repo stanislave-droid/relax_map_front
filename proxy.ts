@@ -71,6 +71,6 @@ export const config = {
     "/sign-in",
     "/sign-up",
     "/locations/add",
-    "/locations/:locationId",
+    "/locations/:path*/edit",
   ],
 };

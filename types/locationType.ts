@@ -1,6 +1,6 @@
 export interface LocationType {
-  id: string;
-  name: string;
+  _id: string;
+  type: string;
   slug: string;
-  iconName: string | null;
+  shortDescription: string;
 }

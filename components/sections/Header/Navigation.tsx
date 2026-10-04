@@ -31,7 +31,10 @@ const Navigation = ({
             Головна
           </Link>
         )}
-        <Link href="/locations" className={css.navLink}>
+        <Link
+          href="/all-locations/all-types/all-regions/popular?search="
+          className={css.navLink}
+        >
           Місця відпочинку
         </Link>
         {isAuthenticated && (
