@@ -23,22 +23,19 @@ export default function LocationCard({
   editLink,
 }: LocationCardProps) {
   const [types, setTypes] = useState<LocationType[] | null>(null);
-  const [locationTypeName, setLocationTypeName] = useState<string | null>(null);
-
+  
+  let locationType: string = location.locationType;
   if (types !== null) {
-    // const typesArray = [...types];
-    // console.log("types", types);
-    // for (const type of typesArray.data) {
-    //   if (type.slug === location.locationType) {
-    //     setLocationTypeName(type.name);
-    //   }
-    // }
+    const index = types.findIndex((item) => (item.slug === location.locationType))
+    if (index !== -1) {
+      locationType = types[index].type;
+    }
   }
 
   useEffect(() => {
     async function fetchTypes() {
-      // const response = await fetchLocationTypes();
-      // setTypes(response);
+      const response = await fetchLocationTypes();
+      setTypes(response);
     }
 
     fetchTypes();
@@ -55,9 +52,7 @@ export default function LocationCard({
         className={css.locationCardImage}
       />
       <div className={css.locationCardContent}>
-        {locationTypeName !== null 
-        ? <p className={css.locationType}>{locationTypeName}</p> 
-        : <p className={css.locationType}>{location.locationType}</p>}
+        <p className={css.locationType}>{locationType}</p>
         <div className={css.locationRate}>
           <RatingStars value={location.rate} />
         </div>
