@@ -5,21 +5,28 @@ import AdvantagesBlock from "@/components/sections/AdvantagesBlock/AdvantagesBlo
 import HeroBlock from "../components/sections/HeroBlock/HeroBlock";
 import ReviewsBlock from "@/components/sections/ReviewsBlock/ReviewsBlock";
 import PopularLocationsBlock from "@/components/sections/PopularLocationsBlock/PopularLocationsBlock";
-import { fetchLocations } from "@/lib/api/serverApi";
+import { fetchLocations, getAllFeedbacks } from "@/lib/api/serverApi";
 
 export default async function Home() {
-  const response = await fetchLocations({
-    limit: 9,
-    sortBy: "rate",
-    sortDirection: "desc",
-  });
+  const [response, feedbacksResponse] = await Promise.all([
+    fetchLocations({
+      limit: 9,
+      sortBy: "rate",
+      sortDirection: "desc",
+    }),
+    getAllFeedbacks().catch(() => null),
+  ]);
 
   return (
     <main className={css.main}>
       <HeroBlock />
       <AdvantagesBlock />
       <PopularLocationsBlock locations={response.locations} />
-      <ReviewsBlock title="Останні відгуки" />
+      <ReviewsBlock
+        title="Останні відгуки"
+        feedbacks={feedbacksResponse?.feedbacks ?? []}
+        showLocation
+      />
     </main>
   );
 }

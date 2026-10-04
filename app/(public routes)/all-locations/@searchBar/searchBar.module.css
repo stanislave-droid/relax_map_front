@@ -1,0 +1,69 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  height: 40px;
+}
+
+.categoriesWrapper {
+  display: flex;
+  gap: 16px;
+}
+
+.typesSelect {
+  width: 160px;
+}
+
+.regionsSelect {
+  width: 160px;
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .categoriesWrapper {
+    width: fit-content;
+    margin-right: auto;
+  }
+  .sortSelect {
+    width: 158px;
+  }
+  .input {
+    width: 704px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .field {
+    height: 43px;
+  }
+  .typesSelect {
+    width: 199px;
+    & > div {
+      height: 43px;
+    }
+  }
+  .regionsSelect {
+    width: 199px;
+    & > div {
+      height: 43px;
+    }
+  }
+  .sortSelect {
+    width: 160px;
+    & > div {
+      height: 43px;
+    }
+  }
+  .input {
+    width: 310px;
+    & > input {
+      height: 43px;
+    }
+  }
+}

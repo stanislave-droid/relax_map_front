@@ -1,12 +1,36 @@
-import css from "./LogoutModal.module.css";
+"use client";
+
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { logout } from "@/lib/api/clientApi";
+import { useAuthStore } from "@/lib/store/authStore";
 import Button from "@/components/ui/Button/Button";
 import Modal from "@/components/ui/Modal/Modal";
+import css from "./LogoutModal.module.css";
 
 interface LogoutModalProps {
   onClose: () => void;
 }
 
 const LogoutModal = ({ onClose }: LogoutModalProps) => {
+  const router = useRouter();
+
+  const clearIsAuthenticated = useAuthStore(
+    (state) => state.clearIsAuthenticated,
+  );
+
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        clearIsAuthenticated();
+        onClose();
+        router.push("/");
+      })
+      .catch(() => {
+        toast.error("Не вдалося вийти. Спробуйте ще раз.");
+      });
+  };
+
   return (
     <Modal onClose={onClose} className={css.modal}>
       <div className={css.content}>
@@ -19,7 +43,9 @@ const LogoutModal = ({ onClose }: LogoutModalProps) => {
           Відмінити
         </Button>
 
-        <Button variant="primary">Вийти</Button>
+        <Button variant="primary" onClick={handleLogout}>
+          Вийти
+        </Button>
       </div>
     </Modal>
   );
