@@ -2,8 +2,16 @@
   padding: 64px 0;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
 .title {
-  margin: 0 0 40px;
+  margin: 0;
   color: var(--color-scheme-2-text);
   font-size: 28px;
   font-weight: 700;
