@@ -12,19 +12,16 @@ import "../../ui/common.module.css";
 import css from "./LocationForm.module.css";
 import { useEffect, useId, useState } from "react";
 import * as Yup from "yup";
-import {
-  Location,
-  CreateLocation,
-  UpdateLocationData,
-} from "@/types/location";
+import { Location, CreateLocation, UpdateLocationData } from "@/types/location";
 import Button from "@/components/ui/Button/Button";
 import { useLocationDraftStore } from "@/lib/store/locationStore";
 import Image from "next/image";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateLocation } from "@/lib/api/clientApi";
+import { updateLocation, fetchLocationTypes } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Spinner from "@/components/ui/Spinner/Spinner";
+import { LocationType } from "@/types/locationType";
 
 interface LocationFormProps {
   location?: Location;
@@ -63,6 +60,7 @@ const ImagePreviewWithFileInput = ({
 }: ImagePreviewWithFileInputProps) => {
   const { setFieldValue, values } = useFormikContext<CreateLocation>();
   const imageId = useId();
+  const [locationTypes, setLocationTypes] = useState<LocationType[]>([]);
 
   let imageUrl = "/location_form_placeholder_image.jpg";
   if (initialImage !== "" && initialImage !== undefined) {
@@ -224,6 +222,10 @@ export default function LocationForm({ location }: LocationFormProps) {
     }
   }, [location]);
 
+  useEffect((() => {
+    // const response = 
+  }), []);
+
   return (
     <Formik<CreateLocation>
       initialValues={draft}
@@ -234,79 +236,97 @@ export default function LocationForm({ location }: LocationFormProps) {
       <Form className={css.form}>
         {isMutating && <Spinner />}
         <fieldset className={css.fieldset}>
-          <label htmlFor={`${fieldId}-image`} className={css.label}>
-            Обкладинка статті
-          </label>
-          <ImagePreviewWithFileInput
-            key={initialLocationData.image}
-            initialImage={initialLocationData.image}
-          />
-          <ErrorMessage name="image" component="span" className={css.error} />
-          <label htmlFor={`${fieldId}-name`} className={css.label}>
-            Назва місця
-          </label>
-          <Field
-            type="text"
-            name="name"
-            id={`${fieldId}-name`}
-            onChange={handleChange}
-            className={css.field}
-          />
-          <ErrorMessage name="name" component="span" className={css.error} />
-          <label htmlFor={`${fieldId}-locationType`} className={css.label}>
-            Тип місця
-          </label>
-          <Field
-            as="select"
-            name="locationType"
-            id={`${fieldId}-locationType`}
-            className={css.select}
-          >
-            <option value="">Оберіть тип місця</option>
-            <option value="istorychne-mistse">Історичне місце</option>
-            <option value="ozero">Озеро</option>
-            <option value="natsionalnyi-park">Національний парк</option>
-          </Field>
-          <ErrorMessage
-            name="locationType"
-            component="span"
-            className={css.error}
-          />
-          <label
-            htmlFor={`${fieldId}-region`}
-            className={`${css.label} ${css.field}`}
-          >
-            Регіон
-          </label>
-          <Field
-            as="select"
-            name="region"
-            id={`${fieldId}-region`}
-            onChange={handleChange}
-            className={css.select}
-          >
-            <option value="">Оберіть регіон</option>
-            <option value="podillya">Поділля</option>
-            <option value="halychyna">Галичина</option>
-            <option value="poltavshchyna">Полтавщина</option>
-          </Field>
-          <ErrorMessage name="region" component="span" className={css.error} />
-          <label htmlFor={`${fieldId}-description`} className={css.label}>
-            Детальний опис
-          </label>
-          <Field
-            as="textarea"
-            name="description"
-            id={`${fieldId}-description`}
-            onChange={handleChange}
-            rows={5}
-            className={css.textarea}
-          />
-          <ErrorMessage
-            name="description"
-            component="span"
-            className={css.error}
-          />
+          <div className={css.formGroup}>
+            <label htmlFor={`${fieldId}-image`} className={css.label}>
+              Обкладинка статті
+            </label>
+            <ImagePreviewWithFileInput
+              key={initialLocationData.image}
+              initialImage={initialLocationData.image}
+            />
+            <ErrorMessage name="image" component="span" className={css.error} />
+          </div>
+
+          <div className={css.formGroup}>
+            <label htmlFor={`${fieldId}-name`} className={css.label}>
+              Назва місця
+            </label>
+            <Field
+              type="text"
+              name="name"
+              id={`${fieldId}-name`}
+              onChange={handleChange}
+              className={css.field}
+            />
+            <ErrorMessage name="name" component="span" className={css.error} />
+          </div>
+
+          <div className={css.formGroup}>
+            <label htmlFor={`${fieldId}-locationType`} className={css.label}>
+              Тип місця
+            </label>
+            <Field
+              as="select"
+              name="locationType"
+              id={`${fieldId}-locationType`}
+              className={css.select}
+            >
+              <option value="">Оберіть тип місця</option>
+              <option value="istorychne-mistse">Історичне місце</option>
+              <option value="ozero">Озеро</option>
+              <option value="natsionalnyi-park">Національний парк</option>
+            </Field>
+            <ErrorMessage
+              name="locationType"
+              component="span"
+              className={css.error}
+            />
+          </div>
+
+          <div className={css.formGroup}>
+            <label
+              htmlFor={`${fieldId}-region`}
+              className={`${css.label} ${css.field}`}
+            >
+              Регіон
+            </label>
+            <Field
+              as="select"
+              name="region"
+              id={`${fieldId}-region`}
+              onChange={handleChange}
+              className={css.select}
+            >
+              <option value="">Оберіть регіон</option>
+              <option value="podillya">Поділля</option>
+              <option value="halychyna">Галичина</option>
+              <option value="poltavshchyna">Полтавщина</option>
+            </Field>
+            <ErrorMessage
+              name="region"
+              component="span"
+              className={css.error}
+            />
+          </div>
+
+          <div className={css.formGroup}>
+            <label htmlFor={`${fieldId}-description`} className={css.label}>
+              Детальний опис
+            </label>
+            <Field
+              as="textarea"
+              name="description"
+              id={`${fieldId}-description`}
+              onChange={handleChange}
+              rows={5}
+              className={css.textarea}
+            />
+            <ErrorMessage
+              name="description"
+              component="span"
+              className={css.error}
+            />
+          </div>
         </fieldset>
 
         <div className={css.buttonsWrapper}>

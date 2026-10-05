@@ -38,15 +38,8 @@ export async function PATCH(request: Request, { params }: Props) {
   try {
     const cookieStore = await cookies();
     const { locationId } = await params;
-    // const body = await request.json();
 
     const formData = await request.formData();
-
-    // const res = await api.patch(`/api/locations/${locationId}`, body, {
-    //   headers: {
-    //     Cookie: cookieStore.toString(),
-    //   },
-    // });
 
     const res = await api.patch(`/api/locations/${locationId}`, formData, {
       headers: {

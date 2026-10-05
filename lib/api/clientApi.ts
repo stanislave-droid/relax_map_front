@@ -88,11 +88,6 @@ export async function updateLocation(
     }
   });
 
-  // const response = await api.patch<Location>(
-  //   `/locations/${locationId}`,
-  //   location,
-  // );
-
   const response = await api.patch<Location>(
     `/locations/${locationId}`,
     formData,
