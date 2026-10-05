@@ -4,10 +4,10 @@
 
 ## Desciption
 
-<p>With our team we made a beautiful website, where you can easily find a location to relax or share your own location with other people on the website. </p>
-<p>It can be cave, river or other type, as well as different regions across all Ukraine. For easier search, we added some filter such as region, type, sort by and field for search by word or sentence.</p>
-<p>You can inspect your new location that you just found by her rate, that counts from real users, feedbaks and even leave your own feedback, but for these and other cool features you should login in or register before.</p>
-<p>You can create your own page with your favourite locations and share them with your friends, or just save them like your memory.</p>
+<p>With our team, we created a beautiful website where you can easily find a location to relax or share your own location with other people on the website. </p>
+<p>It can be a cave, river or other types, as well as different regions across all of Ukraine. For easier searching, we added some filters such as region, type, sort by, and a field to search by word or sentence.</p>
+<p>You can inspect your new location that you just found by its rating, which comes from real users, feedbacks, and even leave your own feedback, but for these and other cool features, you should log in or register first.</p>
+<p>You can create your own page with your favorite locations and share them with your friends or just save them as your memories.</p>
 
 ### Useful link to backend repository:
 - [Backend repository](https://github.com/stanislave-droid/relax_map_back)
