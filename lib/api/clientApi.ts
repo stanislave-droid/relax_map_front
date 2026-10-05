@@ -5,7 +5,7 @@ import {
   Location,
   UpdateLocationData,
 } from "@/types/location";
-import { User } from "@/types/user";
+import { User, UserLocationsResponse } from "@/types/user";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
@@ -109,6 +109,28 @@ export async function fetchLocationById(id: string): Promise<Location> {
 
   return data;
 }
+
+export const fetchUserLocations = async ({
+  userId,
+  page = 1,
+  limit = 4,
+}: {
+  userId: string;
+  page?: number;
+  limit?: number;
+}): Promise<UserLocationsResponse> => {
+  const { data } = await api.get<UserLocationsResponse>(
+    `/users/${userId}/locations`,
+    {
+      params: {
+        page,
+        limit,
+      },
+    },
+  );
+
+  return data;
+};
 
 export async function fetchCreatedReviews(
   locationId: string,

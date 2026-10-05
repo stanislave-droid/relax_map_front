@@ -19,6 +19,28 @@
   letter-spacing: -0.01em;
 }
 
+.header > button {
+  flex-shrink: 0;
+  height: 48px;
+  border-color: var(--color-coral-dark);
+  background-color: var(--color-coral-dark);
+  color: var(--color-white);
+  font-size: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease;
+}
+
+.header > button:hover,
+.header > button:focus-visible {
+  border-color: var(--color-scheme-2-border);
+  background-color: var(--opacity-neutral-darkest-5);
+  color: var(--color-scheme-2-text);
+}
+
 .slider {
   margin-bottom: 40px;
 }
@@ -33,6 +55,10 @@
   align-items: center;
   justify-content: flex-end;
   padding: 10px 10px 10px 0;
+}
+
+.reviews:has(.header > button) .controls {
+  padding: 0;
 }
 
 .pagination {
@@ -105,5 +131,9 @@
 
   .title {
     font-size: 52px;
+  }
+
+  .header > button {
+    font-size: 20px;
   }
 }

@@ -133,6 +133,31 @@
   line-height: 1.5;
   color: var(--text-third);
 }
+
+.profileButton {
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.profileButton:hover,
+.profileButton:focus {
+  border-color: #000;
+}
+
+.profileButton:active {
+  background: #d8d8d8;
+}
+
 .userNameMenu {
   font-weight: 400;
   font-size: 12px;
@@ -233,7 +258,6 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
-  /* max-width: 320px; */
 }
 
 .mobileLoginLink {

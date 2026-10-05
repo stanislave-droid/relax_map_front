@@ -8,7 +8,8 @@ import {
 } from "@vis.gl/react-google-maps";
 import css from "./Map.module.css";
 import clsx from "clsx";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { Coordinates } from "@/types/location";
 
 interface GoogleMapProps {
   lat?: number;
@@ -17,24 +18,23 @@ interface GoogleMapProps {
   className?: string;
 }
 
+function MapController({ lat, lon: lng }: Coordinates) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map) return;
+    map.setCenter({ lat, lng });
+  }, [lat, lng, map]);
+
+  return <></>;
+}
+
 export default function GoogleMap({
   lat = 0,
   lon: lng = 0,
   title,
   className,
 }: GoogleMapProps) {
-  const map = useMap();
-
-  const onSet = (lat: number, lng: number) => {
-    map.setCenter({ lat, lng });
-    console.log("center");
-  };
-
-  useEffect(() => {
-    if (!map) return;
-    onSet(lat, lng);
-  }, [lat, lng]);
-
   return (
     <APIProvider apiKey={process.env.NEXT_PRIVATE_MAP_API || ""}>
       <Map
@@ -43,6 +43,7 @@ export default function GoogleMap({
         defaultZoom={9}
         mapId="LocationsGoogleMap"
       >
+        <MapController lat={lat} lon={lng} />
         <AdvancedMarker position={{ lat, lng }} title={title} />
       </Map>
     </APIProvider>
