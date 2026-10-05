@@ -1,5 +1,3 @@
-"use client";
-
 import "../common.module.css";
 import { Location } from "@/types/location";
 import { LocationType } from "@/types/locationType";
@@ -8,15 +6,12 @@ import Link from "../Link/Link";
 import Icon from "../Icon/Icon";
 import css from "./LocationCard.module.css";
 import RatingStars from "../RatingStars/RatingStars";
-import { fetchLocationTypes } from "@/lib/api/clientApi";
-import { useEffect, useState } from "react";
 
 interface LocationCardProps {
   location: Location;
   locationLink: string;
   editLink?: string;
   locationType?: LocationType;
-
 }
 
 export default function LocationCard({
@@ -25,28 +20,10 @@ export default function LocationCard({
   editLink,
   locationType,
 }: LocationCardProps) {
-  const [types, setTypes] = useState<LocationType[] | null>(null);
-  
   let type: string = location.locationType;
   if (locationType !== undefined) {
-    type = locationType.type;
-  } else if (types !== null) {
-    const index = types.findIndex((item) => (item.slug === location.locationType))
-    if (index !== -1) {
-      type = types[index].type;
-    }
+    type = locationType.name;
   }
-
-  useEffect(() => {
-    if (locationType === undefined) {
-      async function fetchTypes() {
-      const response = await fetchLocationTypes();
-      setTypes(response);
-    }
-
-    fetchTypes();
-    }
-  }, [locationType]);
 
   return (
     <div className={css.locationCard}>
