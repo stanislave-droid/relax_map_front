@@ -2,7 +2,6 @@
 
 import {useQuery} from "@tanstack/react-query";
 import {fetchLocationById, getUserById} from "@/lib/api/clientApi";
-import Spinner from "@/components/ui/Spinner/Spinner";
 import LocationDescription from "@/components/location/LocationDescription/LocationDescription";
 import LocationInfoBlock from "@/components/location/LocationInfoBlock/LocationInfoBlock";
 import css from "./LocationDetailsClient.module.css";
@@ -14,13 +13,13 @@ interface LocationDetailsClientProps {
 
 export default function LocationDetailsClient({id}: LocationDetailsClientProps) {
 
-    const {data: location, isLoading: isLocationLoading, isError: isLocationError} = useQuery({
+    const {data: location, isError: isLocationError} = useQuery({
         queryKey: ["location", id],
         queryFn: () => fetchLocationById(id),
         refetchOnMount: false,
     });
 
-    const {data: author, isLoading: isAuthorLoading, isError: isAuthorError} = useQuery({
+    const {data: author, isError: isAuthorError} = useQuery({
         queryKey: ["author", location?.ownerId],
         queryFn: () => getUserById(location!.ownerId),
         enabled: !!location,
@@ -28,16 +27,8 @@ export default function LocationDetailsClient({id}: LocationDetailsClientProps) 
     });
 
 
-    if (isLocationError || isAuthorError) {
-        return (
-            <p>Не вдалося завантажити локацію</p>
-        )
-    }
-
-    if (isLocationLoading || isAuthorLoading || !location || !author) {
-        return (
-            <Spinner/>
-        )
+    if (isLocationError || isAuthorError || !location || !author) {
+        throw new Error("Не вдалося завантажити локацію");
     }
 
     return (
@@ -51,7 +42,8 @@ export default function LocationDetailsClient({id}: LocationDetailsClientProps) 
                     imageUrl={location.image}
                     author={{
                         id: author._id,
-                        name: author.name
+                        name: author.name,
+                        avatarUrl: null,
                     }}
                 />
             </div>
