@@ -19,47 +19,6 @@
   height: auto;
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 100%;
-  padding: 16px;
-  border-radius: 16px;
-  background-color: var(--color-scheme-2-foreground);
-}
-
-.text {
-  flex-grow: 1;
-  margin: 0;
-  color: var(--color-scheme-2-text);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-}
-
-.authorInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.author {
-  margin: 0;
-  color: var(--color-scheme-2-text);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
-.type {
-  margin: 0;
-  color: var(--color-scheme-2-text);
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
 .controls {
   position: relative;
   display: flex;
@@ -138,17 +97,5 @@
 
   .title {
     font-size: 52px;
-  }
-
-  .text {
-    font-size: 20px;
-  }
-
-  .author {
-    font-size: 18px;
-  }
-
-  .type {
-    font-size: 12px;
   }
 }

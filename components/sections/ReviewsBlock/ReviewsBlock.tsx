@@ -1,21 +1,31 @@
-import { Suspense } from "react";
-import Spinner from "@/components/ui/Spinner/Spinner";
+import { Feedback } from "@/types/feedback";
+import ReviewsBlockClient from "./ReviewsBlockClient";
 import css from "./ReviewsBlock.module.css";
-import ReviewsList from "./ReviewsList";
 
 interface ReviewsBlockProps {
-  title?: string;
+  title: string;
+  feedbacks: Feedback[];
+  showLocation?: boolean;
 }
 
-const ReviewsBlock = ({ title }: ReviewsBlockProps) => {
+const ReviewsBlock = ({
+  title,
+  feedbacks,
+  showLocation = false,
+}: ReviewsBlockProps) => {
   return (
     <section className={css.reviews}>
       <div className="container">
-        {title && <h2 className={css.title}>{title}</h2>}
+        <h2 className={css.title}>{title}</h2>
 
-        <Suspense fallback={<Spinner />}>
-          <ReviewsList />
-        </Suspense>
+        {feedbacks.length > 0 ? (
+          <ReviewsBlockClient
+            feedbacks={feedbacks}
+            showLocation={showLocation}
+          />
+        ) : (
+          <p>Відгуків поки немає</p>
+        )}
       </div>
     </section>
   );
