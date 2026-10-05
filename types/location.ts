@@ -8,10 +8,7 @@ export interface Location {
   rate: number;
   ownerId: string;
   feedbacksId: string[];
-  coordinates: {
-    lat: number;
-    lon: number;
-  };
+  coordinates: Coordinates;
 }
 
 export type SortBy = "rate" | "updatedAt";
@@ -22,6 +19,11 @@ export const SortByArray: (SortBy | "popular")[] = [
   "rate",
   "updatedAt",
 ];
+
+export interface Coordinates {
+  lat: number;
+  lon: number;
+}
 
 export interface fetchLocationsProps {
   page?: number;
