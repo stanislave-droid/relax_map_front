@@ -62,31 +62,32 @@ export default function LocationDetailsClient({
   //   }, []);
 
   return (
-    <main className={css.main}>
-      <div className={css.info}>
-        <LocationInfoBlock
-          name={location.name}
-          rating={location.rate}
-          region={location.region}
-          type={location.locationType}
-          imageUrl={location.image}
-          author={{
-            id: author._id,
-            name: author.name,
-            avatarUrl: null,
-          }}
-        />
-      </div>
-
-      <div className={css.description}>
-        <LocationDescription description={location.description} />
-        {
-          <Map
-            lat={location.coordinates.lat}
-            lon={location.coordinates.lon}
-            title={location.name}
-          />
-        }
+    <main>
+      <div className={css.main}>
+          <div className={css.info}>
+            <LocationInfoBlock
+              name={location.name}
+              rating={location.rate}
+              region={location.region}
+              type={location.locationType}
+              imageUrl={location.image}
+              author={{
+                id: author._id,
+                name: author.name,
+                avatarUrl: null,
+              }}
+            />
+          </div>
+          <div className={css.description}>
+            <LocationDescription description={location.description} />
+            {
+              <Map
+                lat={location.coordinates.lat}
+                lon={location.coordinates.lon}
+                title={location.name}
+              />
+            }
+          </div>
       </div>
 
       <ReviewsBlock
