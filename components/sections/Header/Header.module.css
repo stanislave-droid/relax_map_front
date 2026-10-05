@@ -144,6 +144,9 @@
   border: var(--background);
   cursor: pointer;
   outline: none;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
 }
 
 .profileButton:hover,
