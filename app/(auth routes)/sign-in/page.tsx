@@ -23,7 +23,7 @@ export const SignIn = () => {
       const user = await login(values);
       setUser(user);
       toast.success("Ви успішно увійшли!");
-      router.push(`/profile/${user._id}`);
+      router.push(`/profile/myProfile`);
     } catch (error) {
       toast.error(getLoginErrorMessage(error));
     } finally {
