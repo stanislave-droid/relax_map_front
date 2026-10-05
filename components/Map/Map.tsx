@@ -19,7 +19,7 @@ export default function GoogleMap({
   className,
 }: GoogleMapProps) {
   return (
-    <APIProvider apiKey={process.env.NEXT_PUBLIC_MAP_API || ""}>
+    <APIProvider apiKey={process.env.NEXT_PRIVATE_MAP_API || ""}>
       <Map
         className={clsx(css.map, className)}
         defaultCenter={{ lat, lng }}
