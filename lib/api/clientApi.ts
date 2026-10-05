@@ -11,8 +11,8 @@ import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
-import { Region } from "@/types/region";
 import { placesResponse } from "@/app/api/map/route";
+import { Region } from "@/types/region";
 import { FeedbacksResponse } from "@/types/feedback";
 
 export interface ApiErrorResponse {
