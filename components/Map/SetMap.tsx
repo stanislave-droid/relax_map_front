@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LocationSearch from "../forms/LocationSearch/LocationSearch";
 import GoogleMap from "./Map";
 import { placesResponse } from "@/app/api/map/route";
@@ -16,7 +16,6 @@ export default function SetMap() {
     findPlace(search)
       .then((data) => {
         setPlace(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log(error.message);

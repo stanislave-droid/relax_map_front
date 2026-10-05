@@ -23,8 +23,17 @@ export default function GoogleMap({
   title,
   className,
 }: GoogleMapProps) {
-  const map = useRef(null);
-  useEffect(() => {}, []);
+  const map = useMap();
+
+  const onSet = (lat: number, lng: number) => {
+    map.setCenter({ lat, lng });
+    console.log("center");
+  };
+
+  useEffect(() => {
+    if (!map) return;
+    onSet(lat, lng);
+  }, [lat, lng]);
 
   return (
     <APIProvider apiKey={process.env.NEXT_PRIVATE_MAP_API || ""}>
@@ -33,7 +42,6 @@ export default function GoogleMap({
         defaultCenter={{ lat, lng }}
         defaultZoom={9}
         mapId="LocationsGoogleMap"
-        onCenterChanged={() => {}}
       >
         <AdvancedMarker position={{ lat, lng }} title={title} />
       </Map>
