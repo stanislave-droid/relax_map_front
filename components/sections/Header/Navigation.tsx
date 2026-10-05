@@ -5,8 +5,9 @@ import Icon from "@/components/ui/Icon/Icon";
 import css from "./Header.module.css";
 import Image from "next/image";
 import { useAuthStore } from "@/lib/store/authStore";
-import { LOCATIONS_PATH } from "@/types/location";
+import { LOCATIONS_PATH, SortByArray } from "@/types/location";
 import { usePathname } from "next/navigation";
+import { SortBy } from "@/types/location";
 
 const DEFAULT_AVATAR =
   "https://ac.goit.global/fullstack/react/default-avatar.jpg";
@@ -39,7 +40,8 @@ const Navigation = ({
         <Link
           href={`${LOCATIONS_PATH}/${
             pathname.includes("all-locations")
-              ? lastPiece !== "popular"
+              ? lastPiece &&
+                !SortByArray.includes(lastPiece as SortBy | "popular")
                 ? lastPiece
                 : ""
               : ""
