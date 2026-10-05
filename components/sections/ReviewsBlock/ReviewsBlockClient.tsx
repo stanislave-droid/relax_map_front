@@ -7,15 +7,19 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import Icon from "@/components/ui/Icon/Icon";
-import RatingStars from "@/components/ui/RatingStars/RatingStars";
+import ReviewCard from "@/components/ui/ReviewCard/ReviewCard";
 import { Feedback } from "@/types/feedback";
 import css from "./ReviewsBlock.module.css";
 
 interface ReviewsBlockClientProps {
   feedbacks: Feedback[];
+  showLocation: boolean;
 }
 
-const ReviewsBlockClient = ({ feedbacks }: ReviewsBlockClientProps) => {
+const ReviewsBlockClient = ({
+  feedbacks,
+  showLocation,
+}: ReviewsBlockClientProps) => {
   return (
     <>
       <Swiper
@@ -38,18 +42,9 @@ const ReviewsBlockClient = ({ feedbacks }: ReviewsBlockClientProps) => {
         }}
         className={css.slider}
       >
-        {feedbacks.map(({ _id, rate, description, userName, locationId }) => (
-          <SwiperSlide key={_id} className={css.slide}>
-            <article className={css.card}>
-              <RatingStars value={rate} />
-              <p className={css.text}>{description}</p>
-              <div className={css.authorInfo}>
-                <p className={css.author}>{userName}</p>
-                {locationId?.name && (
-                  <p className={css.type}>{locationId.name}</p>
-                )}
-              </div>
-            </article>
+        {feedbacks.map((feedback) => (
+          <SwiperSlide key={feedback._id} className={css.slide}>
+            <ReviewCard feedback={feedback} showLocation={showLocation} />
           </SwiperSlide>
         ))}
       </Swiper>

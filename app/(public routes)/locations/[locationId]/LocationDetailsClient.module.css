@@ -1,0 +1,64 @@
+.main {
+    max-width: 335px;
+    margin: 0 auto;
+    padding: 32px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.info {
+    width: 100%;
+}
+
+/* скидаємо зовнішні відступи LocationInfoBlock */
+.info > section {
+    margin: 0;
+    padding: 0;
+}
+
+.description {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+@media screen and (min-width: 768px) {
+    .main {
+        max-width: 704px;
+        padding: 32px 0 0;
+    }
+
+    .info > section {
+        padding: 0;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .main {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 1440px;
+        padding: 0 64px;
+        gap: 0;
+
+    }
+
+    .info {
+        padding-block: 48px;
+    }
+
+    .info > section {
+        padding: 0;
+    }
+
+    .description {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 865px;
+        margin: 0 auto;
+        padding: 48px 0 0;
+        gap: 80px
+    }
+}
