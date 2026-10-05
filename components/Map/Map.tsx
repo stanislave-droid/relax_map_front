@@ -1,9 +1,6 @@
-"use client";
-
 import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 import css from "./Map.module.css";
 import clsx from "clsx";
-import axios from "axios";
 
 interface GoogleMapProps {
   lat?: number;
