@@ -1,7 +1,6 @@
 import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
 import {
-  Coordinates,
   fetchLocationsProps,
   Location,
   UpdateLocationData,
@@ -13,6 +12,8 @@ import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
 import { placesResponse } from "@/app/api/map/route";
+import { Region } from "@/types/region";
+import { FeedbacksResponse } from "@/types/feedback";
 
 export interface ApiErrorResponse {
   message: string;
@@ -77,13 +78,27 @@ export const fetchLocationTypes = async (): Promise<LocationType[]> => {
   const { data } = await api.get<LocationType[]>("/types");
   return data;
 };
+
+export const fetchRegions = async (): Promise<Region[]> => {
+  const { data } = await api.get<Region[]>("/regions");
+  return data;
+};
+
 export async function updateLocation(
   locationId: string,
   location: UpdateLocationData,
 ): Promise<Location> {
+  const formData = new FormData();
+
+  Object.entries(location).forEach(([key, value]) => {
+    if (value !== null && value !== undefined) {
+      formData.append(key, value as string | Blob);
+    }
+  });
+
   const response = await api.patch<Location>(
     `/locations/${locationId}`,
-    location,
+    formData,
   );
 
   return response.data;
@@ -102,6 +117,18 @@ export async function fetchCreatedReviews(
   const { data } = await api.post(`/feedbacks/${locationId}`, feedback);
   return data;
 }
+
+export const getFeedbacksByLocation = async (
+  locationId: string,
+  page = 1,
+  limit = 10,
+): Promise<FeedbacksResponse> => {
+  const { data } = await api.get<FeedbacksResponse>(
+    `/feedbacks/${locationId}`,
+    { params: { page, limit } },
+  );
+  return data;
+};
 
 export const getUserById = async (userId: string): Promise<User> => {
   const { data } = await api.get<User>(`/users/${userId}`);

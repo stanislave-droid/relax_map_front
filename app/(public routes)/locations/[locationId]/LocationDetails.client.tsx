@@ -1,9 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchLocationById, getUserById } from "@/lib/api/clientApi";
+import {
+  fetchLocationById,
+  getFeedbacksByLocation,
+  getUserById,
+} from "@/lib/api/clientApi";
 import LocationDescription from "@/components/location/LocationDescription/LocationDescription";
 import LocationInfoBlock from "@/components/location/LocationInfoBlock/LocationInfoBlock";
+import ReviewsBlock from "@/components/sections/ReviewsBlock/ReviewsBlock";
+import Button from "@/components/ui/Button/Button";
+import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewModal";
 import css from "./LocationDetailsClient.module.css";
 import Map from "@/components/Map/Map";
 
@@ -19,6 +27,7 @@ export default function LocationDetailsClient({
     queryFn: () => fetchLocationById(id),
     refetchOnMount: false,
   });
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const { data: author, isError: isAuthorError } = useQuery({
     queryKey: ["author", location?.ownerId],
@@ -30,6 +39,12 @@ export default function LocationDetailsClient({
   if (isLocationError || isAuthorError || !location || !author) {
     throw new Error("Не вдалося завантажити локацію");
   }
+
+  const { data: feedbacksData } = useQuery({
+    queryKey: ["feedbacks", id],
+    queryFn: () => getFeedbacksByLocation(id),
+    refetchOnMount: false,
+  });
 
   //   const [place, setPlace] = useState<placesResponse>({
   //     lat: 0,
@@ -73,6 +88,20 @@ export default function LocationDetailsClient({
           />
         }
       </div>
+
+      <ReviewsBlock
+        title="Відгуки"
+        feedbacks={feedbacksData?.feedbacks ?? []}
+        action={
+          <Button onClick={() => setIsReviewOpen(true)}>Залишити відгук</Button>
+        }
+      />
+
+      <AddReviewBlock
+        isOpen={isReviewOpen}
+        locationId={id}
+        onClose={() => setIsReviewOpen(false)}
+      />
     </main>
   );
 }
