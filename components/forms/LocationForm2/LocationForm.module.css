@@ -83,6 +83,7 @@
   padding: 12px;
   color: var(--color-scheme-2-text);
   background-color: var(--color-scheme-2-foreground);
+  outline: transparent;
 }
 
 .field:user-invalid,

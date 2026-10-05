@@ -114,7 +114,7 @@ const ImagePreviewWithFileInput = ({
   );
 };
 
-export default function LocationForm({ location }: LocationFormProps) {
+export default function LocationForm2({ location }: LocationFormProps) {
   const fieldId = useId();
   const { draft, setDraft, clearDraft } = useLocationDraftStore();
   const buttonSubmitName =

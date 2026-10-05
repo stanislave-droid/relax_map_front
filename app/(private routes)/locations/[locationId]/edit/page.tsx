@@ -3,7 +3,7 @@ import clsx from "clsx";
 import css from "./EditLocationPage.module.css";
 import { Metadata } from "next";
 import { fetchLocationById } from "@/lib/api/serverApi";
-import LocationForm from "@/components/forms/LocationForm/LocationForm";
+import LocationForm from "@/components/forms/LocationForm2/LocationForm2";
 
 export const metadata: Metadata = {
   title: "Редагування місця — RelaxMap",
