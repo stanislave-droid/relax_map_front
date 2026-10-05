@@ -1,6 +1,8 @@
 import css from "./CreateLocationsPage.module.css";
 import type { Metadata } from "next";
 import clsx from "clsx";
+import CreateLocationForm from "@/components/forms/LocationSearch/LocationSearch";
+
 export const metadata: Metadata = {
   title: "Додати нову локацію — RelaxMap",
   description: "Service for searching places to relax",
@@ -27,7 +29,9 @@ export default async function AddLocationPage() {
         <h1 className={clsx("main-headding", css.title)}>
           Додавання нового місця
         </h1>
-        <div className={css.formWrapper}>{/* компонент форми */}</div>
+        <div className={css.formWrapper}>
+          <CreateLocationForm />
+        </div>
       </div>
     </main>
   );
