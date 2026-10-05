@@ -11,6 +11,7 @@ import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
+import { FeedbacksResponse } from "@/types/feedback";
 
 export interface ApiErrorResponse {
   message: string;
@@ -100,6 +101,18 @@ export async function fetchCreatedReviews(
   const { data } = await api.post(`/feedbacks/${locationId}`, feedback);
   return data;
 }
+
+export const getFeedbacksByLocation = async (
+  locationId: string,
+  page = 1,
+  limit = 10,
+): Promise<FeedbacksResponse> => {
+  const { data } = await api.get<FeedbacksResponse>(
+    `/feedbacks/${locationId}`,
+    { params: { page, limit } },
+  );
+  return data;
+};
 
 export const getUserById = async (userId: string): Promise<User> => {
   const { data } = await api.get<User>(`/users/${userId}`);
