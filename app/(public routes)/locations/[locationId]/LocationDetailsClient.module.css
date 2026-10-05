@@ -42,7 +42,6 @@
         max-width: 1440px;
         padding: 0 64px;
         gap: 0;
-
     }
 
     .info {
@@ -62,3 +61,15 @@
         gap: 80px
     }
 }
+
+.info div > span::before {
+    content: "";
+    display: inline-block;
+    border-radius: 50%;
+    background-color: #1b391b;
+    margin-right: 9px;
+    width: 4px;
+    height: 4px;
+    vertical-align: middle;
+}
+
