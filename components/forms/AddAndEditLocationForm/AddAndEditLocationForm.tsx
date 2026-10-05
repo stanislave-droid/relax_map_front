@@ -162,7 +162,7 @@ export default function AddAndEditLocationForm({
                     key={type.slug}
                     value={type.slug}
                   >
-                    {type.type}
+                    {type.name}
                   </option>
                 ))}
               </Field>
