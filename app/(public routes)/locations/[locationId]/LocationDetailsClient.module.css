@@ -40,8 +40,8 @@
         box-sizing: border-box;
         width: 100%;
         max-width: 1440px;
-        padding: 0 64px; /* padding-inline: 64px з макета */
-        gap: 0; /* відступи тепер у блоках */
+        padding: 0 64px;
+        gap: 0;
 
     }
 
