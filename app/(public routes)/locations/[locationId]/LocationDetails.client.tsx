@@ -71,7 +71,6 @@ export default function LocationDetailsClient({
           lon={location.coordinates.lon}
           title={location.name}
         />
-        <SetMap />
       </div>
 
       <ReviewsBlock
