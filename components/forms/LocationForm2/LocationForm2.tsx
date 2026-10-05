@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import Spinner from "@/components/ui/Spinner/Spinner";
 import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
+import SetMap from "@/components/Map/SetMap";
 
 interface LocationFormProps {
   location?: Location;
@@ -405,6 +406,8 @@ export default function LocationForm2({ location }: LocationFormProps) {
             />
           </div>
         </fieldset>
+
+        <SetMap setValue={(value) => {}} />
 
         <div className={css.buttonsWrapper}>
           <Button type="submit" className={css.button} disabled={!isFormFilled}>

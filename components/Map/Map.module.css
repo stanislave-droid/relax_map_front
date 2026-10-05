@@ -3,6 +3,12 @@
   height: 188px;
 }
 
+.setMapWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 @media screen and (min-width: 768px) {
   .map {
     width: 704px;
