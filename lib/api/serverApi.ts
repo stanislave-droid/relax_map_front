@@ -111,8 +111,8 @@ export const checkSession = async () => {
 };
 
 export const fetchLocationTypes = async (): Promise<LocationType[]> => {
-  const { data } = await api.get<LocationType[]>("/types");
-  return data;
+  const { data } = await api.get<{ data: LocationType[] }>("/types");
+  return data.data;
 };
 
 export const fetchRegions = async (): Promise<Region[]> => {

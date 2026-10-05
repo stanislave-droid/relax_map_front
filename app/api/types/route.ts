@@ -28,6 +28,7 @@ export async function GET() {
     } else {
       logErrorResponse({ message: (error as Error).message });
     }
+
     return NextResponse.json(fallbackTypes, {
       status: 200,
       headers: {
