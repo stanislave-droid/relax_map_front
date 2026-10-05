@@ -6,6 +6,7 @@ import css from "./Header.module.css";
 import Image from "next/image";
 import { useAuthStore } from "@/lib/store/authStore";
 import { LOCATIONS_PATH } from "@/types/location";
+import { usePathname } from "next/navigation";
 
 const DEFAULT_AVATAR =
   "https://ac.goit.global/fullstack/react/default-avatar.jpg";
@@ -23,6 +24,9 @@ const Navigation = ({
 }: NavigationProps) => {
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const pathname = usePathname();
+  const pathnameArray = pathname.split("/");
+  const lastPiece = pathnameArray.at(pathnameArray.length - 1);
 
   return (
     <>
@@ -32,7 +36,16 @@ const Navigation = ({
             Головна
           </Link>
         )}
-        <Link href={LOCATIONS_PATH} className={css.navLink}>
+        <Link
+          href={`${LOCATIONS_PATH}/${
+            pathname.includes("all-locations")
+              ? lastPiece !== "popular"
+                ? lastPiece
+                : ""
+              : ""
+          }`}
+          className={css.navLink}
+        >
           Місця відпочинку
         </Link>
         {isAuthenticated && (
