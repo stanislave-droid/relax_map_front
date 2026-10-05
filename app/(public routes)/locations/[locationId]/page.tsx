@@ -1,6 +1,6 @@
 import {dehydrate, QueryClient} from "@tanstack/query-core";
 import {HydrationBoundary} from "@tanstack/react-query";
-import {fetchLocationById, getUserById} from "@/lib/api/serverApi";
+import {fetchLocationById, getFeedbacksByLocation, getUserById} from "@/lib/api/serverApi";
 import LocationDetailsClient from "@/app/(public routes)/locations/[locationId]/LocationDetails.client";
 import {Metadata} from "next";
 
@@ -19,7 +19,7 @@ export async function generateMetadata({params}: LocationDetailsPageProps): Prom
             ? `${cleanDescription.slice(0, 157)}...`
             : cleanDescription;
     const url = `${process.env.NEXT_PUBLIC_SITE_URL}/locations/${locationId}`;
-
+    
     return {
         title,
         description,
@@ -60,6 +60,10 @@ export default async function LocationDetailsPage({params}: LocationDetailsPageP
         queryKey: ["author", location.ownerId],
         queryFn: () => getUserById(location.ownerId)
     })
+    await queryClient.query({
+        queryKey: ["feedbacks", locationId],
+        queryFn: () => getFeedbacksByLocation(locationId),
+    }).catch(() => null);
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
