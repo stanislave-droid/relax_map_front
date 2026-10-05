@@ -44,6 +44,12 @@ interface CreateLocation {
   region: string;
 }
 
+interface FormButtonsParameters {
+  submitButtonName: string;
+  cancelButtonName: string;
+  onCancel: () => void;
+}
+
 const initialValues: CreateLocation = {
   image: "",
   name: "",
@@ -113,6 +119,49 @@ const ImagePreviewWithFileInput = ({
     </div>
   );
 };
+
+function FormButtons({
+  submitButtonName,
+  cancelButtonName,
+  onCancel,
+}: FormButtonsParameters) {
+  const { values, isSubmitting } = useFormikContext<CreateLocation>();
+
+  let submitName = submitButtonName;
+
+  const isAllFieldsFilled =
+    values.name.trim() !== "" &&
+    values.description.trim() !== "" &&
+    values.locationType.trim() !== "" &&
+    values.region.trim() !== "" &&
+    values.image !== null &&
+    values.image !== "";
+
+  if (!isAllFieldsFilled) {
+    submitName = "Опублікувати";
+  }
+
+  return (
+    <div className={css.buttonsWrapper}>
+      <Button
+        type="submit"
+        className={css.button}
+        disabled={!isAllFieldsFilled}
+      >
+        {submitName}
+      </Button>
+      <Button
+        type="button"
+        variant="secondary"
+        className={css.button}
+        onClick={onCancel}
+        disabled={!isAllFieldsFilled || isSubmitting}
+      >
+        {cancelButtonName}
+      </Button>
+    </div>
+  );
+}
 
 export default function LocationForm2({ location }: LocationFormProps) {
   const fieldId = useId();
