@@ -16,6 +16,7 @@ export interface Location {
 
 export type SortBy = "rate" | "updatedAt";
 export type SortDirection = "asc" | "desc";
+export const LOCATIONS_PATH = "/all-locations/all-types/all-regions/popular";
 
 export interface fetchLocationsProps {
   page?: number;
