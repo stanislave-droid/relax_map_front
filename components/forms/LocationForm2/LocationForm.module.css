@@ -73,6 +73,7 @@
   height: 40px;
   color: var(--color-scheme-2-text);
   background-color: var(--color-scheme-2-foreground);
+  outline: transparent;
 }
 
 .textarea {
