@@ -34,7 +34,7 @@ export default function LocationsClient() {
 
   const { data, fetchNextPage, hasNextPage, isFetching, isLoading } =
     useInfiniteQuery({
-      queryKey: ["locations"],
+      queryKey: ["locations", region, type, sortBy],
       queryFn: ({ pageParam }) =>
         fetchLocations({
           page: pageParam,

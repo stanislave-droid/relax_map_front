@@ -40,7 +40,7 @@ export default async function Locations({
   const sortDirection = slug && slug[2] ? "desc" : undefined;
 
   await queryClient.infiniteQuery({
-    queryKey: ["locations"],
+    queryKey: ["locations", region, type, getSortBy(slug)],
     queryFn: () =>
       fetchLocations({
         page: 1,

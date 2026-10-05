@@ -100,3 +100,9 @@ export async function fetchCreatedReviews(
   const { data } = await api.post(`/feedbacks/${locationId}`, feedback);
   return data;
 }
+
+export const getUserById = async (userId: string): Promise<User> => {
+  const { data } = await api.get<User>(`/users/${userId}`);
+  return data;
+};
+
