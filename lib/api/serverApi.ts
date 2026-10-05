@@ -88,6 +88,18 @@ export const getAllFeedbacks = async (
   return data;
 };
 
+export const getFeedbacksByLocation = async (
+  locationId: string,
+  page = 1,
+  limit = 10,
+): Promise<FeedbacksResponse> => {
+  const { data } = await api.get<FeedbacksResponse>(
+    `/feedbacks/${locationId}`,
+    { params: { page, limit } },
+  );
+  return data;
+};
+
 export const checkSession = async () => {
   const cookieStore = await cookies();
   const response = await api.get<CheckSessionRequest>("/auth/session", {

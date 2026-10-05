@@ -9,8 +9,8 @@ export default async function SearchBar() {
 
   return (
     <SearchBarClient
-      types={types}
-      regions={regions}
+      types={Array.isArray(types) ? types : []}
+      regions={Array.isArray(regions) ? regions : []}
       activeType="istorychne-mistse"
       activeRegion="podillya"
       search="dsa"

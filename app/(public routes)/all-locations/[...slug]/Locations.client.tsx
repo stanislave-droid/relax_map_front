@@ -5,8 +5,9 @@ import Button from "@/components/ui/Button/Button";
 import { fetchLocations } from "@/lib/api/clientApi";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import css from "./Locations.module.css";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { SortBy } from "@/types/location";
+import { getSearch } from "@/utils/getSearch";
 
 const getSortBy = (slug: string): SortBy | undefined => {
   if (slug && slug[2] !== "popular") {
@@ -22,11 +23,9 @@ const getSortBy = (slug: string): SortBy | undefined => {
 };
 
 export default function LocationsClient() {
-  const searchParams = useSearchParams();
-  const searchParam = searchParams.get("search");
   const { slug } = useParams();
 
-  const search = typeof searchParam == "string" ? searchParam : undefined;
+  const search = slug && getSearch(slug[3]);
   const region = slug && slug[1] !== "all-regions" ? slug[1] : undefined;
   const type = slug && slug[0] !== "all-types" ? slug[0] : undefined;
   const sortBy = getSortBy(slug as string);
@@ -34,7 +33,7 @@ export default function LocationsClient() {
 
   const { data, fetchNextPage, hasNextPage, isFetching, isLoading } =
     useInfiniteQuery({
-      queryKey: ["locations"],
+      queryKey: ["locations", region, type, sortBy],
       queryFn: ({ pageParam }) =>
         fetchLocations({
           page: pageParam,
