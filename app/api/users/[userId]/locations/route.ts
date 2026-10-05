@@ -12,7 +12,7 @@ type Props = {
 interface LocationsApiResponse {
   locations: Location[];
   page: number;
-  limit: number;
+  perPage: number;
   totalPages: number;
   totalLocations: number;
 }
@@ -37,13 +37,10 @@ export async function GET(request: NextRequest, { params }: Props) {
       },
     );
 
-    const { locations, totalLocations } = locationsResponse.data;
-
     return NextResponse.json(
       {
-        locations,
-        total: totalLocations,
-        isEmpty: totalLocations === 0,
+        ...locationsResponse.data,
+        isEmpty: locationsResponse.data.totalLocations === 0,
       },
       { status: locationsResponse.status },
     );
