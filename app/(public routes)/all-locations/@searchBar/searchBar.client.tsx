@@ -9,6 +9,7 @@ import clsx from "clsx";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { getSearch } from "@/utils/getSearch";
 
 interface SearchBarClientProps {
   types: LocationType[];
@@ -27,7 +28,7 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
   const { slug } = useParams();
 
   const [searchField, setSearchField] = useState(() =>
-    slug ? slug[3] || "" : "",
+    slug ? getSearch(slug[3]) : "",
   );
   const [region, setRegion] = useState(() => (slug ? slug[1] : REGION_DEFAULT));
   const [type, setType] = useState(() => (slug ? slug[0] : TYPE_DEFAULT));
@@ -38,8 +39,8 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
       "/all-locations/" +
         `${type}/` +
         `${region}/` +
-        `${sort}?` +
-        `search=${searchField}`,
+        `${sort}/` +
+        `${searchField}`,
     );
   }, [searchField, type, region, sort, router]);
 
