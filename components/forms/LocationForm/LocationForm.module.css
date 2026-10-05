@@ -1,5 +1,4 @@
 .form {
-  /* padding: 0 20px 64px; */
   padding: 0 0 64px;
   background-color: var(--color-scheme-2-background);
 }
@@ -13,8 +12,13 @@
 }
 
 .formGroup {
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
+}
+
+.formGroup:last-child {
+  margin-bottom: 0;
 }
 
 .label {
@@ -63,11 +67,11 @@
 
 .field,
 .select {
-  margin-bottom: 24px;
   padding: 8px;
   border: 1px solid var(--opacity-neutral-darkest-15);
   border-radius: 6px;
   height: 40px;
+  color: var(--color-scheme-2-text);
   background-color: var(--color-scheme-2-foreground);
 }
 
@@ -77,6 +81,7 @@
   border: 1px solid var(--opacity-neutral-darkest-15);
   border-radius: 6px;
   padding: 12px;
+  color: var(--color-scheme-2-text);
   background-color: var(--color-scheme-2-foreground);
 }
 
@@ -89,6 +94,20 @@
   font-size: 12px;
   line-height: 1.5;
   color: var(--color-red);
+}
+
+.field:hover,
+.field:focus,
+.textarea:hover,
+.textarea:focus {
+  border: 1px solid var(--color-scheme-1-accent);
+  background-color: var(--color-scheme-2-foreground);
+}
+
+.field::placeholder,
+.textarea::placeholder {
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  color: var(--opacity-neutral-darkest-60);
 }
 
 .buttonsWrapper {
@@ -104,4 +123,54 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .image {
+    width: 704px;
+    height: 468px;
+  }
+
+  .field,
+  .select {
+    font-size: 18px;
+  }
+
+  .textarea {
+    min-height: 304px;
+    font-size: 18px;
+  }
+
+  .buttonsWrapper {
+    flex-direction: row;
+    column-gap: 16px;
+  }
+
+  .button {
+    width: 203px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .form {
+    width: 1089px;
+  }
+
+  .image {
+    width: 1089px;
+    height: 724px;
+  }
+
+  .textarea {
+    min-height: 283px;
+  }
+
+  .buttonsWrapper {
+    flex-direction: row;
+    column-gap: 16px;
+  }
+
+  .button {
+    width: 203px;
+  }
 }

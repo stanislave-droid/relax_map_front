@@ -38,7 +38,6 @@ export default async function EditLocation({ params }: EditLocationProps) {
         <h1 className={css.pageTitle}>Редагування місця</h1>
         <div>
           <LocationForm location={location} />
-          {/* <LocationForm /> */}
         </div>
       </div>
     </main>

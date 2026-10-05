@@ -11,6 +11,7 @@ import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
+import { Region } from "@/types/region";
 
 export interface ApiErrorResponse {
   message: string;
@@ -75,6 +76,11 @@ export const fetchLocationTypes = async (): Promise<LocationType[]> => {
   const { data } = await api.get<LocationType[]>("/types");
   return data;
 };
+
+export const fetchRegions = async (): Promise<Region[]> => {
+  const { data } = await api.get<Region[]>("/regions");
+  return data;
+}
 
 export async function updateLocation(
   locationId: string,

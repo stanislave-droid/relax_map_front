@@ -33,22 +33,6 @@ export interface fetchLocationsProps {
   sortDirection?: SortDirection;
 }
 
-export interface CreateLocation {
-  image: string | File | null;
-  name: string;
-  description: string;
-  locationType: string;
-  region: string;
-}
-
-export interface NewLocationData {
-  image: string;
-  name: string;
-  description: string;
-  locationType: string;
-  region: string;
-}
-
 export interface UpdateLocationData {
   image?: string;
   name?: string;

@@ -12,16 +12,21 @@ import "../../ui/common.module.css";
 import css from "./LocationForm.module.css";
 import { useEffect, useId, useState } from "react";
 import * as Yup from "yup";
-import { Location, CreateLocation, UpdateLocationData } from "@/types/location";
+import { Location, UpdateLocationData } from "@/types/location";
 import Button from "@/components/ui/Button/Button";
 import { useLocationDraftStore } from "@/lib/store/locationStore";
 import Image from "next/image";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateLocation, fetchLocationTypes } from "@/lib/api/clientApi";
+import {
+  updateLocation,
+  fetchLocationTypes,
+  fetchRegions,
+} from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Spinner from "@/components/ui/Spinner/Spinner";
 import { LocationType } from "@/types/locationType";
+import { Region } from "@/types/region";
 
 interface LocationFormProps {
   location?: Location;
@@ -29,6 +34,14 @@ interface LocationFormProps {
 
 interface ImagePreviewWithFileInputProps {
   initialImage: string;
+}
+
+interface CreateLocation {
+  image: string | File | null;
+  name: string;
+  description: string;
+  locationType: string;
+  region: string;
 }
 
 const initialValues: CreateLocation = {
@@ -58,9 +71,8 @@ const LocationFormSchema = Yup.object().shape({
 const ImagePreviewWithFileInput = ({
   initialImage,
 }: ImagePreviewWithFileInputProps) => {
-  const { setFieldValue, values } = useFormikContext<CreateLocation>();
+  const { setFieldValue } = useFormikContext<CreateLocation>();
   const imageId = useId();
-  const [locationTypes, setLocationTypes] = useState<LocationType[]>([]);
 
   let imageUrl = "/location_form_placeholder_image.jpg";
   if (initialImage !== "" && initialImage !== undefined) {
@@ -109,9 +121,26 @@ export default function LocationForm({ location }: LocationFormProps) {
     location === undefined ? "Зберегти" : "Зберегти зміни";
   const buttonCancelName =
     location === undefined ? "Відмінити" : "Відмінити зміни";
-  const [isFieldChanged, setIsFieldChanged] = useState<boolean>(false);
   const [isMutating, setIsMutating] = useState<boolean>(false);
+  const [locationTypes, setLocationTypes] = useState<LocationType[]>([]);
+  const [regions, setRegions] = useState<Region[]>([]);
+  const [isFormFilled, setIsFormFilled] = useState<boolean>(false);
   const router = useRouter();
+
+  const renderLocationTypeOptions = (locationTypes: LocationType[]) => {
+    return locationTypes.map((locationType) => (
+      <option key={locationType._id} value={locationType.slug}>
+        {locationType.type}
+      </option>
+    ));
+  };
+  const renderRegionOptions = (regions: Region[]) => {
+    return regions.map((region) => (
+      <option key={region.id} value={region.slug}>
+        {region.name}
+      </option>
+    ));
+  };
 
   const queryClient = useQueryClient();
 
@@ -147,21 +176,7 @@ export default function LocationForm({ location }: LocationFormProps) {
     constantValues.description = location.description;
     constantValues.locationType = location.locationType;
     constantValues.region = location.region;
-  }
-
-  const checkChanges = () => {
-    if (
-      initialLocationData.image !== draft.image ||
-      initialLocationData.name !== draft.name ||
-      initialLocationData.description !== draft.description ||
-      initialLocationData.locationType !== draft.locationType ||
-      initialLocationData.region !== draft.region
-    ) {
-      setIsFieldChanged(true);
-    } else {
-      setIsFieldChanged(false);
-    }
-  };
+  }  
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -172,6 +187,11 @@ export default function LocationForm({ location }: LocationFormProps) {
       ...draft,
       [event.target.name]: event.target.value,
     });
+    if (event.target.value === "") {
+      setIsFormFilled(false);
+    } else {
+      setIsFormFilled(true);
+    }
   };
 
   const handleSubmit = async (
@@ -222,9 +242,22 @@ export default function LocationForm({ location }: LocationFormProps) {
     }
   }, [location]);
 
-  useEffect((() => {
-    // const response = 
-  }), []);
+  useEffect(() => {
+    async function fetchTypes() {
+      const response = await fetchLocationTypes();
+
+      setLocationTypes(response);
+    }
+
+    async function getRegions() {
+      const response = await fetchRegions();
+
+      setRegions(response);
+    }
+
+    fetchTypes();
+    getRegions();
+  }, []);
 
   return (
     <Formik<CreateLocation>
@@ -257,6 +290,7 @@ export default function LocationForm({ location }: LocationFormProps) {
               id={`${fieldId}-name`}
               onChange={handleChange}
               className={css.field}
+              placeholder="Введіть назву місця"
             />
             <ErrorMessage name="name" component="span" className={css.error} />
           </div>
@@ -272,9 +306,7 @@ export default function LocationForm({ location }: LocationFormProps) {
               className={css.select}
             >
               <option value="">Оберіть тип місця</option>
-              <option value="istorychne-mistse">Історичне місце</option>
-              <option value="ozero">Озеро</option>
-              <option value="natsionalnyi-park">Національний парк</option>
+              {renderLocationTypeOptions(locationTypes)}
             </Field>
             <ErrorMessage
               name="locationType"
@@ -286,7 +318,7 @@ export default function LocationForm({ location }: LocationFormProps) {
           <div className={css.formGroup}>
             <label
               htmlFor={`${fieldId}-region`}
-              className={`${css.label} ${css.field}`}
+              className={`${css.label}`}
             >
               Регіон
             </label>
@@ -298,9 +330,7 @@ export default function LocationForm({ location }: LocationFormProps) {
               className={css.select}
             >
               <option value="">Оберіть регіон</option>
-              <option value="podillya">Поділля</option>
-              <option value="halychyna">Галичина</option>
-              <option value="poltavshchyna">Полтавщина</option>
+              {renderRegionOptions(regions)}
             </Field>
             <ErrorMessage
               name="region"
@@ -320,6 +350,7 @@ export default function LocationForm({ location }: LocationFormProps) {
               onChange={handleChange}
               rows={5}
               className={css.textarea}
+              placeholder="Детальний опис локації"
             />
             <ErrorMessage
               name="description"
@@ -330,7 +361,7 @@ export default function LocationForm({ location }: LocationFormProps) {
         </fieldset>
 
         <div className={css.buttonsWrapper}>
-          <Button type="submit" className={css.button}>
+          <Button type="submit" className={css.button} disabled={!isFormFilled}>
             {buttonSubmitName}
           </Button>
           <Button
@@ -338,7 +369,7 @@ export default function LocationForm({ location }: LocationFormProps) {
             variant="secondary"
             className={css.button}
             onClick={handleCancel}
-            disabled={false}
+            disabled={!isFormFilled}
           >
             {buttonCancelName}
           </Button>
