@@ -10,13 +10,14 @@ import { useAuthStore } from "@/lib/store/authStore";
 import css from "./Header.module.css";
 import LogoutModal from "@/components/auth/LogoutModal/LogoutModal";
 import { createPortal } from "react-dom";
+import EditProfileForm from "@/components/forms/EditProfileForm/EditProfileForm";
 
 const emptySubscribe = () => () => {};
 const Header = () => {
   const isMounted = useSyncExternalStore(
     emptySubscribe,
-    () => true, // значення на клієнті
-    () => false, // значення на сервері та під час гідрації
+    () => true,
+    () => false,
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -26,7 +27,7 @@ const Header = () => {
   const openLogoutModal = () => setIsLogoutModalOpen(true);
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   useEffect(() => {
     async function setIsLoadingTrue() {
       setIsLoading(true);
@@ -64,6 +65,7 @@ const Header = () => {
               isMenuOpen={isMenuOpen}
               setIsMenuOpen={setIsMenuOpen}
               onLogoutClick={openLogoutModal}
+              onEditProfileClick={() => setIsEditProfileOpen(true)}
             />
           )}
         </div>
@@ -77,10 +79,13 @@ const Header = () => {
             isAuthenticated={isAuthenticated}
             user={user}
             onLogoutClick={openLogoutModal}
+            onEditProfileClick={() => setIsEditProfileOpen(true)}
           />,
           document.body,
         )}
-
+      {isEditProfileOpen && (
+        <EditProfileForm onClose={() => setIsEditProfileOpen(false)} />
+      )}
       {isLogoutModalOpen && <LogoutModal onClose={closeLogoutModal} />}
     </>
   );

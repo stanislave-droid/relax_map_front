@@ -1,8 +1,9 @@
-import { getMe, getUserLocations } from "@/lib/api/serverApi";
-import ProfilePlaceholder from "@/components/profile/ProfilePlaceholder/ProfilePlaceholder";
-import LocationCard from "@/components/ui/LocationCard/LocationCard";
+import { getMe } from "@/lib/api/serverApi";
 import ProfileInfo from "@/components/profile/ProfileInfo/ProfileInfo";
+import LocationsGrid from "@/components/profile/locationsGrid/LocationsGrid";
 import type { Metadata } from "next";
+import css from "./page.module.css";
+import clsx from "clsx";
 
 export const metadata: Metadata = {
   title: "Мій профіль — Relax Map",
@@ -25,25 +26,11 @@ export const metadata: Metadata = {
 
 export default async function MyProfilePage() {
   const user = await getMe();
-  const locationsData = await getUserLocations(user._id);
-  const isEmpty = locationsData.isEmpty;
 
   return (
-    <main className="container">
+    <main className={clsx("container", css.main)}>
       <ProfileInfo user={user} />
-      {isEmpty && <ProfilePlaceholder isOwnProfile={true} />}
-      {!isEmpty && (
-        <div>
-          {locationsData.locations.map((location) => (
-            <LocationCard
-              key={location._id}
-              location={location}
-              locationLink={`/locations/${location._id}`}
-              editLink={`/locations/${location._id}/edit`}
-            />
-          ))}
-        </div>
-      )}
+      <LocationsGrid userId={user._id} isOwnProfile={true} />
     </main>
   );
 }
