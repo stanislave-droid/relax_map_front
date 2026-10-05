@@ -9,8 +9,58 @@
 <p>You can inspect your new location that you just found by its rating, which comes from real users, feedbacks, and even leave your own feedback, but for these and other cool features, you should log in or register first.</p>
 <p>You can create your own page with your favorite locations and share them with your friends or just save them as your memories.</p>
 
+### Tech Stack
+
+| Category             | Technology                              |
+| -------------------- | --------------------------------------- |
+| Framework            | React + Next.js                         |
+| Languages            | Typescript (TSX)                        |
+| Forms and Validation | Formik + Yup                            |
+| Rest Api requests    | Axios library, Next routing, Next proxy |
+| Storage actions      | Zustand                                 |
+| CSS                  | CLSX library, modern-normalize          |
+| Cash control         | Tanstack Query                          |
+| Push notifications   | React hot toast                         |
+
+Others:
+` React-use `, `swiper`, `slim-select`, `cookie`, `@vis.gl/react-google-maps `, `spinners-react`, `use-debounce`, `react-dropzone`.
+
+### Project Architecture:
+```
+/
+├──app               # Main core of the program where all pages are 
+   ├──auth routes    # Auth routes pages
+   ├──private roures # Private routes for logged-in users
+   ├──public routes  # For all users, either logged-in or without an account
+   ├──api            # Next routing
+   ├──others         # Main page, layout, error and loading pages, and so on
+├──components        # Frequently used React components
+   ├──auth           # For authentication stuff
+   ├──forms          # Form components
+   ├──providers      # AuthProvider, TanstackProvider
+   ├──sections       # Sections across the project
+   ├──ui             # Reusable UI elements
+   ├──others         # Folders and components that aren`t in any of the categories above
+├──lib               # For API clients and stores
+   ├──api            # For API clients and API functions
+   ├──store          # For stores such as authStore, LocationStore
+├──public            # Public photos and icons
+├──types             # For types and interfaces used across the project
+└──utils             # Reusable or helper functions
+```
+### Environmental variables
+
+| Name                   | Purpose                                 | Required |
+| ---------------------- | --------------------------------------- | -------- |
+| `NEXT_PUBLIC_SITE_URL` | For all client-frontend requests        | Yes      |
+| `NEXT_PUBLIC_API_URL`  | For all frontend-backend requests       | Yes      |
+| `NEXT_PRIVATE_MAP_API` | For working map at location description | No       |
+
+> For environmental variables, use only safe places, such as a "Deploy secret API keys manager". Don`t save or share them in repository.
+
 ### Useful link to backend repository:
 - [Backend repository](https://github.com/stanislave-droid/relax_map_back)
+- [Swagger documentation for Backend](https://app.swaggerhub.com/apis-docs/development-0ab/Relax-map/1.0.0?view=uiDocs)
 
 ## Our Team:
  - [Drochak Stanislav - Team Lead FullStack developer](https://www.linkedin.com/in/stanislav-drochak/)
