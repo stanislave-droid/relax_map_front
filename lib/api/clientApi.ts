@@ -11,6 +11,7 @@ import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
+import { Region } from "@/types/region";
 import { FeedbacksResponse } from "@/types/feedback";
 
 export interface ApiErrorResponse {
@@ -76,13 +77,27 @@ export const fetchLocationTypes = async (): Promise<LocationType[]> => {
   const { data } = await api.get<LocationType[]>("/types");
   return data;
 };
+
+export const fetchRegions = async (): Promise<Region[]> => {
+  const { data } = await api.get<Region[]>("/regions");
+  return data;
+}
+
 export async function updateLocation(
   locationId: string,
   location: UpdateLocationData,
 ): Promise<Location> {
+  const formData = new FormData();
+
+  Object.entries(location).forEach(([key, value]) => {
+    if (value !== null && value !== undefined) {
+      formData.append(key, value as string | Blob);
+    }
+  });
+
   const response = await api.patch<Location>(
     `/locations/${locationId}`,
-    location,
+    formData,
   );
 
   return response.data;
