@@ -1,6 +1,7 @@
 import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
 import {
+  Coordinates,
   fetchLocationsProps,
   Location,
   UpdateLocationData,
@@ -11,6 +12,7 @@ import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
+import { placesResponse } from "@/app/api/map/route";
 
 export interface ApiErrorResponse {
   message: string;
@@ -106,3 +108,7 @@ export const getUserById = async (userId: string): Promise<User> => {
   return data;
 };
 
+export async function findPlace(search: string) {
+  const { data } = await api.get<placesResponse>(`/map?search=${search}`);
+  return data;
+}

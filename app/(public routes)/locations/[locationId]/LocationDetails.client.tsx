@@ -5,7 +5,7 @@ import { fetchLocationById, getUserById } from "@/lib/api/clientApi";
 import LocationDescription from "@/components/location/LocationDescription/LocationDescription";
 import LocationInfoBlock from "@/components/location/LocationInfoBlock/LocationInfoBlock";
 import css from "./LocationDetailsClient.module.css";
-import GoogleMap from "@/components/Map/Map";
+import Map from "@/components/Map/Map";
 
 interface LocationDetailsClientProps {
   id: string;
@@ -31,6 +31,21 @@ export default function LocationDetailsClient({
     throw new Error("Не вдалося завантажити локацію");
   }
 
+  //   const [place, setPlace] = useState<placesResponse>({
+  //     lat: 0,
+  //     lon: 0,
+  //     name: "",
+  //   });
+
+  //   useEffect(() => {
+  //     findPlace("Буковина")
+  //       .then((data) => {
+  //         setPlace(data);
+  //         console.log(data);
+  //       })
+  //       .catch((error) => console.log(error));
+  //   }, []);
+
   return (
     <main className={css.main}>
       <div className={css.info}>
@@ -51,7 +66,7 @@ export default function LocationDetailsClient({
       <div className={css.description}>
         <LocationDescription description={location.description} />
         {
-          <GoogleMap
+          <Map
             lat={location.coordinates.lat}
             lon={location.coordinates.lon}
             title={location.name}
