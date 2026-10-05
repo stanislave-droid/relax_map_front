@@ -5,6 +5,7 @@ import Icon from "@/components/ui/Icon/Icon";
 import css from "./Header.module.css";
 import Image from "next/image";
 import { useAuthStore } from "@/lib/store/authStore";
+import { LOCATIONS_PATH } from "@/types/location";
 
 const DEFAULT_AVATAR =
   "https://ac.goit.global/fullstack/react/default-avatar.jpg";
@@ -31,10 +32,7 @@ const Navigation = ({
             Головна
           </Link>
         )}
-        <Link
-          href="/all-locations/all-types/all-regions/popular?search="
-          className={css.navLink}
-        >
+        <Link href={LOCATIONS_PATH} className={css.navLink}>
           Місця відпочинку
         </Link>
         {isAuthenticated && (

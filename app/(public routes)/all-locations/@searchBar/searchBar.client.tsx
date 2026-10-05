@@ -27,7 +27,7 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
   const { slug } = useParams();
 
   const [searchField, setSearchField] = useState(() =>
-    slug ? slug[3] || "" : "",
+    slug ? decodeURIComponent(slug[3]) || "" : "",
   );
   const [region, setRegion] = useState(() => (slug ? slug[1] : REGION_DEFAULT));
   const [type, setType] = useState(() => (slug ? slug[0] : TYPE_DEFAULT));
@@ -38,8 +38,8 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
       "/all-locations/" +
         `${type}/` +
         `${region}/` +
-        `${sort}?` +
-        `search=${searchField}`,
+        `${sort}/` +
+        `${searchField}`,
     );
   }, [searchField, type, region, sort, router]);
 
