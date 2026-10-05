@@ -176,7 +176,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
     constantValues.description = location.description;
     constantValues.locationType = location.locationType;
     constantValues.region = location.region;
-  }  
+  }
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -316,10 +316,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
           </div>
 
           <div className={css.formGroup}>
-            <label
-              htmlFor={`${fieldId}-region`}
-              className={`${css.label}`}
-            >
+            <label htmlFor={`${fieldId}-region`} className={`${css.label}`}>
               Регіон
             </label>
             <Field
