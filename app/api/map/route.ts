@@ -8,7 +8,7 @@ export interface placesResponse extends Coordinates {
   name: string;
 }
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const search = req.nextUrl.searchParams.get("search");
     if (!search) {
