@@ -1,5 +1,6 @@
 import Link from "@/components/ui/Link/Link";
 import css from "./ProfilePlaceholder.module.css";
+import { LOCATIONS_PATH } from "@/types/location";
 
 interface ProfilePlaceholderProps {
   isOwnProfile: boolean;
@@ -14,7 +15,7 @@ export default function ProfilePlaceholder({
 
   const linkText = isOwnProfile ? "Поділитися локацією" : "Назад до локацій";
 
-  const href = isOwnProfile ? "/locations/action/create" : "/locations";
+  const href = isOwnProfile ? "/locations/add" : LOCATIONS_PATH;
 
   return (
     <div className={css.placeholder}>

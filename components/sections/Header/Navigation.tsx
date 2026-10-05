@@ -53,7 +53,7 @@ const Navigation = ({
           Місця відпочинку
         </Link>
         {isAuthenticated && (
-          <Link href={`/profile/${user._id}`} className={css.navLink}>
+          <Link href={`/profile/myProfile`} className={css.navLink}>
             Мій Профіль
           </Link>
         )}

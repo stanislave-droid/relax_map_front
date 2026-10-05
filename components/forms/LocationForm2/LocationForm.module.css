@@ -101,9 +101,7 @@
 .field:hover,
 .field:focus,
 .textarea:hover,
-.textarea:focus,
-.select:hover,
-.select:focus {
+.textarea:focus {
   border: 1px solid var(--color-scheme-1-accent);
   background-color: var(--color-scheme-2-foreground);
 }

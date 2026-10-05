@@ -173,11 +173,12 @@ export default function LocationForm2({ location }: LocationFormProps) {
   const [isMutating, setIsMutating] = useState<boolean>(false);
   const [locationTypes, setLocationTypes] = useState<LocationType[]>([]);
   const [regions, setRegions] = useState<Region[]>([]);
+  const [isFormFilled, setIsFormFilled] = useState<boolean>(false);
   const router = useRouter();
 
   const renderLocationTypeOptions = (locationTypes: LocationType[]) => {
     return locationTypes.map((locationType) => (
-      <option key={locationType.id} value={locationType.slug}>
+      <option key={locationType._id} value={locationType.slug}>
         {locationType.name}
       </option>
     ));
@@ -235,6 +236,11 @@ export default function LocationForm2({ location }: LocationFormProps) {
       ...draft,
       [event.target.name]: event.target.value,
     });
+    if (event.target.value === "") {
+      setIsFormFilled(false);
+    } else {
+      setIsFormFilled(true);
+    }
   };
 
   const handleSubmit = async (
@@ -348,9 +354,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
               id={`${fieldId}-locationType`}
               className={css.select}
             >
-              <option key="locationTypeEmptykey" value="">
-                Оберіть тип місця
-              </option>
+              <option value="">Оберіть тип місця</option>
               {renderLocationTypeOptions(locationTypes)}
             </Field>
             <ErrorMessage
@@ -371,9 +375,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
               onChange={handleChange}
               className={css.select}
             >
-              <option key="regionEmptykey" value="">
-                Оберіть регіон
-              </option>
+              <option value="">Оберіть регіон</option>
               {renderRegionOptions(regions)}
             </Field>
             <ErrorMessage
@@ -404,11 +406,20 @@ export default function LocationForm2({ location }: LocationFormProps) {
           </div>
         </fieldset>
 
-        <FormButtons
-          submitButtonName={buttonSubmitName}
-          cancelButtonName={buttonCancelName}
-          onCancel={handleCancel}
-        />
+        <div className={css.buttonsWrapper}>
+          <Button type="submit" className={css.button} disabled={!isFormFilled}>
+            {buttonSubmitName}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            className={css.button}
+            onClick={handleCancel}
+            disabled={!isFormFilled}
+          >
+            {buttonCancelName}
+          </Button>
+        </div>
       </Form>
     </Formik>
   );
