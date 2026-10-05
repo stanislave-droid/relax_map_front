@@ -6,17 +6,22 @@ interface ReviewsBlockProps {
   title: string;
   feedbacks: Feedback[];
   showLocation?: boolean;
+  action?: React.ReactNode;
 }
 
 const ReviewsBlock = ({
   title,
   feedbacks,
   showLocation = false,
+  action,
 }: ReviewsBlockProps) => {
   return (
     <section className={css.reviews}>
       <div className="container">
-        <h2 className={css.title}>{title}</h2>
+        <div className={css.header}>
+          <h2 className={css.title}>{title}</h2>
+          {action}
+        </div>
 
         {feedbacks.length > 0 ? (
           <ReviewsBlockClient

@@ -68,7 +68,7 @@ export default function LoginForm({onSubmit, isLoading, errorMessage}: LoginForm
                             id={emailId}
                             as={Input}
                             name="email"
-                            type="text"
+                            type="email"
                             placeholder="hello@relaxmap.ua"
                             className={css.inputForm}
                         />
