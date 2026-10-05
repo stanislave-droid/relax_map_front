@@ -16,8 +16,8 @@ const emptySubscribe = () => () => {};
 const Header = () => {
   const isMounted = useSyncExternalStore(
     emptySubscribe,
-    () => true, // значення на клієнті
-    () => false, // значення на сервері та під час гідрації
+    () => true,
+    () => false,
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);

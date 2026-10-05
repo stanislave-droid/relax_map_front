@@ -137,7 +137,7 @@ const EditProfileFormContent = ({ user, onClose }: FormContentProps) => {
   return (
     <form className={css.form} onSubmit={handleSubmit} noValidate>
       <h2 className={css.title}>Редагувати профіль</h2>
-
+      <p className={css.labelAvatar}>Аватар</p>
       <div className={css.avatarBlock}>
         <Image
           className={css.avatar}
@@ -161,8 +161,6 @@ const EditProfileFormContent = ({ user, onClose }: FormContentProps) => {
               aria-describedby={fileError ? "avatar-error" : undefined}
             />
           </label>
-
-          {/* <p className={css.hint}>Зображення до 2 МБ</p> */}
 
           {fileError && (
             <p id="avatar-error" className={css.error} role="alert">
@@ -201,10 +199,11 @@ const EditProfileFormContent = ({ user, onClose }: FormContentProps) => {
           type="button"
           onClick={handleCancel}
           disabled={isPending}
+          className={css.buttonUpdate}
         >
           Відмінити
         </Button>
-        <Button variant="primary" type="submit" disabled={isPending}>
+        <Button variant="primary" type="submit" disabled={isPending} className={css.buttonUpdate}>
           {isPending ? "Збереження..." : "Зберегти"}
         </Button>
       </div>
