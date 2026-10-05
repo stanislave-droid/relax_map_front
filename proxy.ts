@@ -67,7 +67,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/profile",
+    "/profile/myProfile",
     "/sign-in",
     "/sign-up",
     "/locations/add",
