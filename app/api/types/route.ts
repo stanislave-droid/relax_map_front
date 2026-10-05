@@ -16,7 +16,7 @@ export async function GET() {
   try {
     const response = await api.get<typesResponse>("/api/categories/types");
 
-    return NextResponse.json(response.data.data, {
+    return NextResponse.json(response.data, {
       status: 200,
       headers: {
         "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600",
