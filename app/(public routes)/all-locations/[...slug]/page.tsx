@@ -6,10 +6,10 @@ import {
 } from "@tanstack/react-query";
 import LocationsClient from "./Locations.client";
 import { type SortBy } from "@/types/location";
+import { getSearch } from "@/utils/getSearch";
 
 interface LocationsProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const getSortBy = (slug: string): SortBy | undefined => {
@@ -25,22 +25,19 @@ const getSortBy = (slug: string): SortBy | undefined => {
   }
 };
 
-export default async function Locations({
-  params,
-  searchParams,
-}: LocationsProps) {
+export default async function Locations({ params }: LocationsProps) {
   const queryClient = new QueryClient();
   const { slug } = await params;
-  const SearchParams = await searchParams;
 
   const region = slug && slug[1] !== "all-regions" ? slug[1] : undefined;
   const type = slug && slug[0] !== "all-types" ? slug[0] : undefined;
-  const search =
-    typeof SearchParams.search == "string" ? SearchParams.search : undefined;
+  const search = getSearch(slug[3]);
   const sortDirection = slug && slug[2] ? "desc" : undefined;
 
+  console.log(search);
+
   await queryClient.infiniteQuery({
-    queryKey: ["locations"],
+    queryKey: ["locations", region, type, getSortBy(slug)],
     queryFn: () =>
       fetchLocations({
         page: 1,

@@ -8,14 +8,22 @@ export interface Location {
   rate: number;
   ownerId: string;
   feedbacksId: string[];
-  coordinates: {
-    lat: number;
-    lon: number;
-  };
+  coordinates: Coordinates;
 }
 
 export type SortBy = "rate" | "updatedAt";
 export type SortDirection = "asc" | "desc";
+export const LOCATIONS_PATH = "/all-locations/all-types/all-regions/popular";
+export const SortByArray: (SortBy | "popular")[] = [
+  "popular",
+  "rate",
+  "updatedAt",
+];
+
+export interface Coordinates {
+  lat: number;
+  lon: number;
+}
 
 export interface fetchLocationsProps {
   page?: number;

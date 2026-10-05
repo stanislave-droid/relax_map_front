@@ -15,6 +15,7 @@ interface MobileMenuProps {
   isAuthenticated: boolean;
   user: { _id: string; name: string; avatarUrl: string | null };
   onLogoutClick: () => void;
+  onEditProfileClick: () => void;
 }
 
 const MobileMenu = ({
@@ -23,10 +24,16 @@ const MobileMenu = ({
   isAuthenticated,
   user,
   onLogoutClick,
+  onEditProfileClick,
 }: MobileMenuProps) => {
   const handleLogoutClick = () => {
     closeMenu();
     onLogoutClick();
+  };
+
+  const handleEditProfileClick = () => {
+    closeMenu();
+    onEditProfileClick();
   };
 
   return (
@@ -75,15 +82,22 @@ const MobileMenu = ({
               </div>
 
               <div className={css.userInfo}>
-                <Image
-                  src={user?.avatarUrl || DEFAULT_AVATAR}
-                  alt={user?.name ?? "Аватар користувача"}
-                  width={32}
-                  height={32}
-                  className={css.avatar}
-                  unoptimized
-                />
-                <span className={css.userNameMenu}>{user?.name}</span>
+                <button
+                  type="button"
+                  className={css.profileButton}
+                  aria-label="Редагувати профіль"
+                  onClick={handleEditProfileClick}
+                >
+                  <Image
+                    src={user?.avatarUrl || DEFAULT_AVATAR}
+                    alt=""
+                    width={32}
+                    height={32}
+                    className={css.avatar}
+                    unoptimized
+                  />
+                  <span className={css.userNameMenu}>{user?.name}</span>
+                </button>
                 <span className={css.divider} aria-hidden="true" />
                 <button
                   type="button"

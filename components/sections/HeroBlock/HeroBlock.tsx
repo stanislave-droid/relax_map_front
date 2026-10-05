@@ -6,6 +6,7 @@ import Input from "../../ui/Input/Input";
 import css from "./HeroBlock.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { LOCATIONS_PATH } from "@/types/location";
 
 const HeroBlock = () => {
   const [query, setQuery] = useState("");
@@ -17,7 +18,7 @@ const HeroBlock = () => {
     const search = query.trim();
 
     if (search) {
-      router.push(`/locations?search=${encodeURIComponent(search)}`);
+      router.push(`${LOCATIONS_PATH}/${search}`);
     }
   };
 
