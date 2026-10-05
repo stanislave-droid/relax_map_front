@@ -7,6 +7,7 @@ import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import css from "./Locations.module.css";
 import { useParams } from "next/navigation";
 import { SortBy } from "@/types/location";
+import { getSearch } from "@/utils/getSearch";
 
 const getSortBy = (slug: string): SortBy | undefined => {
   if (slug && slug[2] !== "popular") {
@@ -24,7 +25,7 @@ const getSortBy = (slug: string): SortBy | undefined => {
 export default function LocationsClient() {
   const { slug } = useParams();
 
-  const search = slug && slug[3] ? decodeURIComponent(slug[3]) : "";
+  const search = slug && getSearch(slug[3]);
   const region = slug && slug[1] !== "all-regions" ? slug[1] : undefined;
   const type = slug && slug[0] !== "all-types" ? slug[0] : undefined;
   const sortBy = getSortBy(slug as string);
