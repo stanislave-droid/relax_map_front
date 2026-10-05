@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef } from "react";
 import { Swiper as SwiperType } from "swiper";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
-import { Location } from "@/types/location";
+import { Location, LOCATIONS_PATH } from "@/types/location";
 import SliderArrows from "@/components/ui/SliderArrows/SliderArrows";
 import Link from "@/components/ui/Link/Link";
 type PopularLocationsBlockProps = {
@@ -19,7 +19,7 @@ const PopularLocationsBlock = ({ locations }: PopularLocationsBlockProps) => {
         <div className={css.headingPopularLocations}>
           <h2 className="secondary-headding">Популярні локації</h2>
           <Link
-            href="/locations"
+            href={LOCATIONS_PATH}
             variant="primary"
             className={css.linkAllLocations}
           >
