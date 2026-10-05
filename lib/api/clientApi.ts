@@ -11,6 +11,7 @@ import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
+import { Region } from "@/types/region";
 
 export interface ApiErrorResponse {
   message: string;
@@ -98,5 +99,9 @@ export async function fetchCreatedReviews(
   feedback: AddReviewFormValues,
 ) {
   const { data } = await api.post(`/feedbacks/${locationId}`, feedback);
+  return data;
+}
+export async function fetchRegions(): Promise<Region[]> {
+  const { data } = await api.get<Region[]>("/regions");
   return data;
 }

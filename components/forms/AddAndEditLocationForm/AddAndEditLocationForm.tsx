@@ -8,15 +8,18 @@ import { useEffect, useRef, useState } from "react";
 import { useId } from "react";
 import * as Yup from "yup";
 import { LocationFormValues } from "@/types/locationForm/locationFormValues";
+import Button from "@/components/ui/Button/Button";
+import { useQuery } from "@tanstack/react-query";
+import { fetchLocationTypes, fetchRegions } from "@/lib/api/clientApi";
+import clsx from "clsx";
+import Spinner from "@/components/ui/Spinner/Spinner";
 
 interface LocationFormProps {
   onSubmit: (values: LocationFormValues) => Promise<void>;
-  onCancel: () => void;
-  // locationTypes: LocationType[];
-  // regions: Region[];
   validationSchema: Yup.ObjectSchema<LocationFormValues>;
   initialValues?: LocationFormValues;
-  isEditinfg?: boolean;
+  isEditing?: boolean;
+  isLoading?: boolean;
 }
 const defaultValues: LocationFormValues = {
   image: null,
@@ -79,32 +82,38 @@ const ImageDropzone = () => {
             />
           ) : (
             <Image
-              src="/p/placeholder-image-form-location-desktop.jpg"
+              src="/placeholder-image-form-location.jpg"
               alt="фото локації"
               fill
               className={css.image}
             />
           )}
         </div>
-        <button type="button" onClick={open} className={css.loadImfBtn}>
+        <button type="button" onClick={open} className={css.loadImgBtn}>
           Завантажити фото
         </button>
       </div>
-      <ErrorMessage name="image" component="span" className="css.error" />
+      <ErrorMessage name="image" component="span" className={css.error} />
     </div>
   );
 };
 export default function AddAndEditLocationForm({
   onSubmit,
-  onCancel,
-  // locationTypes,
-  // regions,
   validationSchema,
   initialValues,
-  isEditinfg,
+  isEditing,
+  isLoading,
 }: LocationFormProps) {
   const fieldId = useId();
   const [imageKey, setImageKey] = useState(0);
+  const { data: regions } = useQuery({
+    queryKey: ["regions"],
+    queryFn: fetchRegions,
+  });
+  const { data: locationTypes } = useQuery({
+    queryKey: ["locationTypes"],
+    queryFn: fetchLocationTypes,
+  });
 
   return (
     <Formik
@@ -117,98 +126,121 @@ export default function AddAndEditLocationForm({
           <fieldset className={css.fieldset}>
             <label className={css.label}>Обкладинка</label>
             <ImageDropzone key={imageKey} />
-            <label className={css.label} htmlFor={`${fieldId}-name`}>
-              Назва місця
-            </label>
-            <Field
-              className={css.field}
-              type="text"
-              name="name"
-              id={`${fieldId}-name`}
-              // onChange={handleChange}
-            />
-            <ErrorMessage name="name" component="span" className="css.error" />
-            <label className={css.label} htmlFor={`${fieldId}-locationType`}>
-              Тип місця
-            </label>
-            <Field
-              className={css.select}
-              as="select"
-              name="locationType"
-              id={`${fieldId}-locationType`}
-            >
-              <option value="" defaultChecked>
-                Оберіть тип місця
-              </option>
-              {/* {locationTypes &&
-              locationTypes.map((type) => (
-                <option key={type._id} value={type.type}>
-                  {type.type}
+            <div className={css.fieldContainer}>
+              <label className={css.label} htmlFor={`${fieldId}-name`}>
+                Назва місця
+              </label>
+              <Field
+                className={css.field}
+                type="text"
+                name="name"
+                id={`${fieldId}-name`}
+                placeholder="Введіть назву місця"
+              />
+              <ErrorMessage
+                name="name"
+                component="span"
+                className={css.error}
+              />
+            </div>
+            <div className={clsx(css.fieldContainer, "selectWrapper")}>
+              <label className={css.label} htmlFor={`${fieldId}-locationType`}>
+                Тип місця
+              </label>
+              <Field
+                className={css.select}
+                as="select"
+                name="locationType"
+                id={`${fieldId}-locationType`}
+              >
+                <option className={css.optionSelect} value="">
+                  Оберіть тип місця
                 </option>
-              ))} */}
-            </Field>
-            <ErrorMessage
-              name="locationType"
-              component="span"
-              className="css.error"
-            />
-            <label className={css.label} htmlFor={`${fieldId}-region`}>
-              Регіон
-            </label>
-            <Field
-              className={css.select}
-              as="select"
-              name="region"
-              id={`${fieldId}-region`}
-              // onChange={handleChange}
-            >
-              <option value="" defaultChecked>
-                Оберіть регіон
-              </option>
-              {/* {regions &&
-              regions.map((region) => (
-                <option key={region.slug} value={region.slug}>
-                  {region.name}
+                {locationTypes?.map((type) => (
+                  <option
+                    className={css.optionSelect}
+                    key={type.slug}
+                    value={type.slug}
+                  >
+                    {type.type}
+                  </option>
+                ))}
+              </Field>
+              <ErrorMessage
+                name="locationType"
+                component="span"
+                className={css.error}
+              />
+            </div>
+            <div className={css.fieldContainer}>
+              <label className={css.label} htmlFor={`${fieldId}-region`}>
+                Регіон
+              </label>
+              <Field
+                className={css.select}
+                as="select"
+                name="region"
+                id={`${fieldId}-region`}
+              >
+                <option className={css.optionSelect} value="">
+                  Оберіть регіон
                 </option>
-              ))}
-             */}
-            </Field>
-            <ErrorMessage
-              name="region"
-              component="span"
-              className="css.error"
-            />
-            <label className={css.label} htmlFor={`${fieldId}-description`}>
-              Детальний опис
-            </label>
-            <Field
-              as="textarea"
-              name="description"
-              id={`${fieldId}-description`}
-              // onChange={handleChange}
-              rows={5}
-              className={css.textarea}
-            />
-            <ErrorMessage
-              name="description"
-              component="span"
-              className="css.error"
-            />
+                {regions?.map((region) => (
+                  <option
+                    className={css.optionSelect}
+                    key={region.slug}
+                    value={region.slug}
+                  >
+                    {region.name}
+                  </option>
+                ))}
+              </Field>
+              <ErrorMessage
+                name="region"
+                component="span"
+                className={css.error}
+              />
+            </div>
+            <div className={css.fieldContainer}>
+              <label className={css.label} htmlFor={`${fieldId}-description`}>
+                Детальний опис
+              </label>
+              <Field
+                as="textarea"
+                name="description"
+                id={`${fieldId}-description`}
+                rows={5}
+                className={css.textarea}
+                placeholder="Детальний опис локації"
+              />
+              <ErrorMessage
+                name="description"
+                component="span"
+                className={css.error}
+              />
+            </div>
           </fieldset>
           <div className={css.buttonsWrapper}>
-            <button
+            <Button
               type="button"
+              variant="secondary"
+              className={clsx(css.button, "cancelBtn")}
               onClick={() => {
                 resetForm();
                 setImageKey((prev) => prev + 1);
-                onCancel();
               }}
             >
-              {isEditinfg ? "Відмінити зміни" : "Відмінити"}
-            </button>
-            <button type="submit" className={css.button} disabled={!dirty}>
-              {isEditinfg ? "Зберегти зміни" : "Опублікувати"}
-            </button>
+              {isEditing ? "Відмінити зміни" : "Відмінити"}
+            </Button>
+            <Button
+              variant="primary"
+              className={css.button}
+              type="submit"
+              disabled={!dirty || isLoading}
+            >
+              {isLoading && <Spinner />}
+              {isEditing ? "Зберегти зміни" : "Опублікувати"}
+            </Button>
           </div>
         </Form>
       )}
