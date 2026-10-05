@@ -1,14 +1,11 @@
-import {useRouter} from "next/navigation";
+"use client";
+
 import {useQuery} from "@tanstack/react-query";
-import Modal from "@/components/ui/Modal/Modal";
-import {fetchLocationById} from "@/lib/api/clientApi";
+import {fetchLocationById, getUserById} from "@/lib/api/clientApi";
 import Spinner from "@/components/ui/Spinner/Spinner";
-import {Toast} from "next/dist/next-devtools/dev-overlay/components/toast";
-import css from "./LocationDetailsClient.module.css";
-import LocationCard from "@/components/ui/LocationCard/LocationCard";
-import RatingStars from "@/components/ui/RatingStars/RatingStars";
-// import clsx from "clsx";
 import LocationDescription from "@/components/location/LocationDescription/LocationDescription";
+import LocationInfoBlock from "@/components/location/LocationInfoBlock/LocationInfoBlock";
+import css from "./LocationDetailsClient.module.css";
 
 
 interface LocationDetailsClientProps {
@@ -16,62 +13,54 @@ interface LocationDetailsClientProps {
 }
 
 export default function LocationDetailsClient({id}: LocationDetailsClientProps) {
-    const router = useRouter();
 
-    const {data: location, isLoading, isError} = useQuery({
+    const {data: location, isLoading: isLocationLoading, isError: isLocationError} = useQuery({
         queryKey: ["location", id],
         queryFn: () => fetchLocationById(id),
         refetchOnMount: false,
     });
 
-    const handleBack = () => {
-        router.back();
-    }
-    if (isLoading) {
+    const {data: author, isLoading: isAuthorLoading, isError: isAuthorError} = useQuery({
+        queryKey: ["author", location?.ownerId],
+        queryFn: () => getUserById(location!.ownerId),
+        enabled: !!location,
+        refetchOnMount: false,
+    });
+
+
+    if (isLocationError || isAuthorError) {
         return (
-            <Modal onClose={handleBack}>
-                <Spinner/>
-            </Modal>
+            <p>Не вдалося завантажити локацію</p>
         )
     }
 
-    if (isError) {
+    if (isLocationLoading || isAuthorLoading || !location || !author) {
         return (
-            <Modal onClose={handleBack}>
-                <Toast/>
-            </Modal>
-            )
+            <Spinner/>
+        )
     }
 
     return (
-        <Modal onClose={handleBack}>
-            <main className={css.main}>
-                <div className={css.container}>
-                    <div className={css.image}>
-                        <LocationCard location={location.image} locationLink={""}/>
-                    </div>
+        <main className={css.main}>
+            <div className={css.info}>
+                <LocationInfoBlock
+                    name={location.name}
+                    rating={location.rate}
+                    region={location.region}
+                    type={location.locationType}
+                    imageUrl={location.image}
+                    author={{
+                        id: author._id,
+                        name: author.name
+                    }}
+                />
+            </div>
 
-                    <div className={css.locationInfo}>
-                        <RatingStars value={location.rate} className={css.rite}/>
-                        <div className={css.title}>
-                            <h2>{location?.name}</h2>
-                        </div>
-                        <div className={css.details}>
-                            <p className={css.region}>Регіон: {location?.region}</p>
-                            <p>Тип локації: {location?.locationType}</p>
-                            <p>Автор статті: {location?.ownerId}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={css.description}>
-                    <LocationDescription description={location.description}/>
-                </div>
-
-            </main>
-
-        </Modal>
+            <div className={css.description}>
+                <LocationDescription description={location.description}/>
+                {/*    <LocationMap />*/}
+            </div>
+        </main>
     )
-
 }
 

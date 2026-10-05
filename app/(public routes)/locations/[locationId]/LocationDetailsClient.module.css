@@ -1,54 +1,64 @@
-.maim {
-
+.main {
+    max-width: 335px;
+    margin: 0 auto;
+    padding: 32px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
-.container {
+
+.info {
+    width: 100%;
+}
+
+/* скидаємо зовнішні відступи LocationInfoBlock */
+.info > section {
+    margin: 0;
+    padding: 0;
+}
+
+.description {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 24px
+    gap: 32px;
 }
-
-.image {
-    width: 335px;
-
-}
-
-.locationInfo {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.rite {
-
-}
-
-.title {
-
-}
-
-.details {
-
-}
-
-.region {
-
-}
-
-
-
-.description{
-
-}
-
 
 @media screen and (min-width: 768px) {
+    .main {
+        max-width: 704px;
+        padding: 32px 0 0;
+    }
 
+    .info > section {
+        padding: 0;
+    }
 }
 
-
 @media screen and (min-width: 1440px) {
+    .main {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 1440px;
+        padding: 0 64px; /* padding-inline: 64px з макета */
+        gap: 0; /* відступи тепер у блоках */
 
+    }
+
+    .info {
+        padding-block: 48px;
+    }
+
+    .info > section {
+        padding: 0;
+    }
+
+    .description {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 865px;
+        margin: 0 auto;
+        padding: 48px 0 0;
+        gap: 80px
+    }
 }
