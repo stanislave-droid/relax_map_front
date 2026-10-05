@@ -91,7 +91,7 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
                             id={emailId}
                             as={Input}
                             name="email"
-                            type="text"
+                            type="email"
                             placeholder="hello@relaxmap.ua"
                             className={css.inputForm}
                         />
