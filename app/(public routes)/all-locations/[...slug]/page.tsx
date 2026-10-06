@@ -59,8 +59,6 @@ export default async function Locations({ params }: LocationsProps) {
   const search = getSearch(slug[3]);
   const sortDirection = slug && slug[2] ? "desc" : undefined;
 
-  console.log(search);
-
   await queryClient.infiniteQuery({
     queryKey: ["locations", region, type, getSortBy(slug)],
 >>>>>>> 2d40f6eb220ae7e370cda688be6d7e43ce1586f3

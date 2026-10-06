@@ -41,4 +41,5 @@ export interface UpdateLocationData {
   description?: string;
   locationType?: string;
   region?: string;
+  coordinates?: Coordinates;
 }

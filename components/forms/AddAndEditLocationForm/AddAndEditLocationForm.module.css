@@ -18,7 +18,6 @@
 
 .form {
   width: 100%;
-  max-width: 335px;
   padding: 0 0 64px;
   background-color: var(--color-scheme-2-background);
 }

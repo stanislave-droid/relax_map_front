@@ -16,6 +16,12 @@ export default function LocationSearch({ onSearch }: LocationSearchProps) {
     onSearch(location);
   }
 
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  }
+
   return (
     <div className={css.wrapper}>
       <h2 className={css.title}>Оберіть розташування</h2>
@@ -25,6 +31,7 @@ export default function LocationSearch({ onSearch }: LocationSearchProps) {
           type="text"
           value={location}
           onChange={(event) => setLocation(event.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Назва розташування"
         />
 
