@@ -101,14 +101,15 @@
 .field:hover,
 .field:focus,
 .textarea:hover,
-.textarea:focus {
+.textarea:focus,
+.select:hover,
+.select:focus {
   border: 1px solid var(--color-scheme-1-accent);
   background-color: var(--color-scheme-2-foreground);
 }
 
 .field::placeholder,
 .textarea::placeholder {
-  border: 1px solid var(--opacity-neutral-darkest-15);
   color: var(--opacity-neutral-darkest-60);
 }
 

@@ -11,13 +11,9 @@ import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
-<<<<<<< HEAD
-import { Region } from "@/types/region";
-=======
-import { placesResponse } from "@/app/api/map/route";
+import { PlacesResponse } from "@/app/api/map/route";
 import { Region } from "@/types/region";
 import { FeedbacksResponse } from "@/types/feedback";
->>>>>>> development
 
 export interface ApiErrorResponse {
   message: string;
@@ -96,7 +92,8 @@ export async function updateLocation(
 
   Object.entries(location).forEach(([key, value]) => {
     if (value !== null && value !== undefined) {
-      formData.append(key, value as string | Blob);
+      if (typeof value == "object") formData.append(key, JSON.stringify(value));
+      else formData.append(key, value as string | Blob);
     }
   });
 
@@ -162,6 +159,6 @@ export const getUserById = async (userId: string): Promise<User> => {
 };
 
 export async function findPlace(search: string) {
-  const { data } = await api.get<placesResponse>(`/map?search=${search}`);
+  const { data } = await api.get<PlacesResponse>(`/map?search=${search}`);
   return data;
 }
