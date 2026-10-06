@@ -1,3 +1,5 @@
+import { PlacesResponse } from "@/app/api/map/route";
+import { Coordinates } from "@/types/location";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -7,6 +9,7 @@ interface NewLocationData {
   description: string;
   locationType: string;
   region: string;
+  coordinates: Coordinates;
 }
 
 interface LocationDraftStore {
@@ -21,6 +24,10 @@ const initialDraft: NewLocationData = {
   description: "",
   locationType: "istorychne-mistse",
   region: "podillya",
+  coordinates: {
+    lat: 0,
+    lon: 0,
+  },
 };
 
 export const useLocationDraftStore = create<LocationDraftStore>()(

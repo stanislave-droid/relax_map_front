@@ -8,7 +8,7 @@ import {
 } from "@vis.gl/react-google-maps";
 import css from "./Map.module.css";
 import clsx from "clsx";
-import { useEffect } from "react";
+import { useState } from "react";
 import { Coordinates } from "@/types/location";
 
 interface GoogleMapProps {
@@ -19,12 +19,13 @@ interface GoogleMapProps {
 }
 
 function MapController({ lat, lon: lng }: Coordinates) {
+  const [coordinates, setCoordinates] = useState({ lat, lng });
   const map = useMap();
 
-  useEffect(() => {
-    if (!map) return;
-    map.setCenter({ lat, lng });
-  }, [lat, lng, map]);
+  if (!map) return;
+  if (coordinates.lat == lat || coordinates.lng == lng) return;
+  setCoordinates({ lat, lng });
+  map.setCenter({ lat, lng });
 
   return <></>;
 }

@@ -3,7 +3,11 @@ import AdvantagesBlock from "@/components/sections/AdvantagesBlock/AdvantagesBlo
 import HeroBlock from "../components/sections/HeroBlock/HeroBlock";
 import ReviewsBlock from "@/components/sections/ReviewsBlock/ReviewsBlock";
 import PopularLocationsBlock from "@/components/sections/PopularLocationsBlock/PopularLocationsBlock";
-import { fetchLocations, getAllFeedbacks } from "@/lib/api/serverApi";
+import {
+  fetchLocations,
+  fetchLocationTypes,
+  getAllFeedbacks,
+} from "@/lib/api/serverApi";
 
 export const revalidate = 60;
 
@@ -16,6 +20,16 @@ export default async function Home() {
     }),
     getAllFeedbacks().catch(() => null),
   ]);
+
+  const responseLocationTypes = await fetchLocationTypes();
+  for (const location of response.locations) {
+    const index = responseLocationTypes.findIndex(
+      (locationType) => location.locationType === locationType.slug,
+    );
+    if (index !== -1) {
+      location.locationType = responseLocationTypes[index].name;
+    }
+  }
 
   return (
     <main className={css.main}>

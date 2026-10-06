@@ -1,28 +1,43 @@
 import { useState } from "react";
 import LocationSearch from "../forms/LocationSearch/LocationSearch";
 import GoogleMap from "./Map";
-import { placesResponse } from "@/app/api/map/route";
+import { PlacesResponse } from "@/app/api/map/route";
 import { findPlace } from "@/lib/api/clientApi";
 import { showError } from "../ui/Toast/Toast";
 import { Coordinates } from "@/types/location";
 import css from "./Map.module.css";
 
 interface SetMapProps {
-  setValue: (value: Coordinates) => void;
+  getValue: (value: Coordinates) => void;
+  previousPlace?: PlacesResponse;
+  onSearch?: () => void;
 }
 
-export default function SetMap({ setValue }: SetMapProps) {
-  const [place, setPlace] = useState<placesResponse>({
+export default function SetMap({
+  getValue,
+  previousPlace,
+  onSearch,
+}: SetMapProps) {
+  const [place, setPlace] = useState<PlacesResponse>({
     lat: 0,
     lon: 0,
     name: "",
   });
 
+  if (
+    previousPlace &&
+    previousPlace.lat !== place.lat &&
+    previousPlace.lon !== place.lon
+  ) {
+    setPlace(previousPlace);
+  }
+
   const handleSearch = (search: string) => {
     findPlace(search)
       .then((data) => {
         setPlace(data);
-        if (setValue) setValue({ lat: data.lat, lon: data.lon });
+        if (onSearch) onSearch();
+        if (getValue) getValue({ lat: data.lat, lon: data.lon });
       })
       .catch((error) => {
         console.log(error.message);
