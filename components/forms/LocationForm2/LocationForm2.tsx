@@ -10,7 +10,7 @@ import {
 } from "formik";
 import "../../ui/common.module.css";
 import css from "./LocationForm.module.css";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState, useMemo } from "react";
 import * as Yup from "yup";
 import { Location, UpdateLocationData } from "@/types/location";
 import Button from "@/components/ui/Button/Button";
@@ -33,10 +33,6 @@ interface LocationFormProps {
   location?: Location;
 }
 
-interface ImagePreviewWithFileInputProps {
-  initialImage: string;
-}
-
 interface CreateLocation {
   image: string | File | null;
   name: string;
@@ -49,6 +45,7 @@ interface FormButtonsParameters {
   submitButtonName: string;
   cancelButtonName: string;
   onCancel: () => void;
+  initialImage: string;
 }
 
 const initialValues: CreateLocation = {
@@ -75,18 +72,19 @@ const LocationFormSchema = Yup.object().shape({
   region: Yup.string().required("Select region"),
 });
 
-const ImagePreviewWithFileInput = ({
-  initialImage,
-}: ImagePreviewWithFileInputProps) => {
-  const { setFieldValue } = useFormikContext<CreateLocation>();
+const ImagePreviewWithFileInput = () => {
+  const { setFieldValue, values } = useFormikContext<CreateLocation>();
   const imageId = useId();
 
-  let imageUrl = "/location_form_placeholder_image.jpg";
-  if (initialImage !== "" && initialImage !== undefined) {
-    imageUrl = initialImage;
-  }
-
-  const [previewSrc, setPreviewSrc] = useState(imageUrl);
+  const previewSrc = useMemo(() => {
+    if (values.image instanceof File) {
+      return URL.createObjectURL(values.image);
+    }
+    if (values.image !== "" && values.image !== null && values.image !== undefined) {
+      return values.image;
+    }
+    return "/location_form_placeholder_image.jpg";
+  }, [values.image]);
 
   return (
     <div className={css.ImagePreviewWithFileInput}>
@@ -109,12 +107,8 @@ const ImagePreviewWithFileInput = ({
         accept="image/*"
         className={css.loadImageInput}
         onChange={(event) => {
-          setFieldValue("image", event.currentTarget.files?.[0] ?? null);
-          const file = event.currentTarget.files?.[0];
-          if (file !== null && file !== undefined) {
-            const localUrl = URL.createObjectURL(file);
-            setPreviewSrc(localUrl);
-          }
+          const file = event.currentTarget.files?.[0] ?? null;
+          setFieldValue("image", file);
         }}
       />
     </div>
@@ -125,8 +119,9 @@ function FormButtons({
   submitButtonName,
   cancelButtonName,
   onCancel,
+  initialImage,
 }: FormButtonsParameters) {
-  const { values, isSubmitting } = useFormikContext<CreateLocation>();
+  const { values, isSubmitting, setFieldValue } = useFormikContext<CreateLocation>();
 
   let submitName = submitButtonName;
 
@@ -155,7 +150,10 @@ function FormButtons({
         type="button"
         variant="secondary"
         className={css.button}
-        onClick={onCancel}
+        onClick={() => {
+          onCancel();
+          setFieldValue("image", initialImage);
+        }}
         disabled={!isAllFieldsFilled || isSubmitting}
       >
         {cancelButtonName}
@@ -174,12 +172,28 @@ export default function LocationForm2({ location }: LocationFormProps) {
   const [isMutating, setIsMutating] = useState<boolean>(false);
   const [locationTypes, setLocationTypes] = useState<LocationType[]>([]);
   const [regions, setRegions] = useState<Region[]>([]);
-  const [isFormFilled, setIsFormFilled] = useState<boolean>(false);
   const router = useRouter();
+
+  const constantValues = structuredClone(initialValues);
+
+  if (location !== undefined) {
+    constantValues.image = location.image;
+    constantValues.name = location.name;
+    constantValues.description = location.description;
+    constantValues.locationType = location.locationType;
+    constantValues.region = location.region;
+  }
+
+  let constanImage: string = String(constantValues.image);
+  if (constantValues.image !== undefined && constantValues.image !== null) {
+    constanImage = String(constantValues.image);
+  } else {
+    constanImage = "";
+  }
 
   const renderLocationTypeOptions = (locationTypes: LocationType[]) => {
     return locationTypes.map((locationType) => (
-      <option key={locationType._id} value={locationType.slug}>
+      <option key={locationType.id} value={locationType.slug}>
         {locationType.name}
       </option>
     ));
@@ -217,17 +231,6 @@ export default function LocationForm2({ location }: LocationFormProps) {
     },
   });
 
-  const initialLocationData = structuredClone(draft);
-  const constantValues = structuredClone(initialValues);
-
-  if (location !== undefined) {
-    constantValues.image = location.image;
-    constantValues.name = location.name;
-    constantValues.description = location.description;
-    constantValues.locationType = location.locationType;
-    constantValues.region = location.region;
-  }
-
   const handleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -237,11 +240,6 @@ export default function LocationForm2({ location }: LocationFormProps) {
       ...draft,
       [event.target.name]: event.target.value,
     });
-    if (event.target.value === "") {
-      setIsFormFilled(false);
-    } else {
-      setIsFormFilled(true);
-    }
   };
 
   const handleSubmit = async (
@@ -270,6 +268,14 @@ export default function LocationForm2({ location }: LocationFormProps) {
       const image: string = String(constantValues.image);
       setDraft({
         image: image,
+        name: constantValues.name,
+        description: constantValues.description,
+        locationType: constantValues.locationType,
+        region: constantValues.region,
+      });
+    } else {
+      setDraft({
+        image: "",
         name: constantValues.name,
         description: constantValues.description,
         locationType: constantValues.locationType,
@@ -324,8 +330,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
               Обкладинка статті
             </label>
             <ImagePreviewWithFileInput
-              key={initialLocationData.image}
-              initialImage={initialLocationData.image}
+              key={constanImage}
             />
             <ErrorMessage name="image" component="span" className={css.error} />
           </div>
@@ -355,7 +360,9 @@ export default function LocationForm2({ location }: LocationFormProps) {
               id={`${fieldId}-locationType`}
               className={css.select}
             >
-              <option value="">Оберіть тип місця</option>
+              <option key="locationTypeEmptykey" value="">
+                Оберіть тип місця
+              </option>
               {renderLocationTypeOptions(locationTypes)}
             </Field>
             <ErrorMessage
@@ -376,7 +383,9 @@ export default function LocationForm2({ location }: LocationFormProps) {
               onChange={handleChange}
               className={css.select}
             >
-              <option value="">Оберіть регіон</option>
+              <option key="regionEmptykey" value="">
+                Оберіть регіон
+              </option>
               {renderRegionOptions(regions)}
             </Field>
             <ErrorMessage
@@ -409,20 +418,12 @@ export default function LocationForm2({ location }: LocationFormProps) {
 
         <SetMap setValue={(value) => {}} />
 
-        <div className={css.buttonsWrapper}>
-          <Button type="submit" className={css.button} disabled={!isFormFilled}>
-            {buttonSubmitName}
-          </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            className={css.button}
-            onClick={handleCancel}
-            disabled={!isFormFilled}
-          >
-            {buttonCancelName}
-          </Button>
-        </div>
+        <FormButtons
+          submitButtonName={buttonSubmitName}
+          cancelButtonName={buttonCancelName}
+          onCancel={handleCancel}
+          initialImage={constanImage}
+        />
       </Form>
     </Formik>
   );
