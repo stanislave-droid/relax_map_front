@@ -27,7 +27,11 @@ const Header = () => {
   const openLogoutModal = () => setIsLogoutModalOpen(true);
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
   const [isLoading, setIsLoading] = useState(false);
+<<<<<<< HEAD
+
+=======
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+>>>>>>> 2d40f6eb220ae7e370cda688be6d7e43ce1586f3
   useEffect(() => {
     async function setIsLoadingTrue() {
       setIsLoading(true);
@@ -65,7 +69,10 @@ const Header = () => {
               isMenuOpen={isMenuOpen}
               setIsMenuOpen={setIsMenuOpen}
               onLogoutClick={openLogoutModal}
+<<<<<<< HEAD
+=======
               onEditProfileClick={() => setIsEditProfileOpen(true)}
+>>>>>>> 2d40f6eb220ae7e370cda688be6d7e43ce1586f3
             />
           )}
         </div>

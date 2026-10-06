@@ -14,6 +14,7 @@ import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewF
 import { PlacesResponse } from "@/app/api/map/route";
 import { Region } from "@/types/region";
 import { FeedbacksResponse } from "@/types/feedback";
+>>>>>>> development
 
 export interface ApiErrorResponse {
   message: string;
