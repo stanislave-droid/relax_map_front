@@ -11,6 +11,8 @@ import {
 
 export const revalidate = 60;
 
+export const revalidate = 60;
+
 export default async function Home() {
   const [response, feedbacksResponse] = await Promise.all([
     fetchLocations({
