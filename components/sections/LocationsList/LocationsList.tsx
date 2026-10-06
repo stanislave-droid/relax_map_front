@@ -23,7 +23,7 @@ export default function LocationsList({
             locationLink={`${process.env.NEXT_PUBLIC_SITE_URL}/locations/${location._id}`}
             editLink={
               isOwnProfile
-                ? `${process.env.NEXT_PUBLIC_SITE_URL}/locations/create/${location._id}`
+                ? `${process.env.NEXT_PUBLIC_SITE_URL}/locations/${location._id}/edit`
                 : undefined
             }
           />

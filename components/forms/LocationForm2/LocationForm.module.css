@@ -1,0 +1,178 @@
+.form {
+  padding: 0 0 64px;
+  background-color: var(--color-scheme-2-background);
+}
+
+.fieldset {
+  margin: 0 0 24px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text);
+}
+
+.ImagePreviewWithFileInput {
+  margin-bottom: 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrapper {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.image {
+  width: 335px;
+  height: 223px;
+}
+
+.customLoadImageButton {
+  border: 1px solid var(--color-scheme-2-border);
+  border-radius: 6px;
+  padding: 4px 0;
+  text-align: center;
+  width: 176px;
+  height: 32px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text);
+  cursor: pointer;
+  background-color: var(--opacity-neutral-darkest-5);
+}
+
+.loadImageInput {
+  display: none;
+}
+
+.field,
+.select {
+  padding: 8px;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  border-radius: 6px;
+  height: 40px;
+  color: var(--color-scheme-2-text);
+  background-color: var(--color-scheme-2-foreground);
+  outline: transparent;
+}
+
+.textarea {
+  min-height: 688px;
+  resize: vertical;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  border-radius: 6px;
+  padding: 12px;
+  color: var(--color-scheme-2-text);
+  background-color: var(--color-scheme-2-foreground);
+  outline: transparent;
+}
+
+.field:user-invalid,
+.textarea:user-invalid {
+  border: 1px solid var(--color-red);
+}
+
+.error {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-red);
+}
+
+.field:hover,
+.field:focus,
+.textarea:hover,
+.textarea:focus {
+  border: 1px solid var(--color-scheme-1-accent);
+  background-color: var(--color-scheme-2-foreground);
+}
+
+.field::placeholder,
+.textarea::placeholder {
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  color: var(--opacity-neutral-darkest-60);
+}
+
+.buttonsWrapper {
+  padding-top: 36px;
+  display: flex;
+  flex-direction: column-reverse;
+  row-gap: 16px;
+}
+
+.button {
+  width: 100%;
+  height: 48px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .image {
+    width: 704px;
+    height: 468px;
+  }
+
+  .field,
+  .select {
+    font-size: 18px;
+  }
+
+  .textarea {
+    min-height: 304px;
+    font-size: 18px;
+  }
+
+  .buttonsWrapper {
+    flex-direction: row;
+    column-gap: 16px;
+  }
+
+  .button {
+    width: 203px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .form {
+    width: 1089px;
+  }
+
+  .image {
+    width: 1089px;
+    height: 724px;
+  }
+
+  .textarea {
+    min-height: 283px;
+  }
+
+  .buttonsWrapper {
+    flex-direction: row;
+    column-gap: 16px;
+  }
+
+  .button {
+    width: 203px;
+  }
+}
