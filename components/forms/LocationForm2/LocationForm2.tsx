@@ -354,7 +354,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
     getRegions();
   }, []);
 
-  const [clearMap, setClearMap] = useState(false);
+  const [clearMap, setClearMap] = useState(true);
 
   return (
     <Formik<CreateLocation>
@@ -457,7 +457,11 @@ export default function LocationForm2({ location }: LocationFormProps) {
 
         <SetMap
           getValue={handleCoordinatesChange}
-          previousPlace={clearMap ? { lat: 10, lon: 10, name: "" } : undefined}
+          previousPlace={
+            clearMap
+              ? location && { ...location.coordinates, name: location.name }
+              : undefined
+          }
           onSearch={() => setClearMap(false)}
         />
 
