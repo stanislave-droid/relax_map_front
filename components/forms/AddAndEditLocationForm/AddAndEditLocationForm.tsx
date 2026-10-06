@@ -227,7 +227,7 @@ export default function AddAndEditLocationForm({
           </fieldset>
 
           <SetMap
-            setValue={(value) => {
+            getValue={(value) => {
               setFieldValue("coordinates", value);
             }}
           />
