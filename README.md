@@ -88,6 +88,7 @@ Others:
   <img width="454" height="703" alt="image" src="https://github.com/user-attachments/assets/bfc25d9a-e1dd-4551-91e5-a9512ee0cfb3" />
 
 - ### Possibility to add your own location.
+  <img width="403" height="772" alt="image" src="https://github.com/user-attachments/assets/3226018a-a475-413d-b982-5a97325e8259" />
 
 - ### Edit existing location.
   <img width="402" height="773" alt="image" src="https://github.com/user-attachments/assets/06e18dfd-2b32-482e-8892-80f2e3f7be30" />
