@@ -40,6 +40,9 @@ const Navigation = ({
           </Link>
         )}
         <Link
+<<<<<<< HEAD
+          href="/all-locations/all-types/all-regions/popular?search="
+=======
           href={`${LOCATIONS_PATH}/${
             pathname.includes("all-locations")
               ? lastPiece &&
@@ -48,6 +51,7 @@ const Navigation = ({
                 : ""
               : ""
           }`}
+>>>>>>> 2d40f6eb220ae7e370cda688be6d7e43ce1586f3
           className={css.navLink}
         >
           Місця відпочинку

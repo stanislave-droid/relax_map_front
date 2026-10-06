@@ -28,6 +28,10 @@ const defaultValues: LocationFormValues = {
   locationType: "",
   region: "",
   description: "",
+  coordinates: {
+    lat: 0,
+    lon: 0,
+  },
 };
 const ImageDropzone = () => {
   const { values, setFieldTouched, setFieldValue } =
@@ -122,7 +126,7 @@ export default function AddAndEditLocationForm({
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ resetForm, dirty }) => (
+      {({ resetForm, dirty, setFieldValue }) => (
         <Form className={css.form}>
           <fieldset className={css.fieldset}>
             <label className={css.label}>Обкладинка</label>
@@ -222,7 +226,11 @@ export default function AddAndEditLocationForm({
             </div>
           </fieldset>
 
-          <SetMap getValue={(value) => {}} />
+          <SetMap
+            setValue={(value) => {
+              setFieldValue("coordinates", value);
+            }}
+          />
 
           <div className={css.buttonsWrapper}>
             <Button
