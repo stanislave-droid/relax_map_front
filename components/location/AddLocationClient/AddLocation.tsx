@@ -32,6 +32,14 @@ const createLocationSchema = Yup.object().shape({
     .min(20, "Мінімум 20 символів")
     .max(6000, "Максимум 6000 символів")
     .required("Введіть опис"),
+  coordinates: Yup.object({
+    lat: Yup.number().required(),
+    lon: Yup.number().required(),
+  }).test(
+    "coordinates",
+    "Оберіть місце на карті",
+    (value) => value?.lat !== 0 && value?.lon !== 0,
+  ),
 });
 
 export default function AddLocation() {
@@ -45,6 +53,7 @@ export default function AddLocation() {
       formData.append("locationType", values.locationType);
       formData.append("region", values.region);
       formData.append("description", values.description);
+      formData.append("coordinates", JSON.stringify(values.coordinates));
       if (values.image instanceof File) {
         formData.append("image", values.image);
       }
