@@ -24,7 +24,8 @@ export default async function Home() {
   const responseLocationTypes = await fetchLocationTypes();
   for (const location of response.locations) {
     const index = responseLocationTypes.findIndex(
-      (locationType) => (location.locationType === locationType.slug));
+      (locationType) => location.locationType === locationType.slug,
+    );
     if (index !== -1) {
       location.locationType = responseLocationTypes[index].name;
     }
