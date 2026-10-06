@@ -205,7 +205,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
 
   const renderLocationTypeOptions = (locationTypes: LocationType[]) => {
     return locationTypes.map((locationType) => (
-      <option key={locationType._id} value={locationType.slug}>
+      <option key={locationType.id} value={locationType.slug}>
         {locationType.name}
       </option>
     ));
