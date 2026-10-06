@@ -3,6 +3,7 @@ import clsx from "clsx";
 import css from "./EditLocationPage.module.css";
 import { Metadata } from "next";
 import { fetchLocationById } from "@/lib/api/serverApi";
+import LocationForm from "@/components/forms/LocationForm2/LocationForm2";
 
 export const metadata: Metadata = {
   title: "Редагування місця — RelaxMap",
@@ -35,7 +36,9 @@ export default async function EditLocation({ params }: EditLocationProps) {
     <main className={css.main}>
       <div className={clsx("container", css.container)}>
         <h1 className={css.pageTitle}>Редагування місця</h1>
-        <div>{/* компонент форми */}</div>
+        <div>
+          <LocationForm location={location} />
+        </div>
       </div>
     </main>
   );

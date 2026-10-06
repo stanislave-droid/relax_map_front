@@ -50,3 +50,22 @@
     font-size: 12px;
   }
 }
+<<<<<<< HEAD
+=======
+
+a.author,
+a.location {
+  align-self: flex-start;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 250ms ease;
+}
+
+a.author:hover,
+a.author:focus-visible,
+a.location:hover,
+a.location:focus-visible {
+  color: var(--color-coral);
+  text-decoration: underline;
+}
+>>>>>>> 2d40f6eb220ae7e370cda688be6d7e43ce1586f3

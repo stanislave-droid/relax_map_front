@@ -13,6 +13,10 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchLocationTypes, fetchRegions } from "@/lib/api/clientApi";
 import clsx from "clsx";
 import Spinner from "@/components/ui/Spinner/Spinner";
+<<<<<<< HEAD
+=======
+import SetMap from "@/components/Map/SetMap";
+>>>>>>> development
 
 interface LocationFormProps {
   onSubmit: (values: LocationFormValues) => Promise<void>;
@@ -162,7 +166,11 @@ export default function AddAndEditLocationForm({
                     key={type.slug}
                     value={type.slug}
                   >
+<<<<<<< HEAD
                     {type.type}
+=======
+                    {type.name}
+>>>>>>> development
                   </option>
                 ))}
               </Field>
@@ -220,6 +228,9 @@ export default function AddAndEditLocationForm({
               />
             </div>
           </fieldset>
+
+          <SetMap setValue={(value) => {}} />
+
           <div className={css.buttonsWrapper}>
             <Button
               type="button"

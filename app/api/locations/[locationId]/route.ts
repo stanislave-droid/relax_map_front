@@ -6,7 +6,7 @@ import { isAxiosError } from "axios";
 
 interface Props {
   params: Promise<{ locationId: string }>;
-};
+}
 
 export async function GET(request: Request, { params }: Props) {
   try {
@@ -35,26 +35,31 @@ export async function GET(request: Request, { params }: Props) {
 }
 
 export async function PATCH(request: Request, { params }: Props) {
-    try {
+  try {
     const cookieStore = await cookies();
     const { locationId } = await params;
-    const body = await request.json();
 
-    const res = await api.patch(`/api/locations/${locationId}`, body, {
+    const formData = await request.formData();
+
+    const res = await api.patch(`/api/locations/${locationId}`, formData, {
       headers: {
         Cookie: cookieStore.toString(),
       },
     });
+
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.status }
+        { status: error.status },
       );
     }
     logErrorResponse({ message: (error as Error).message });
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
