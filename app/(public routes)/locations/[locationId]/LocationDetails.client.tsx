@@ -32,6 +32,7 @@ export default function LocationDetailsClient({
     queryFn: () => fetchLocationById(id),
     refetchOnMount: false,
   });
+
   const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const { data: locationTypes } = useQuery({
