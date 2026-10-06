@@ -49,9 +49,7 @@ export default function AddLocation() {
       formData.append("locationType", values.locationType);
       formData.append("region", values.region);
       formData.append("description", values.description);
-      if (values.coordinates?.lat != null && values.coordinates?.lon != null) {
-        formData.append("coordinates", JSON.stringify(values.coordinates));
-      }
+      formData.append("coordinates", JSON.stringify(values.coordinates));
       if (values.image instanceof File) {
         formData.append("image", values.image);
       }
