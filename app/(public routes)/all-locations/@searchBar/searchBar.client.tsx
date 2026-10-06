@@ -75,7 +75,7 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
           {types &&
             types.map((type) => (
               <option key={type.slug} value={type.slug}>
-                {type.type}
+                {type.name}
               </option>
             ))}
         </Select>

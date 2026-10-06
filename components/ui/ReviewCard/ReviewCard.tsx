@@ -1,3 +1,4 @@
+import Link from "next/link";
 import RatingStars from "../RatingStars/RatingStars";
 import { Feedback } from "@/types/feedback";
 import css from "./ReviewCard.module.css";
@@ -11,16 +12,25 @@ export default function ReviewCard({
   feedback,
   showLocation = false,
 }: ReviewCardProps) {
-  const { rate, description, userName, locationId } = feedback;
+  const { rate, description, userName, ownerId, locationId } = feedback;
 
   return (
     <article className={css.card}>
       <RatingStars value={rate} />
       <p className={css.text}>{description}</p>
       <div className={css.authorInfo}>
-        <p className={css.author}>{userName}</p>
+        {ownerId ? (
+          <Link href={`/profile/${ownerId}`} className={css.author}>
+            {userName}
+          </Link>
+        ) : (
+          <p className={css.author}>{userName}</p>
+        )}
+
         {showLocation && locationId?.name && (
-          <p className={css.location}>{locationId.name}</p>
+          <Link href={`/locations/${locationId._id}`} className={css.location}>
+            {locationId.name}
+          </Link>
         )}
       </div>
     </article>

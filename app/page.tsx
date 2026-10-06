@@ -5,6 +5,8 @@ import ReviewsBlock from "@/components/sections/ReviewsBlock/ReviewsBlock";
 import PopularLocationsBlock from "@/components/sections/PopularLocationsBlock/PopularLocationsBlock";
 import { fetchLocations, getAllFeedbacks } from "@/lib/api/serverApi";
 
+export const revalidate = 60;
+
 export default async function Home() {
   const [response, feedbacksResponse] = await Promise.all([
     fetchLocations({

@@ -1,7 +1,7 @@
 import { fetchLocationsProps } from "@/types/location";
 import { axiosClient as api } from "./api";
 import { LocationsResponse } from "@/app/api/locations/route";
-import { User } from "@/types/user";
+import { User, UserLocationsResponse } from "@/types/user";
 import { Location } from "@/types/location";
 import { FeedbacksResponse } from "@/types/feedback";
 import { cookies } from "next/headers";
@@ -62,12 +62,6 @@ export const getMe = async (): Promise<User> => {
   });
   return data;
 };
-
-interface UserLocationsResponse {
-  locations: Location[];
-  total: number;
-  isEmpty: boolean;
-}
 
 export const getUserLocations = async (
   userId: string,

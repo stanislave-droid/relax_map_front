@@ -5,12 +5,14 @@ import {
   Location,
   UpdateLocationData,
 } from "@/types/location";
-import { User } from "@/types/user";
+import { User, UserLocationsResponse } from "@/types/user";
 import { RegisterSchema } from "@/components/auth/RegistrationForm/RegistrationForm";
 import type { AxiosError } from "axios";
 import { LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { LocationType } from "@/types/locationType";
 import { AddReviewFormValues } from "@/components/forms/AddReviewForm/AddReviewForm";
+import { placesResponse } from "@/app/api/map/route";
+import { Region } from "@/types/region";
 import { FeedbacksResponse } from "@/types/feedback";
 
 export interface ApiErrorResponse {
@@ -76,13 +78,27 @@ export const fetchLocationTypes = async (): Promise<LocationType[]> => {
   const { data } = await api.get<LocationType[]>("/types");
   return data;
 };
+
+export const fetchRegions = async (): Promise<Region[]> => {
+  const { data } = await api.get<Region[]>("/regions");
+  return data;
+};
+
 export async function updateLocation(
   locationId: string,
   location: UpdateLocationData,
 ): Promise<Location> {
+  const formData = new FormData();
+
+  Object.entries(location).forEach(([key, value]) => {
+    if (value !== null && value !== undefined) {
+      formData.append(key, value as string | Blob);
+    }
+  });
+
   const response = await api.patch<Location>(
     `/locations/${locationId}`,
-    location,
+    formData,
   );
 
   return response.data;
@@ -93,6 +109,28 @@ export async function fetchLocationById(id: string): Promise<Location> {
 
   return data;
 }
+
+export const fetchUserLocations = async ({
+  userId,
+  page = 1,
+  limit = 4,
+}: {
+  userId: string;
+  page?: number;
+  limit?: number;
+}): Promise<UserLocationsResponse> => {
+  const { data } = await api.get<UserLocationsResponse>(
+    `/users/${userId}/locations`,
+    {
+      params: {
+        page,
+        limit,
+      },
+    },
+  );
+
+  return data;
+};
 
 export async function fetchCreatedReviews(
   locationId: string,
@@ -119,3 +157,7 @@ export const getUserById = async (userId: string): Promise<User> => {
   return data;
 };
 
+export async function findPlace(search: string) {
+  const { data } = await api.get<placesResponse>(`/map?search=${search}`);
+  return data;
+}

@@ -1,5 +1,6 @@
 import "../common.module.css";
 import { Location } from "@/types/location";
+import { LocationType } from "@/types/locationType";
 import Image from "next/image";
 import Link from "../Link/Link";
 import Icon from "../Icon/Icon";
@@ -10,13 +11,20 @@ interface LocationCardProps {
   location: Location;
   locationLink: string;
   editLink?: string;
+  locationType?: LocationType;
 }
 
 export default function LocationCard({
   location,
   locationLink,
   editLink,
+  locationType,
 }: LocationCardProps) {
+  let type: string = location.locationType;
+  if (locationType !== undefined) {
+    type = locationType.name;
+  }
+
   return (
     <div className={css.locationCard}>
       <Image
@@ -28,7 +36,7 @@ export default function LocationCard({
         className={css.locationCardImage}
       />
       <div className={css.locationCardContent}>
-        <p className={css.locationType}>{location.locationType}</p>
+        <p className={css.locationType}>{type}</p>
         <div className={css.locationRate}>
           <RatingStars value={location.rate} />
         </div>

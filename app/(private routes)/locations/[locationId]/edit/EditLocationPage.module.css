@@ -1,3 +1,30 @@
 .main {
   width: 100%;
 }
+
+.container {
+  background-color: var(--color-scheme-2-background);
+}
+
+.pageTitle {
+  padding: 32px 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-2-text);
+}
+
+@media (min-width: 768px) {
+  .pageTitle {
+    font-size: 48px;
+    text-align: left;
+  }
+}
+
+@media (min-width: 1440px) {
+  .pageTitle {
+    font-size: 56px;
+  }
+}

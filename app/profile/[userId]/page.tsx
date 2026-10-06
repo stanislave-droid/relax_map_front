@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { getUserById, getUserLocations } from "@/lib/api/serverApi";
-import ProfilePlaceholder from "@/components/profile/ProfilePlaceholder/ProfilePlaceholder";
-import LocationCard from "@/components/ui/LocationCard/LocationCard";
+import css from "./page.module.css";
+import { getUserById } from "@/lib/api/serverApi";
 import ProfileInfo from "@/components/profile/ProfileInfo/ProfileInfo";
+import LocationsGrid from "@/components/profile/locationsGrid/LocationsGrid";
+import clsx from "clsx";
 
 type Props = {
   params: Promise<{ userId: string }>;
@@ -34,28 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProfilePage({ params }: Props) {
   const { userId } = await params;
-  const [user, locationsData] = await Promise.all([
-    getUserById(userId),
-    getUserLocations(userId),
-  ]);
-  const isEmpty = locationsData.isEmpty;
+  const user = await getUserById(userId);
 
   return (
-    <main className="container">
+    <main className={clsx("container", css.main)}>
       <ProfileInfo user={user} />
-      {isEmpty && <ProfilePlaceholder isOwnProfile={false} />}
-      {!isEmpty && (
-        <div>
-          {locationsData.locations.map((location) => (
-            <LocationCard
-              key={location._id}
-              location={location}
-              locationLink={`/locations/${location._id}`}
-              editLink={undefined}
-            />
-          ))}
-        </div>
-      )}
+      <LocationsGrid userId={userId} isOwnProfile={false} />
     </main>
   );
 }
