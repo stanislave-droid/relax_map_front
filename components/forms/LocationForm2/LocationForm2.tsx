@@ -12,7 +12,7 @@ import "../../ui/common.module.css";
 import css from "./LocationForm.module.css";
 import { useEffect, useId, useState, useMemo } from "react";
 import * as Yup from "yup";
-import { Location, UpdateLocationData } from "@/types/location";
+import { Coordinates, Location, UpdateLocationData } from "@/types/location";
 import Button from "@/components/ui/Button/Button";
 import { useLocationDraftStore } from "@/lib/store/locationStore";
 import Image from "next/image";
@@ -28,6 +28,7 @@ import Spinner from "@/components/ui/Spinner/Spinner";
 import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
 import SetMap from "@/components/Map/SetMap";
+import { PlacesResponse } from "@/app/api/map/route";
 
 interface LocationFormProps {
   location?: Location;
@@ -39,6 +40,7 @@ interface CreateLocation {
   description: string;
   locationType: string;
   region: string;
+  coordinates: Coordinates;
 }
 
 interface FormButtonsParameters {
@@ -54,6 +56,10 @@ const initialValues: CreateLocation = {
   description: "",
   locationType: "",
   region: "",
+  coordinates: {
+    lat: 0,
+    lon: 0,
+  },
 };
 
 const LocationFormSchema = Yup.object().shape({
@@ -80,7 +86,11 @@ const ImagePreviewWithFileInput = () => {
     if (values.image instanceof File) {
       return URL.createObjectURL(values.image);
     }
-    if (values.image !== "" && values.image !== null && values.image !== undefined) {
+    if (
+      values.image !== "" &&
+      values.image !== null &&
+      values.image !== undefined
+    ) {
       return values.image;
     }
     return "/location_form_placeholder_image.jpg";
@@ -121,7 +131,8 @@ function FormButtons({
   onCancel,
   initialImage,
 }: FormButtonsParameters) {
-  const { values, isSubmitting, setFieldValue } = useFormikContext<CreateLocation>();
+  const { values, isSubmitting, setFieldValue } =
+    useFormikContext<CreateLocation>();
 
   let submitName = submitButtonName;
 
@@ -182,6 +193,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
     constantValues.description = location.description;
     constantValues.locationType = location.locationType;
     constantValues.region = location.region;
+    constantValues.coordinates = location.coordinates;
   }
 
   let constanImage: string = String(constantValues.image);
@@ -207,8 +219,6 @@ export default function LocationForm2({ location }: LocationFormProps) {
   };
 
   const queryClient = useQueryClient();
-
-  const postLocationMutation = useMutation({});
 
   const updateLocationMutation = useMutation({
     mutationFn: ({
@@ -242,12 +252,31 @@ export default function LocationForm2({ location }: LocationFormProps) {
     });
   };
 
+  const handleCoordinatesChange = (newValue: Coordinates) => {
+    setDraft({
+      ...draft,
+      coordinates: { ...newValue },
+    });
+  };
+
   const handleSubmit = async (
     values: CreateLocation,
     actions: FormikHelpers<CreateLocation>,
   ) => {
     values.name = values.name.trim();
     values.description = values.description.trim();
+
+    if (
+      constantValues.coordinates.lat !== draft.coordinates.lat ||
+      constantValues.coordinates.lon !== draft.coordinates.lon
+    ) {
+      values.coordinates = {
+        lat: draft.coordinates.lat,
+        lon: draft.coordinates.lon,
+      };
+    }
+
+    console.log(values);
 
     if (location !== undefined) {
       try {
@@ -272,6 +301,10 @@ export default function LocationForm2({ location }: LocationFormProps) {
         description: constantValues.description,
         locationType: constantValues.locationType,
         region: constantValues.region,
+        coordinates: {
+          lat: constantValues.coordinates.lat,
+          lon: constantValues.coordinates.lon,
+        },
       });
     } else {
       setDraft({
@@ -280,8 +313,13 @@ export default function LocationForm2({ location }: LocationFormProps) {
         description: constantValues.description,
         locationType: constantValues.locationType,
         region: constantValues.region,
+        coordinates: {
+          lat: constantValues.coordinates.lat,
+          lon: constantValues.coordinates.lon,
+        },
       });
     }
+    setClearMap(true);
   };
 
   useEffect(() => {
@@ -292,6 +330,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
         description: location.description,
         locationType: location.locationType,
         region: location.region,
+        coordinates: location.coordinates,
       });
     } else {
       clearDraft();
@@ -315,6 +354,8 @@ export default function LocationForm2({ location }: LocationFormProps) {
     getRegions();
   }, []);
 
+  const [clearMap, setClearMap] = useState(false);
+
   return (
     <Formik<CreateLocation>
       initialValues={draft}
@@ -329,9 +370,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
             <label htmlFor={`${fieldId}-image`} className={css.label}>
               Обкладинка статті
             </label>
-            <ImagePreviewWithFileInput
-              key={constanImage}
-            />
+            <ImagePreviewWithFileInput key={constanImage} />
             <ErrorMessage name="image" component="span" className={css.error} />
           </div>
 
@@ -416,7 +455,11 @@ export default function LocationForm2({ location }: LocationFormProps) {
           </div>
         </fieldset>
 
-        <SetMap setValue={(value) => {}} />
+        <SetMap
+          getValue={handleCoordinatesChange}
+          previousPlace={clearMap ? { lat: 10, lon: 10, name: "" } : undefined}
+          onSearch={() => setClearMap(false)}
+        />
 
         <FormButtons
           submitButtonName={buttonSubmitName}

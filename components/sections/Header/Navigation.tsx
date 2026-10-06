@@ -63,7 +63,7 @@ const Navigation = ({
         {isAuthenticated ? (
           <>
             <Link
-              href="/locations/add"
+              href="/private-locations/add"
               variant="primary"
               size="md"
               className={css.addLocationLink}

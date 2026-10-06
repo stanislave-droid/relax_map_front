@@ -15,7 +15,7 @@ export default function ProfilePlaceholder({
 
   const linkText = isOwnProfile ? "Поділитися локацією" : "Назад до локацій";
 
-  const href = isOwnProfile ? "/locations/add" : LOCATIONS_PATH;
+  const href = isOwnProfile ? "/private-locations/add" : LOCATIONS_PATH;
 
   return (
     <div className={css.placeholder}>

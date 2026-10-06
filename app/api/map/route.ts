@@ -4,7 +4,7 @@ import { logErrorResponse } from "../auth/_utils/utils";
 import { isAxiosError } from "axios";
 import { Coordinates } from "@/types/location";
 
-export interface placesResponse extends Coordinates {
+export interface PlacesResponse extends Coordinates {
   name: string;
 }
 
