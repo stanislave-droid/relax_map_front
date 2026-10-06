@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   fetchLocationById,
+  fetchLocationTypes,
+  fetchRegions,
   getFeedbacksByLocation,
   getUserById,
 } from "@/lib/api/clientApi";
@@ -15,6 +17,8 @@ import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewMod
 import css from "./LocationDetailsClient.module.css";
 import Map from "@/components/Map/Map";
 import SetMap from "@/components/Map/SetMap";
+import { LocationType } from "@/types/locationType";
+import { Region } from "@/types/region";
 
 interface LocationDetailsClientProps {
   id: string;
@@ -29,6 +33,20 @@ export default function LocationDetailsClient({
     refetchOnMount: false,
   });
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+
+  const { data: locationTypes } = useQuery({
+    queryKey: ["locations"],
+    queryFn: () => fetchLocationTypes(),
+    enabled: !!location,
+    refetchOnMount: false,
+  });
+
+  const { data: regions } = useQuery({
+    queryKey: ["regions"],
+    queryFn: () => fetchRegions(),
+    enabled: !!location,
+    refetchOnMount: false,
+  });
 
   const { data: author, isError: isAuthorError } = useQuery({
     queryKey: ["author", location?.ownerId],
@@ -47,14 +65,36 @@ export default function LocationDetailsClient({
     refetchOnMount: false,
   });
 
+  const locationTypesArray = locationTypes as LocationType[];
+  let indexLocationType: number = -1;
+  if (locationTypesArray !== undefined) {
+    indexLocationType = locationTypesArray.findIndex(
+      (locationType) => location.locationType === locationType.slug,
+    );
+  }
+  let locationTypeName = location.locationType;
+  if (indexLocationType !== -1) {
+    locationTypeName = locationTypesArray[indexLocationType].name;
+  }
+
+  const regionsArray = regions as Region[];
+  let indexRegion: number = -1;
+  if (regionsArray !== undefined) {
+    indexRegion = regionsArray.findIndex((region) => (location.region === region.slug));
+  }
+  let regionName = location.region;
+  if (indexRegion !== -1) {
+    regionName = regionsArray[indexRegion].name;
+  }
+
   return (
     <main className={css.main}>
       <div className={css.info}>
         <LocationInfoBlock
           name={location.name}
           rating={location.rate}
-          region={location.region}
-          type={location.locationType}
+          region={regionName}
+          type={locationTypeName}
           imageUrl={location.image}
           author={{
             id: author._id,
