@@ -6,5 +6,5 @@ export interface LocationFormValues {
   locationType: string;
   region: string;
   description: string;
-  coordinates: Coordinates;
+  coordinates?: Coordinates;
 }
