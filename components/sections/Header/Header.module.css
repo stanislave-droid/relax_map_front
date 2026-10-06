@@ -139,9 +139,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 2px 12px;
+  padding: 3px 12px;
   border-radius: 6px;
-  border: var(--background);
+  border: 1px solid transparent;
   cursor: pointer;
   outline: none;
   transition:
@@ -151,7 +151,7 @@
 
 .profileButton:hover,
 .profileButton:focus {
-  border: 1px solid #000;
+  border-color: #000;
 }
 
 .profileButton:active {

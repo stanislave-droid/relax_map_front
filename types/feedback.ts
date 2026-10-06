@@ -1,6 +1,7 @@
 export interface Feedback {
   _id: string;
   userName: string;
+  ownerId?: string;
   rate: number;
   description: string;
   locationId?: {

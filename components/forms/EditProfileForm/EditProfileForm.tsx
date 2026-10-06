@@ -10,6 +10,7 @@ import { updateProfile } from "@/lib/api/updateProfile";
 import { User } from "@/types/user";
 import css from "./EditProfileForm.module.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const DEFAULT_AVATAR_URL =
   "https://ac.goit.global/fullstack/react/default-avatar.jpg";
@@ -39,12 +40,12 @@ const validateName = (value: string): string => {
 const EditProfileFormContent = ({ user, onClose }: FormContentProps) => {
   const setUser = useAuthStore((state) => state.setUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [name, setName] = useState(user.name);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState(user.avatarUrl ?? DEFAULT_AVATAR_URL);
   const [nameError, setNameError] = useState("");
   const [fileError, setFileError] = useState("");
+  const router = useRouter();
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;
@@ -66,6 +67,7 @@ const EditProfileFormContent = ({ user, onClose }: FormContentProps) => {
       setUser({ ...user, ...updatedUser });
       toast.success("Профіль успішно оновлено");
       onClose();
+      router.refresh();
     },
     onError: () => {
       toast.error("Під час операції сталася помилка, повторіть пізніше");

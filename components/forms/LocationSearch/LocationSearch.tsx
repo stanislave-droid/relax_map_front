@@ -5,11 +5,15 @@ import Input from "@/components/ui/Input/Input";
 import Button from "@/components/ui/Button/Button";
 import css from "./LocationSearch.module.css";
 
-export default function LocationSearch() {
+interface LocationSearchProps {
+  onSearch: (search: string) => void;
+}
+
+export default function LocationSearch({ onSearch }: LocationSearchProps) {
   const [location, setLocation] = useState("");
 
   function handleSearch() {
-    console.log("Пошук:", location);
+    onSearch(location);
   }
 
   return (

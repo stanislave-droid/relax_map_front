@@ -14,6 +14,7 @@ import Button from "@/components/ui/Button/Button";
 import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewModal";
 import css from "./LocationDetailsClient.module.css";
 import Map from "@/components/Map/Map";
+import SetMap from "@/components/Map/SetMap";
 
 interface LocationDetailsClientProps {
   id: string;
@@ -46,21 +47,6 @@ export default function LocationDetailsClient({
     refetchOnMount: false,
   });
 
-  //   const [place, setPlace] = useState<placesResponse>({
-  //     lat: 0,
-  //     lon: 0,
-  //     name: "",
-  //   });
-
-  //   useEffect(() => {
-  //     findPlace("Буковина")
-  //       .then((data) => {
-  //         setPlace(data);
-  //         console.log(data);
-  //       })
-  //       .catch((error) => console.log(error));
-  //   }, []);
-
   return (
     <main className={css.main}>
       <div className={css.info}>
@@ -80,13 +66,11 @@ export default function LocationDetailsClient({
 
       <div className={css.description}>
         <LocationDescription description={location.description} />
-        {
-          <Map
-            lat={location.coordinates.lat}
-            lon={location.coordinates.lon}
-            title={location.name}
-          />
-        }
+        <Map
+          lat={location.coordinates.lat}
+          lon={location.coordinates.lon}
+          title={location.name}
+        />
       </div>
 
       <ReviewsBlock

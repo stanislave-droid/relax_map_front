@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import Spinner from "@/components/ui/Spinner/Spinner";
 import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
+import SetMap from "@/components/Map/SetMap";
 
 interface LocationFormProps {
   location?: Location;
@@ -42,6 +43,12 @@ interface CreateLocation {
   description: string;
   locationType: string;
   region: string;
+}
+
+interface FormButtonsParameters {
+  submitButtonName: string;
+  cancelButtonName: string;
+  onCancel: () => void;
 }
 
 const initialValues: CreateLocation = {
@@ -114,6 +121,49 @@ const ImagePreviewWithFileInput = ({
   );
 };
 
+function FormButtons({
+  submitButtonName,
+  cancelButtonName,
+  onCancel,
+}: FormButtonsParameters) {
+  const { values, isSubmitting } = useFormikContext<CreateLocation>();
+
+  let submitName = submitButtonName;
+
+  const isAllFieldsFilled =
+    values.name.trim() !== "" &&
+    values.description.trim() !== "" &&
+    values.locationType.trim() !== "" &&
+    values.region.trim() !== "" &&
+    values.image !== null &&
+    values.image !== "";
+
+  if (!isAllFieldsFilled) {
+    submitName = "Опублікувати";
+  }
+
+  return (
+    <div className={css.buttonsWrapper}>
+      <Button
+        type="submit"
+        className={css.button}
+        disabled={!isAllFieldsFilled}
+      >
+        {submitName}
+      </Button>
+      <Button
+        type="button"
+        variant="secondary"
+        className={css.button}
+        onClick={onCancel}
+        disabled={!isAllFieldsFilled || isSubmitting}
+      >
+        {cancelButtonName}
+      </Button>
+    </div>
+  );
+}
+
 export default function LocationForm2({ location }: LocationFormProps) {
   const fieldId = useId();
   const { draft, setDraft, clearDraft } = useLocationDraftStore();
@@ -130,7 +180,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
   const renderLocationTypeOptions = (locationTypes: LocationType[]) => {
     return locationTypes.map((locationType) => (
       <option key={locationType._id} value={locationType.slug}>
-        {locationType.type}
+        {locationType.name}
       </option>
     ));
   };
@@ -176,7 +226,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
     constantValues.description = location.description;
     constantValues.locationType = location.locationType;
     constantValues.region = location.region;
-  }  
+  }
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -316,10 +366,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
           </div>
 
           <div className={css.formGroup}>
-            <label
-              htmlFor={`${fieldId}-region`}
-              className={`${css.label}`}
-            >
+            <label htmlFor={`${fieldId}-region`} className={`${css.label}`}>
               Регіон
             </label>
             <Field
@@ -359,6 +406,8 @@ export default function LocationForm2({ location }: LocationFormProps) {
             />
           </div>
         </fieldset>
+
+        <SetMap setValue={(value) => {}} />
 
         <div className={css.buttonsWrapper}>
           <Button type="submit" className={css.button} disabled={!isFormFilled}>
