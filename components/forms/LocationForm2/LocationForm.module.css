@@ -110,7 +110,6 @@
 
 .field::placeholder,
 .textarea::placeholder {
-  border: 1px solid var(--opacity-neutral-darkest-15);
   color: var(--opacity-neutral-darkest-60);
 }
 
