@@ -222,7 +222,7 @@ export default function AddAndEditLocationForm({
             </div>
           </fieldset>
 
-          <SetMap setValue={(value) => {}} />
+          <SetMap getValue={(value) => {}} />
 
           <div className={css.buttonsWrapper}>
             <Button

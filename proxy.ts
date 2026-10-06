@@ -4,9 +4,9 @@ import { checkSession } from "./lib/api/serverApi";
 import { parseSetCookie } from "cookie";
 
 const privateRoutes = [
-  "/locations/add",
+  "/private-locations/add",
   "/profile/myProfile",
-  "/locations/:path*/edit",
+  "/private-locations",
 ];
 const authRoutes = ["/sign-in", "/sign-up"];
 
@@ -74,7 +74,6 @@ export const config = {
     "/profile/myProfile",
     "/sign-in",
     "/sign-up",
-    "/locations/add",
-    "/locations/:path*/edit",
+    "/private-locations/:path*",
   ],
 };
