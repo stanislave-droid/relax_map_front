@@ -1,0 +1,6 @@
+.authLayout {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 82px);
+    padding-block: 64px;
+}
