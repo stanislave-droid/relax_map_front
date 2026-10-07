@@ -48,8 +48,10 @@ export default function RootLayout({
           <AuthProvider>
             <Toaster />
             <Header />
-            {children}
-            {modal}
+            <div className="page-content">
+              {children}
+              {modal}
+            </div>
             <FooterWrapper />
           </AuthProvider>
         </TanStackQueryProvider>
