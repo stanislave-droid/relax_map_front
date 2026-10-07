@@ -20,6 +20,9 @@ import SetMap from "@/components/Map/SetMap";
 import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
 
+import AuthErrorModal from "@/components/addFeedback/AuthErrorModal/AuthErrorModal";
+import { useAuthStore } from "@/lib/store/authStore";
+
 interface LocationDetailsClientProps {
   id: string;
 }
@@ -34,6 +37,16 @@ export default function LocationDetailsClient({
   });
 
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+
+  const handleLeaveReview = () => {
+    if (isAuthenticated) {
+      setIsReviewOpen(true);
+    } else {
+      setIsAuthModalOpen(true);
+    }
+  };
 
   const { data: locationTypes } = useQuery({
     queryKey: ["locations"],
@@ -81,7 +94,9 @@ export default function LocationDetailsClient({
   const regionsArray = regions as Region[];
   let indexRegion: number = -1;
   if (regionsArray !== undefined) {
-    indexRegion = regionsArray.findIndex((region) => (location.region === region.slug));
+    indexRegion = regionsArray.findIndex(
+      (region) => location.region === region.slug,
+    );
   }
   let regionName = location.region;
   if (indexRegion !== -1) {
@@ -117,9 +132,7 @@ export default function LocationDetailsClient({
       <ReviewsBlock
         title="Відгуки"
         feedbacks={feedbacksData?.feedbacks ?? []}
-        action={
-          <Button onClick={() => setIsReviewOpen(true)}>Залишити відгук</Button>
-        }
+        action={<Button onClick={handleLeaveReview}>Залишити відгук</Button>}
       />
 
       <AddReviewBlock
@@ -127,6 +140,10 @@ export default function LocationDetailsClient({
         locationId={id}
         onClose={() => setIsReviewOpen(false)}
       />
+
+      {isAuthModalOpen && (
+        <AuthErrorModal onClose={() => setIsAuthModalOpen(false)} />
+      )}
     </main>
   );
 }

@@ -1,4 +1,4 @@
-'"use client";';
+"use client";
 
 import clsx from "clsx";
 import css from "./AddReviewModal.module.css";
@@ -10,6 +10,8 @@ import { fetchCreatedReviews } from "@/lib/api/clientApi";
 import { ApiError } from "@/lib/api/clientApi";
 import showToast, { showError } from "@/components/ui/Toast/Toast";
 import AuthErrorModal from "../AuthErrorModal/AuthErrorModal";
+
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AddReviewBlockProps {
   onClose: () => void;
@@ -25,10 +27,18 @@ export default function AddReviewBlock({
   const [isLoading, setIsLoading] = useState(false);
   const [showAuthErrorModal, setShowAuthErrorModal] = useState(false);
 
+  const queryClient = useQueryClient();
+
   const handleSubmit = async (values: AddReviewFormValues) => {
     setIsLoading(true);
     try {
       await fetchCreatedReviews(locationId, values);
+
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["feedbacks", locationId] }),
+        queryClient.invalidateQueries({ queryKey: ["location", locationId] }),
+      ]);
+
       onClose();
       showToast("Відгук відправлено на модерацію", "communication");
     } catch (e) {
