@@ -18,7 +18,7 @@ const HeroBlock = () => {
     const search = query.trim();
 
     if (search) {
-      router.push(`${LOCATIONS_PATH}/${search}`);
+      router.push(`${LOCATIONS_PATH}?search=${decodeURIComponent(search)}`);
     }
   };
 

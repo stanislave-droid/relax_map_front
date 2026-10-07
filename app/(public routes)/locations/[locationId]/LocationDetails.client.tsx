@@ -16,7 +16,6 @@ import Button from "@/components/ui/Button/Button";
 import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewModal";
 import css from "./LocationDetailsClient.module.css";
 import Map from "@/components/Map/Map";
-import SetMap from "@/components/Map/SetMap";
 import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
 
@@ -47,6 +46,20 @@ export default function LocationDetailsClient({
       setIsAuthModalOpen(true);
     }
   };
+
+  const { data: locationTypes } = useQuery({
+    queryKey: ["locations"],
+    queryFn: () => fetchLocationTypes(),
+    enabled: !!location,
+    refetchOnMount: false,
+  });
+
+  const { data: regions } = useQuery({
+    queryKey: ["regions"],
+    queryFn: () => fetchRegions(),
+    enabled: !!location,
+    refetchOnMount: false,
+  });
 
   const { data: locationTypes } = useQuery({
     queryKey: ["locations"],

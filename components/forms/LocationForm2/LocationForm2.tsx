@@ -64,18 +64,18 @@ const initialValues: CreateLocation = {
 
 const LocationFormSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, "Name too short")
-    .max(96, "Name too long")
+    .min(3, "Назва місця має бути не менше 3 символів")
+    .max(96, "Назва місця не повинна перевищувати 96 символів")
     .matches(
       /^[^\s].*[^\s]$/,
       "Spaces at the beginning and end are not allowed",
     )
-    .required("Name is required"),
+    .required("Потрібна назва місця"),
   description: Yup.string()
-    .min(20, "Description too short")
-    .max(6000, "Description too long"),
-  locationType: Yup.string().required("Select locationType"),
-  region: Yup.string().required("Select region"),
+    .min(20, "Детальний опис має бути не менше 20 символів")
+    .max(6000, "Детальний опис не повинен перевищувати 96 символів"),
+  locationType: Yup.string().required("Виберіть тип місця"),
+  region: Yup.string().required("Виберіть регіон"),
 });
 
 const ImagePreviewWithFileInput = () => {
@@ -340,14 +340,18 @@ export default function LocationForm2({ location }: LocationFormProps) {
   useEffect(() => {
     async function fetchTypes() {
       const response = await fetchLocationTypes();
+      const locationTypes = response as LocationType[];
+      locationTypes.sort((a, b) => a.name.localeCompare(b.name, "uk"));
 
-      setLocationTypes(response);
+      setLocationTypes(locationTypes);
     }
 
     async function getRegions() {
       const response = await fetchRegions();
+      const regions = response as Region[];
+      regions.sort((a, b) => a.name.localeCompare(b.name, "uk"));
 
-      setRegions(response);
+      setRegions(regions);
     }
 
     fetchTypes();
