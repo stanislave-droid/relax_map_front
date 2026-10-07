@@ -6,10 +6,11 @@ import css from "./searchBar.module.css";
 import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
 import clsx from "clsx";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { getSearch } from "@/utils/getSearch";
+import { LOCATIONS_PATH } from "@/types/location";
 
 interface SearchBarClientProps {
   types: LocationType[];
@@ -25,27 +26,21 @@ export const SORT_DEFAULT = "popular";
 
 export function SearchBarClient({ types, regions }: SearchBarClientProps) {
   const router = useRouter();
-  const { slug } = useParams();
+  const params = useSearchParams();
+  const SearchParams = new URLSearchParams(params.toString());
 
-  const [searchField, setSearchField] = useState(() =>
-    slug ? getSearch(slug[3]) : "",
-  );
-  const [region, setRegion] = useState(() => (slug ? slug[1] : REGION_DEFAULT));
-  const [type, setType] = useState(() => (slug ? slug[0] : TYPE_DEFAULT));
-  const [sort, setSort] = useState(() => (slug ? slug[2] : SORT_DEFAULT));
+  const handleUpdateParam = (key: string, value: string) => {
+    if (value) {
+      SearchParams.set(key, value);
+    } else {
+      SearchParams.delete(key);
+    }
 
-  useEffect(() => {
-    router.push(
-      "/all-locations/" +
-        `${type}/` +
-        `${region}/` +
-        `${sort}/` +
-        `${searchField}`,
-    );
-  }, [searchField, type, region, sort, router]);
+    router.push(`${LOCATIONS_PATH}?${SearchParams.toString()}`);
+  };
 
   const delaySearch = useDebouncedCallback(
-    (value) => setSearchField(value),
+    (value) => handleUpdateParam("search", value),
     1000,
   );
 
@@ -58,15 +53,20 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
     <div className={css.wrapper}>
       <Input
         aria-label="Пошук"
-        defaultValue={searchField ?? ""}
+        defaultValue={SearchParams.get("search") || ""}
         className={clsx(css.input, css.field)}
         onChange={handleSearch}
       ></Input>
       <div className={css.categoriesWrapper}>
         <Select
           aria-label="Тип"
-          value={type}
-          onChange={(event) => setType(event.target.value)}
+          value={SearchParams.get("type") || TYPE_DEFAULT}
+          onChange={(event) =>
+            handleUpdateParam(
+              "type",
+              event.target.value !== TYPE_DEFAULT ? event.target.value : "",
+            )
+          }
           className={clsx(css.typesSelect, css.field)}
         >
           <option value={TYPE_DEFAULT} defaultChecked>
@@ -81,8 +81,13 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
         </Select>
         <Select
           aria-label="Регіон"
-          value={region}
-          onChange={(event) => setRegion(event.target.value)}
+          value={SearchParams.get("region") || REGION_DEFAULT}
+          onChange={(event) =>
+            handleUpdateParam(
+              "region",
+              event.target.value !== REGION_DEFAULT ? event.target.value : "",
+            )
+          }
           className={clsx(css.regionsSelect, css.field)}
         >
           <option value={REGION_DEFAULT} defaultChecked>
@@ -98,8 +103,13 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
       </div>
       <Select
         aria-label="Сортування"
-        value={sort}
-        onChange={(event) => setSort(event.target.value)}
+        value={SearchParams.get("sortBy") || SORT_DEFAULT}
+        onChange={(event) =>
+          handleUpdateParam(
+            "sortBy",
+            event.target.value !== SORT_DEFAULT ? event.target.value : "",
+          )
+        }
         className={clsx(css.sortSelect, css.field)}
       >
         <option value={SORT_DEFAULT} defaultChecked>

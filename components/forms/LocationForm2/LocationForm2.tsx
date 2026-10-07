@@ -341,7 +341,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
     async function fetchTypes() {
       const response = await fetchLocationTypes();
       const locationTypes = response as LocationType[];
-      locationTypes.sort((a, b) => a.name.localeCompare(b.name, 'uk'));
+      locationTypes.sort((a, b) => a.name.localeCompare(b.name, "uk"));
 
       setLocationTypes(locationTypes);
     }
@@ -349,7 +349,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
     async function getRegions() {
       const response = await fetchRegions();
       const regions = response as Region[];
-      regions.sort((a, b) => a.name.localeCompare(b.name, 'uk'));
+      regions.sort((a, b) => a.name.localeCompare(b.name, "uk"));
 
       setRegions(regions);
     }
@@ -358,7 +358,7 @@ export default function LocationForm2({ location }: LocationFormProps) {
     getRegions();
   }, []);
 
-  const [clearMap, setClearMap] = useState(false);
+  const [clearMap, setClearMap] = useState(true);
 
   return (
     <Formik<CreateLocation>
@@ -461,7 +461,11 @@ export default function LocationForm2({ location }: LocationFormProps) {
 
         <SetMap
           getValue={handleCoordinatesChange}
-          previousPlace={clearMap ? { lat: 10, lon: 10, name: "" } : undefined}
+          previousPlace={
+            clearMap
+              ? location && { ...location.coordinates, name: location.name }
+              : undefined
+          }
           onSearch={() => setClearMap(false)}
         />
 
