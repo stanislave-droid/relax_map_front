@@ -14,6 +14,7 @@ import { fetchLocationTypes, fetchRegions } from "@/lib/api/clientApi";
 import clsx from "clsx";
 import Spinner from "@/components/ui/Spinner/Spinner";
 import SetMap from "@/components/Map/SetMap";
+import { useMemo } from "react";
 
 interface LocationFormProps {
   onSubmit: (values: LocationFormValues) => Promise<void>;
@@ -34,7 +35,7 @@ const defaultValues: LocationFormValues = {
   },
 };
 const ImageDropzone = () => {
-  const { values, setFieldTouched, setFieldValue } =
+  const { values, errors, touched, setFieldTouched, setFieldValue } =
     useFormikContext<LocationFormValues>();
   const [preview, setPreview] = useState<string | null>(null);
   const previewUrlRef = useRef<string | null>(null);
@@ -70,7 +71,11 @@ const ImageDropzone = () => {
     <div className={css.imageSection}>
       <div {...getRootProps()}>
         <input {...getInputProps()} />
-        <div className={css.imageWrapper}>
+        <div
+          className={`${css.imageWrapper} ${
+            errors.image && touched.image ? css.fieldError : ""
+          }`}
+        >
           {typeof values.image === "string" ? (
             <Image
               src={values.image}
@@ -119,6 +124,18 @@ export default function AddAndEditLocationForm({
     queryKey: ["locationTypes"],
     queryFn: fetchLocationTypes,
   });
+  const sortedLocationTypes = useMemo(
+    () =>
+      [...(locationTypes ?? [])].sort((a, b) =>
+        a.name.localeCompare(b.name, "uk"),
+      ),
+    [locationTypes],
+  );
+  const sortedRegions = useMemo(
+    () =>
+      [...(regions ?? [])].sort((a, b) => a.name.localeCompare(b.name, "uk")),
+    [regions],
+  );
 
   return (
     <Formik
@@ -126,17 +143,23 @@ export default function AddAndEditLocationForm({
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ resetForm, dirty, setFieldValue }) => (
+      {({ resetForm, dirty, setFieldValue, errors, touched }) => (
         <Form className={css.form}>
           <fieldset className={css.fieldset}>
-            <label className={css.label}>Обкладинка</label>
-            <ImageDropzone key={imageKey} />
+            <div className={css.fieldContainer}>
+              <label className={css.label}>Обкладинка</label>
+              <ImageDropzone key={imageKey} />
+            </div>
             <div className={css.fieldContainer}>
               <label className={css.label} htmlFor={`${fieldId}-name`}>
                 Назва місця
               </label>
               <Field
-                className={css.field}
+                className={
+                  errors.name && touched.name
+                    ? `${css.field} ${css.fieldError}`
+                    : css.field
+                }
                 type="text"
                 name="name"
                 id={`${fieldId}-name`}
@@ -153,7 +176,11 @@ export default function AddAndEditLocationForm({
                 Тип місця
               </label>
               <Field
-                className={css.select}
+                className={
+                  errors.locationType && touched.locationType
+                    ? `${css.select} ${css.fieldError}`
+                    : css.select
+                }
                 as="select"
                 name="locationType"
                 id={`${fieldId}-locationType`}
@@ -161,7 +188,7 @@ export default function AddAndEditLocationForm({
                 <option className={css.optionSelect} value="">
                   Оберіть тип місця
                 </option>
-                {locationTypes?.map((type) => (
+                {sortedLocationTypes?.map((type) => (
                   <option
                     className={css.optionSelect}
                     key={type.slug}
@@ -182,7 +209,11 @@ export default function AddAndEditLocationForm({
                 Регіон
               </label>
               <Field
-                className={css.select}
+                className={
+                  errors.region && touched.region
+                    ? `${css.select} ${css.fieldError}`
+                    : css.select
+                }
                 as="select"
                 name="region"
                 id={`${fieldId}-region`}
@@ -190,7 +221,7 @@ export default function AddAndEditLocationForm({
                 <option className={css.optionSelect} value="">
                   Оберіть регіон
                 </option>
-                {regions?.map((region) => (
+                {sortedRegions?.map((region) => (
                   <option
                     className={css.optionSelect}
                     key={region.slug}
@@ -215,7 +246,11 @@ export default function AddAndEditLocationForm({
                 name="description"
                 id={`${fieldId}-description`}
                 rows={5}
-                className={css.textarea}
+                className={
+                  errors.description && touched.description
+                    ? `${css.textarea} ${css.fieldError}`
+                    : css.textarea
+                }
                 placeholder="Детальний опис локації"
               />
               <ErrorMessage
