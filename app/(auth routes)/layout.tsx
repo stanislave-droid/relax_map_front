@@ -21,8 +21,10 @@ const AuthLayout = ({children}: AuthLayoutProps) => {
 
     return (
         <div className={css.authLayout}>
-            <AuthNav activeTab={activeTab}/>
-            {children}
+            <div className={css.contentGroup}>
+                <AuthNav activeTab={activeTab}/>
+                {children}
+            </div>
         </div>
     )
 };
