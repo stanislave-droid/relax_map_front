@@ -24,12 +24,24 @@ import Spinner from "@/components/ui/Spinner/Spinner";
 import showToast, { showError } from "@/components/ui/Toast/Toast";
 
 import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewModal";
+import AuthErrorModal from "@/components/addFeedback/AuthErrorModal/AuthErrorModal";
+import { useAuthStore } from "@/lib/store/authStore";
 import { string } from "yup";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+
+  const handleLeaveReview = () => {
+    if (isAuthenticated) {
+      setIsReviewOpen(true);
+    } else {
+      setIsAuthModalOpen(true);
+    }
+  };
 
   const handleSubmit = async (values: LoginSchema) => {
     setErrorMessage(null);
@@ -290,12 +302,15 @@ export default function Home() {
         </ul>
         <Spinner />
         {/* MODAL FOR CREATE NEW FEEDBACK */}
-        <Button onClick={() => setIsReviewOpen(true)}>Залишити відгук</Button>
+        <Button onClick={handleLeaveReview}>Залишити відгук</Button>
         <AddReviewBlock
           isOpen={isReviewOpen}
           locationId="68d568270e6bcc357e9833e9"
           onClose={() => setIsReviewOpen(false)}
         />
+        {isAuthModalOpen && (
+          <AuthErrorModal onClose={() => setIsAuthModalOpen(false)} />
+        )}
         {/* -------------------------------------- */}
       </div>
     </main>

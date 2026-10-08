@@ -6,10 +6,11 @@ import css from "./searchBar.module.css";
 import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
 import clsx from "clsx";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { getSearch } from "@/utils/getSearch";
+import { LOCATIONS_PATH } from "@/types/location";
 
 interface SearchBarClientProps {
   types: LocationType[];
@@ -25,27 +26,25 @@ export const SORT_DEFAULT = "popular";
 
 export function SearchBarClient({ types, regions }: SearchBarClientProps) {
   const router = useRouter();
-  const { slug } = useParams();
+  const params = useSearchParams();
+  const SearchParams = new URLSearchParams(params.toString());
 
-  const [searchField, setSearchField] = useState(() =>
-    slug ? getSearch(slug[3]) : "",
-  );
-  const [region, setRegion] = useState(() => (slug ? slug[1] : REGION_DEFAULT));
-  const [type, setType] = useState(() => (slug ? slug[0] : TYPE_DEFAULT));
-  const [sort, setSort] = useState(() => (slug ? slug[2] : SORT_DEFAULT));
+  const type = SearchParams.get("type");
+  const region = SearchParams.get("region");
+  const sortBy = SearchParams.get("sortBy");
 
-  useEffect(() => {
-    router.push(
-      "/all-locations/" +
-        `${type}/` +
-        `${region}/` +
-        `${sort}/` +
-        `${searchField}`,
-    );
-  }, [searchField, type, region, sort, router]);
+  const handleUpdateParam = (key: string, value: string) => {
+    if (value) {
+      SearchParams.set(key, value);
+    } else {
+      SearchParams.delete(key);
+    }
+
+    router.push(`${LOCATIONS_PATH}?${SearchParams.toString()}`);
+  };
 
   const delaySearch = useDebouncedCallback(
-    (value) => setSearchField(value),
+    (value) => handleUpdateParam("search", value),
     1000,
   );
 
@@ -54,19 +53,35 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
     delaySearch(search.trim());
   };
 
+  const [previousValue, setPreviousValue] = useState("");
+
+  const handleSelectChange = (
+    key: string,
+    value: string,
+    defaultValue: string,
+  ) => {
+    if (value != previousValue) {
+      setPreviousValue(value);
+
+      handleUpdateParam(key, value !== defaultValue ? value : "");
+    }
+  };
+
   return (
     <div className={css.wrapper}>
       <Input
         aria-label="Пошук"
-        defaultValue={searchField ?? ""}
+        defaultValue={getSearch(SearchParams.get("search") || "")}
         className={clsx(css.input, css.field)}
         onChange={handleSearch}
       ></Input>
       <div className={css.categoriesWrapper}>
         <Select
           aria-label="Тип"
-          value={type}
-          onChange={(event) => setType(event.target.value)}
+          value={type || TYPE_DEFAULT}
+          onChange={(event) =>
+            handleSelectChange("type", event.target.value, TYPE_DEFAULT)
+          }
           className={clsx(css.typesSelect, css.field)}
         >
           <option value={TYPE_DEFAULT} defaultChecked>
@@ -81,8 +96,10 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
         </Select>
         <Select
           aria-label="Регіон"
-          value={region}
-          onChange={(event) => setRegion(event.target.value)}
+          value={region || REGION_DEFAULT}
+          onChange={(event) =>
+            handleSelectChange("region", event.target.value, REGION_DEFAULT)
+          }
           className={clsx(css.regionsSelect, css.field)}
         >
           <option value={REGION_DEFAULT} defaultChecked>
@@ -98,8 +115,10 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
       </div>
       <Select
         aria-label="Сортування"
-        value={sort}
-        onChange={(event) => setSort(event.target.value)}
+        value={sortBy || SORT_DEFAULT}
+        onChange={(event) =>
+          handleSelectChange("sortBy", event.target.value, SORT_DEFAULT)
+        }
         className={clsx(css.sortSelect, css.field)}
       >
         <option value={SORT_DEFAULT} defaultChecked>

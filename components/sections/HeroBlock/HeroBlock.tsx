@@ -18,7 +18,7 @@ const HeroBlock = () => {
     const search = query.trim();
 
     if (search) {
-      router.push(`${LOCATIONS_PATH}/${search}`);
+      router.push(`${LOCATIONS_PATH}?search=${decodeURIComponent(search)}`);
     }
   };
 
@@ -29,6 +29,7 @@ const HeroBlock = () => {
         alt=""
         fill
         priority
+        loading="eager"
         className={css.backgroundImage}
       />
       <div className="container">

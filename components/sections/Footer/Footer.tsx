@@ -1,5 +1,6 @@
 import Link from "next/link";
 import css from "./Footer.module.css";
+import { LOCATIONS_PATH } from "@/types/location";
 
 interface FooterProps {
   isAuthRoute?: boolean;
@@ -78,7 +79,7 @@ const Footer = ({ isAuthRoute = false }: FooterProps) => {
                 <Link href="/">Головна</Link>
               </li>
               <li>
-                <Link href="/locations">Місця відпочинку</Link>
+                <Link href={LOCATIONS_PATH}>Місця відпочинку</Link>
               </li>
             </ul>
           </nav>
