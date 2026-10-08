@@ -40,8 +40,8 @@ export default function SetMap({
         if (getValue) getValue({ lat: data.lat, lon: data.lon });
       })
       .catch((error) => {
-        console.log(error.message);
-        showError(error.message);
+        console.error(error.message);
+        showError("Такого місця не має :(");
       });
   };
 

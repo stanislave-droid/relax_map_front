@@ -276,8 +276,6 @@ export default function LocationForm2({ location }: LocationFormProps) {
       };
     }
 
-    console.log(values);
-
     if (location !== undefined) {
       try {
         setIsMutating(true);
