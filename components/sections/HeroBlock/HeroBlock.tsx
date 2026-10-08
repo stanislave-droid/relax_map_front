@@ -29,6 +29,7 @@ const HeroBlock = () => {
         alt=""
         fill
         priority
+        loading="eager"
         className={css.backgroundImage}
       />
       <div className="container">

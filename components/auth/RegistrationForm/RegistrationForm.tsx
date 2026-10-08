@@ -25,22 +25,22 @@ const initialValues: RegisterFormValues = {
 const registerValidationSchema = Yup.object().shape({
     name: Yup.string()
         .trim()
-        .min(2, "Name must be at least 2 characters long")
-        .max(32, "Name must be 32 characters or less")
-        .required("Name is required"),
+        .min(2, "Ім'я має містити щонайменше 2 символи")
+        .max(32, "Ім'я має містити не більше 32 символів")
+        .required("Ім'я обов'язкове"),
     email: Yup.string()
         .trim()
         .lowercase()
-        .max(64, "Email must be 64 characters or less")
+        .max(64, "Email має містити не більше 64 символів")
         .matches(EMAIL_REGEX, {
-            message: "Enter a valid email address",
+            message: "Введіть коректну email адресу",
             excludeEmptyString: true, //якщо значення порожній рядок => не перевіряє EMAIL_REGEX,
         })
-        .required("Email is required"),
+        .required("Email обов'язковий"),
     password: Yup.string()
-        .min(8, "Password must be at least 8 characters long")
-        .max(128, "Password must be 128 characters or less")
-        .required("Password is required"),
+        .min(8, "Пароль має містити щонайменше 8 символів")
+        .max(128, "Пароль має містити не більше 128 символів")
+        .required("Пароль обов'язковий"),
 });
 
 export type RegisterSchema = Yup.InferType<typeof registerValidationSchema>;
