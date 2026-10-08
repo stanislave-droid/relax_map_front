@@ -6,8 +6,8 @@ import css from "./searchBar.module.css";
 import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
 import clsx from "clsx";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { getSearch } from "@/utils/getSearch";
 import { LOCATIONS_PATH } from "@/types/location";
@@ -71,7 +71,7 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
     <div className={css.wrapper}>
       <Input
         aria-label="Пошук"
-        defaultValue={SearchParams.get("search") || ""}
+        defaultValue={getSearch(SearchParams.get("search") || "")}
         className={clsx(css.input, css.field)}
         onChange={handleSearch}
       ></Input>
