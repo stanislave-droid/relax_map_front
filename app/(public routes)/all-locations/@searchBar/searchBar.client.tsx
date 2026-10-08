@@ -29,6 +29,10 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
   const params = useSearchParams();
   const SearchParams = new URLSearchParams(params.toString());
 
+  const type = SearchParams.get("type");
+  const region = SearchParams.get("region");
+  const sortBy = SearchParams.get("sortBy");
+
   const handleUpdateParam = (key: string, value: string) => {
     if (value) {
       SearchParams.set(key, value);
@@ -49,6 +53,20 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
     delaySearch(search.trim());
   };
 
+  const [previousValue, setPreviousValue] = useState("");
+
+  const handleSelectChange = (
+    key: string,
+    value: string,
+    defaultValue: string,
+  ) => {
+    if (value != previousValue) {
+      setPreviousValue(value);
+
+      handleUpdateParam(key, value !== defaultValue ? value : "");
+    }
+  };
+
   return (
     <div className={css.wrapper}>
       <Input
@@ -60,12 +78,9 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
       <div className={css.categoriesWrapper}>
         <Select
           aria-label="Тип"
-          value={SearchParams.get("type") || TYPE_DEFAULT}
+          value={type || TYPE_DEFAULT}
           onChange={(event) =>
-            handleUpdateParam(
-              "type",
-              event.target.value !== TYPE_DEFAULT ? event.target.value : "",
-            )
+            handleSelectChange("type", event.target.value, TYPE_DEFAULT)
           }
           className={clsx(css.typesSelect, css.field)}
         >
@@ -81,12 +96,9 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
         </Select>
         <Select
           aria-label="Регіон"
-          value={SearchParams.get("region") || REGION_DEFAULT}
+          value={region || REGION_DEFAULT}
           onChange={(event) =>
-            handleUpdateParam(
-              "region",
-              event.target.value !== REGION_DEFAULT ? event.target.value : "",
-            )
+            handleSelectChange("region", event.target.value, REGION_DEFAULT)
           }
           className={clsx(css.regionsSelect, css.field)}
         >
@@ -103,12 +115,9 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
       </div>
       <Select
         aria-label="Сортування"
-        value={SearchParams.get("sortBy") || SORT_DEFAULT}
+        value={sortBy || SORT_DEFAULT}
         onChange={(event) =>
-          handleUpdateParam(
-            "sortBy",
-            event.target.value !== SORT_DEFAULT ? event.target.value : "",
-          )
+          handleSelectChange("sortBy", event.target.value, SORT_DEFAULT)
         }
         className={clsx(css.sortSelect, css.field)}
       >

@@ -27,14 +27,13 @@ const getSortBy = (sortBy: string | undefined): SortBy | undefined => {
 
 export default async function Locations({ searchParams }: LocationsProps) {
   const queryClient = new QueryClient();
-  const params = await searchParams;
+  const SearchParams = await searchParams;
 
-  const SearchParams = new URLSearchParams(params.toString());
-  const region = SearchParams.get("region") || undefined;
-  const type = SearchParams.get("type") || undefined;
-  const search = getSearch(SearchParams.get("search") || "");
-  const sortBy = SearchParams.get("sortBy") || undefined;
-  const sortDirection = SearchParams.get("sortDirection") || undefined;
+  const region = (SearchParams.region as string) || undefined;
+  const type = (SearchParams.type as string) || undefined;
+  const search = getSearch((SearchParams.search as string) || "");
+  const sortBy = (SearchParams.sortBy as string) || undefined;
+  const sortDirection = SearchParams.sortDirection || undefined;
 
   await queryClient.infiniteQuery({
     queryKey: ["locations", region, type, getSortBy(sortBy), search],
