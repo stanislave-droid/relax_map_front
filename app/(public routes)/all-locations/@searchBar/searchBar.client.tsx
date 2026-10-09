@@ -73,9 +73,7 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
   };
 
   return (
-    <div
-      className={clsx(css.wrapper, SearchParams.size > 0 ? css.isResetBtn : "")}
-    >
+    <div className={clsx(css.wrapper, css.isResetBtn)}>
       <Input
         aria-label="Пошук"
         placeholder="Пошук"
@@ -120,11 +118,14 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
               </option>
             ))}
         </Select>
-        {SearchParams.size > 0 && (
-          <Button onClick={handleResetFilters} className={css.resetBtn}>
-            Скинути фільтри
-          </Button>
-        )}
+
+        <Button
+          onClick={handleResetFilters}
+          className={css.resetBtn}
+          disabled={SearchParams.size == 0}
+        >
+          Скинути фільтри
+        </Button>
       </div>
       <Select
         aria-label="Сортування"
