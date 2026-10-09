@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
+}
+
+.isResetBtn {
+  padding-bottom: 30px;
 }
 
 .field {
@@ -11,6 +16,7 @@
 .categoriesWrapper {
   display: flex;
   gap: 16px;
+  align-items: center;
 }
 
 .typesSelect {
@@ -19,6 +25,23 @@
 
 .regionsSelect {
   width: 160px;
+}
+
+@media screen and (max-width: 767px) {
+  .resetBtn {
+    position: absolute;
+    width: 100%;
+    max-width: 335px;
+    bottom: -32px;
+    padding: 6px 6px;
+    right: 0;
+  }
+}
+
+@media screen and (min-width: 768) and (max-width: 1439px) {
+  .resetBtn {
+    transform: translateY(3px);
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -35,6 +58,11 @@
   }
   .input {
     width: 704px;
+  }
+  .resetBtn {
+    width: 160px;
+    font-size: 16px;
+    padding: 6px 8px;
   }
 }
 
@@ -65,5 +93,9 @@
     & > input {
       height: 43px;
     }
+  }
+  .resetBtn {
+    font-size: 18px;
+    width: 180px;
   }
 }
