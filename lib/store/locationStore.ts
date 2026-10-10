@@ -1,4 +1,3 @@
-import { PlacesResponse } from "@/app/api/map/route";
 import { Coordinates } from "@/types/location";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";

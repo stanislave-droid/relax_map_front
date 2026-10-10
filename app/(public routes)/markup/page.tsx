@@ -14,9 +14,6 @@ import SignUp from "@/app/(auth routes)/sign-up/page";
 import LoginForm, {
   type LoginSchema,
 } from "@/components/auth/LoginForm/LoginForm";
-import RegistrationForm, {
-  type RegisterSchema,
-} from "@/components/auth/RegistrationForm/RegistrationForm";
 import { Location } from "@/types/location";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
 import Spinner from "@/components/ui/Spinner/Spinner";
@@ -26,7 +23,6 @@ import showToast, { showError } from "@/components/ui/Toast/Toast";
 import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewModal";
 import AuthErrorModal from "@/components/addFeedback/AuthErrorModal/AuthErrorModal";
 import { useAuthStore } from "@/lib/store/authStore";
-import { string } from "yup";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
