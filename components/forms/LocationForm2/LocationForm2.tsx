@@ -104,6 +104,7 @@ const ImagePreviewWithFileInput = () => {
           alt="Image"
           width={1091}
           height={726}
+          loading="eager"
           className={css.image}
         />
       </div>
@@ -275,8 +276,6 @@ export default function LocationForm2({ location }: LocationFormProps) {
         lon: draft.coordinates.lon,
       };
     }
-
-    console.log(values);
 
     if (location !== undefined) {
       try {
