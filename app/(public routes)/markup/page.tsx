@@ -7,13 +7,11 @@ import Textarea from "@/components/ui/Textarea/Textarea";
 import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
 import RatingStars from "@/components/ui/RatingStars/RatingStars";
-import Select from "@/components/ui/Select/Select";
+import Select, { SelectFormik } from "@/components/ui/Select/Select";
 
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
 import SignUp from "@/app/(auth routes)/sign-up/page";
-import LoginForm, {
-  type LoginSchema,
-} from "@/components/auth/LoginForm/LoginForm";
+import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { Location } from "@/types/location";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
 import Spinner from "@/components/ui/Spinner/Spinner";
@@ -23,6 +21,38 @@ import showToast, { showError } from "@/components/ui/Toast/Toast";
 import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewModal";
 import AuthErrorModal from "@/components/addFeedback/AuthErrorModal/AuthErrorModal";
 import { useAuthStore } from "@/lib/store/authStore";
+
+import { Field, Form, Formik } from "formik";
+
+function FormikSelectForm() {
+  const id = useId();
+  const initialValues = { locationType: "test-option-final" };
+
+  const options = new Array(5).fill(null).map((_, i) => (
+    <option key={i} value={`test-option-${i}`}>
+      Test Option {i}
+    </option>
+  ));
+
+  return (
+    <Formik initialValues={initialValues} onSubmit={(values) => console.log("Submitted: ", values)}>
+      {() => {
+        return (
+          <Form>
+            <label htmlFor={`${id}-locationType`}>Тип місця</label>
+            <Field component={SelectFormik} name="locationType" id={`${id}-locationType`}>
+              <option value="">Оберіть тип місця</option>
+              {options}
+              <option value={`test-option-final`}>Final Option</option>
+            </Field>
+            <Button type="reset">Reset</Button>
+            <Button type="submit">Submit</Button>
+          </Form>
+        );
+      }}
+    </Formik>
+  );
+}
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,8 +87,7 @@ export default function Home() {
     region: "chornomorske-uzberezhzhya",
     rate: 4.5,
     ownerId: "6881563901add19ee16fcff5",
-    description:
-      "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль.",
+    description: "Уявіть собі місце, де кожен ранок починається з ніжного дотику сонячних променів і тихого шепоту хвиль.",
     feedbacksId: [],
     coordinates: {
       lat: 0,
@@ -252,11 +281,7 @@ export default function Home() {
           </label>
           <label>
             Comment:
-            <Textarea
-              placeholder="Comment here ..."
-              minLength={2}
-              maxLength={256}
-            />
+            <Textarea placeholder="Comment here ..." minLength={2} maxLength={256} />
           </label>
           <Button type="submit">Submit</Button>
         </form>
@@ -274,40 +299,27 @@ export default function Home() {
           <SignUp />
         </div>
         <div>
-          <LoginForm
-            onSubmit={handleSubmit}
-            isLoading={isLoading}
-            errorMessage={errorMessage}
-          ></LoginForm>
+          <LoginForm onSubmit={handleSubmit} isLoading={isLoading} errorMessage={errorMessage}></LoginForm>
         </div>
         <LocationCard location={location} locationLink="#" editLink="#" />
         <p> </p>
         <ul>
           <li>
-            <Button
-              onClick={() => showToast("You pressed the 'Info Toast' button")}
-            >
-              Info Toast
-            </Button>
+            <Button onClick={() => showToast("You pressed the 'Info Toast' button")}>Info Toast</Button>
           </li>
           <li>
-            <Button onClick={() => showError("Something went oops")}>
-              Error Toast
-            </Button>
+            <Button onClick={() => showError("Something went oops")}>Error Toast</Button>
           </li>
         </ul>
         <Spinner />
         {/* MODAL FOR CREATE NEW FEEDBACK */}
         <Button onClick={handleLeaveReview}>Залишити відгук</Button>
-        <AddReviewBlock
-          isOpen={isReviewOpen}
-          locationId="68d568270e6bcc357e9833e9"
-          onClose={() => setIsReviewOpen(false)}
-        />
-        {isAuthModalOpen && (
-          <AuthErrorModal onClose={() => setIsAuthModalOpen(false)} />
-        )}
+        <AddReviewBlock isOpen={isReviewOpen} locationId="68d568270e6bcc357e9833e9" onClose={() => setIsReviewOpen(false)} />
+        {isAuthModalOpen && <AuthErrorModal onClose={() => setIsAuthModalOpen(false)} />}
+        <Button onClick={() => setIsReviewOpen(true)}>Залишити відгук</Button>
+        <AddReviewBlock isOpen={isReviewOpen} locationId="68d568270e6bcc357e9833e9" onClose={() => setIsReviewOpen(false)} />
         {/* -------------------------------------- */}
+        <FormikSelectForm />
       </div>
     </main>
   );
