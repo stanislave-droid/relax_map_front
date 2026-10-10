@@ -3,13 +3,17 @@
 import Button from "@/components/ui/Button/Button";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {useId} from "react";
+import {useId, useState} from "react";
 import {EMAIL_REGEX} from "@/utils/emailRegex";
 import Input from "@/components/ui/Input/Input";
 import clsx from "clsx";
-import Spinner from "@/components/ui/Spinner/Spinner"
 import css from "./LoginForm.module.css"
 import Icon from "@/components/ui/Icon/Icon"
+import {useAuthStore} from "@/lib/store/authStore";
+import {login} from "@/lib/api/clientApi";
+import toast from "react-hot-toast";
+import {getLoginErrorMessage} from "@/utils/loginErrorMessage";
+import {useRouter} from "next/navigation";
 
 
 type LoginFormValues = {
@@ -40,25 +44,37 @@ const loginValidationSchema = Yup.object().shape({
 
 export type LoginSchema = Yup.InferType<typeof loginValidationSchema>;
 
-export interface LoginFormProps {
-    onSubmit: (value: LoginSchema) => Promise<void> | void;
-    isLoading?: boolean,
-    errorMessage?: string | null;
-};
-
-export default function LoginForm({onSubmit, isLoading, errorMessage}: LoginFormProps) {
+export default function LoginForm() {
 
     const fieldId = useId();
 
     const emailId = `${fieldId}-email`;
     const passwordId = `${fieldId}-password`;
 
+    const router = useRouter();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const setUser = useAuthStore((state) => state.setUser);
+
+    const handleSubmit = async (values: LoginSchema) => {
+        setErrorMessage(null);
+
+        try {
+            const user = await login(values);
+            setUser(user);
+            toast.success("Ви успішно увійшли!");
+            router.push(`/profile/myProfile`);
+        } catch (error) {
+            toast.error(getLoginErrorMessage(error));
+        }
+    };
+
     return (
         <div>
             <h1 className={clsx(css["title"])}>Вхід</h1>
             <Formik
                 initialValues={initialValues}
-                onSubmit={onSubmit}
+                onSubmit={handleSubmit}
                 validationSchema={loginValidationSchema}
             >
                 <Form className={css.form}>
@@ -97,12 +113,8 @@ export default function LoginForm({onSubmit, isLoading, errorMessage}: LoginForm
                     <div>
                         <Button
                             type={"submit"}
-                            disabled={isLoading}
                             className={clsx(css["submitButton"])}
-                        >
-                            {isLoading
-                                ? <Spinner color="white"/>
-                                : "Увійти"}
+                        > Увійти
                         </Button>
                     </div>
                     {errorMessage && (
