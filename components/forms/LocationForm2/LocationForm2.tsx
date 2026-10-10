@@ -104,6 +104,7 @@ const ImagePreviewWithFileInput = () => {
           alt="Image"
           width={1091}
           height={726}
+          loading="eager"
           className={css.image}
         />
       </div>
