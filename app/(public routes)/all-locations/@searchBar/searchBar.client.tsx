@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { getSearch } from "@/utils/getSearch";
 import { LOCATIONS_PATH } from "@/types/location";
+import Button from "@/components/ui/Button/Button";
 
 interface SearchBarClientProps {
   types: LocationType[];
@@ -29,9 +30,9 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
   const params = useSearchParams();
   const SearchParams = new URLSearchParams(params.toString());
 
-  const type = SearchParams.get("type");
-  const region = SearchParams.get("region");
-  const sortBy = SearchParams.get("sortBy");
+  const type = SearchParams.get("type") || TYPE_DEFAULT;
+  const region = SearchParams.get("region") || REGION_DEFAULT;
+  const sortBy = SearchParams.get("sortBy") || SORT_DEFAULT;
 
   const handleUpdateParam = (key: string, value: string) => {
     if (value) {
@@ -41,6 +42,10 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
     }
 
     router.push(`${LOCATIONS_PATH}?${SearchParams.toString()}`);
+  };
+
+  const handleResetFilters = () => {
+    window.location.href = LOCATIONS_PATH;
   };
 
   const delaySearch = useDebouncedCallback(
@@ -68,9 +73,10 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
   };
 
   return (
-    <div className={css.wrapper}>
+    <div className={clsx(css.wrapper, css.isResetBtn)}>
       <Input
         aria-label="Пошук"
+        placeholder="Пошук"
         defaultValue={getSearch(SearchParams.get("search") || "")}
         className={clsx(css.input, css.field)}
         onChange={handleSearch}
@@ -78,7 +84,7 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
       <div className={css.categoriesWrapper}>
         <Select
           aria-label="Тип"
-          value={type || TYPE_DEFAULT}
+          value={type}
           onChange={(event) =>
             handleSelectChange("type", event.target.value, TYPE_DEFAULT)
           }
@@ -96,7 +102,7 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
         </Select>
         <Select
           aria-label="Регіон"
-          value={region || REGION_DEFAULT}
+          value={region}
           onChange={(event) =>
             handleSelectChange("region", event.target.value, REGION_DEFAULT)
           }
@@ -112,10 +118,18 @@ export function SearchBarClient({ types, regions }: SearchBarClientProps) {
               </option>
             ))}
         </Select>
+
+        <Button
+          onClick={handleResetFilters}
+          className={css.resetBtn}
+          disabled={SearchParams.size == 0}
+        >
+          Скинути фільтри
+        </Button>
       </div>
       <Select
         aria-label="Сортування"
-        value={sortBy || SORT_DEFAULT}
+        value={sortBy}
         onChange={(event) =>
           handleSelectChange("sortBy", event.target.value, SORT_DEFAULT)
         }
