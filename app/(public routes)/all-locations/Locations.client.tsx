@@ -5,15 +5,15 @@ import Button from "@/components/ui/Button/Button";
 import { fetchLocations } from "@/lib/api/clientApi";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import css from "./Locations.module.css";
-import { useParams } from "next/navigation";
-import { SortBy } from "@/types/location";
+import { useSearchParams } from "next/navigation";
+import { SortBy, SortDirection } from "@/types/location";
 import { getSearch } from "@/utils/getSearch";
 
-const getSortBy = (slug: string): SortBy | undefined => {
-  if (slug && slug[2] !== "popular") {
+const getSortBy = (sortBy: string | undefined): SortBy | undefined => {
+  if (sortBy && sortBy !== "popular") {
     const sortTypes: SortBy[] = ["rate", "updatedAt"];
-    if (sortTypes.includes(slug[2] as SortBy)) {
-      return slug[2] as SortBy;
+    if (sortTypes.includes(sortBy as SortBy)) {
+      return sortBy as SortBy;
     } else {
       return undefined;
     }
@@ -23,17 +23,18 @@ const getSortBy = (slug: string): SortBy | undefined => {
 };
 
 export default function LocationsClient() {
-  const { slug } = useParams();
+  const params = useSearchParams();
 
-  const search = slug && getSearch(slug[3]);
-  const region = slug && slug[1] !== "all-regions" ? slug[1] : undefined;
-  const type = slug && slug[0] !== "all-types" ? slug[0] : undefined;
-  const sortBy = getSortBy(slug as string);
-  const sortDirection = sortBy ? "desc" : undefined;
+  const SearchParams = new URLSearchParams(params.toString());
+  const region = SearchParams.get("region") || undefined;
+  const type = SearchParams.get("type") || undefined;
+  const search = getSearch(SearchParams.get("search") || "");
+  const sortBy = SearchParams.get("sortBy") || undefined;
+  const sortDirection = SearchParams.get("sortDirection") || undefined;
 
   const { data, fetchNextPage, hasNextPage, isFetching, isLoading } =
     useInfiniteQuery({
-      queryKey: ["locations", region, type, sortBy],
+      queryKey: ["locations", region, type, sortBy, search],
       queryFn: ({ pageParam }) =>
         fetchLocations({
           page: pageParam,
@@ -41,8 +42,10 @@ export default function LocationsClient() {
           region,
           type,
           search,
-          sortBy,
-          sortDirection,
+          sortBy: getSortBy(sortBy),
+          sortDirection: sortDirection
+            ? (sortDirection as SortDirection)
+            : undefined,
         }),
       initialPageParam: 1,
       initialData: { pages: [], pageParams: [] },

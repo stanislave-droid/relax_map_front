@@ -58,6 +58,27 @@ Others:
 
 > For environmental variables, use only safe places, such as a "Deploy secret API keys manager". Don`t save or share them in repository.
 
+### Fast start
+```
+# 1. Clone the repository.
+git clone git@github.com:stanislave-droid/relax_map_front.git
+cd relax_map_front
+
+# 2. Install all dependencies.
+npm install
+
+# 3. Configure environmental variables (.env)
+You can check example in .env.example.
+Make sure to write all necessary value; otherwise project won`t work.
+Requirements are above.
+
+# 4. Run in dev mode
+npm run dev
+
+# 5. Run build mode
+npm start
+```
+
 ### Useful link to backend repository:
 - [Backend repository](https://github.com/stanislave-droid/relax_map_back)
 - [Swagger documentation for Backend](https://app.swaggerhub.com/apis-docs/development-0ab/Relax-map/1.0.0?view=uiDocs)
@@ -88,8 +109,10 @@ Others:
   <img width="454" height="703" alt="image" src="https://github.com/user-attachments/assets/bfc25d9a-e1dd-4551-91e5-a9512ee0cfb3" />
 
 - ### Possibility to add your own location.
+  <img width="403" height="772" alt="image" src="https://github.com/user-attachments/assets/3226018a-a475-413d-b982-5a97325e8259" />
 
 - ### Edit existing location.
+  <img width="402" height="773" alt="image" src="https://github.com/user-attachments/assets/06e18dfd-2b32-482e-8892-80f2e3f7be30" />
 
 - ### Leave a comment/feedback.
   <img width="576" height="413" alt="image" src="https://github.com/user-attachments/assets/8e680ab7-86c9-4d11-9f59-2a73dac82428" />

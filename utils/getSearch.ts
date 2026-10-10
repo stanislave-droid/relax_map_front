@@ -1,3 +1,4 @@
 export const getSearch = (search: string) => {
-  return search && search !== "undefined" ? decodeURIComponent(search) : "";
+  if (search && search != "") return decodeURIComponent(search);
+  else return undefined;
 };

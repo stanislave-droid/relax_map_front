@@ -5,6 +5,8 @@ import Link from "@/components/ui/Link/Link";
 import Icon from "@/components/ui/Icon/Icon";
 import Image from "next/image";
 import css from "./Header.module.css";
+import { LOCATIONS_PATH } from "@/types/location";
+import { useSearchParams } from "next/navigation";
 
 const DEFAULT_AVATAR =
   "https://ac.goit.global/fullstack/react/default-avatar.jpg";
@@ -36,6 +38,8 @@ const MobileMenu = ({
     onEditProfileClick();
   };
 
+  const params = useSearchParams();
+
   return (
     <nav
       className={clsx(css.mobileNav, isMenuOpen && css.isOpen)}
@@ -48,7 +52,7 @@ const MobileMenu = ({
           </Link>
 
           <Link
-            href="/locations"
+            href={`${LOCATIONS_PATH}?${new URLSearchParams(params.toString())}`}
             className={css.navLinkMenu}
             onClick={closeMenu}
           >
@@ -56,7 +60,7 @@ const MobileMenu = ({
           </Link>
           {isAuthenticated && (
             <Link
-              href={`/profile/${user._id}`}
+              href={`/profile/myProfile`}
               className={css.navLinkMenu}
               onClick={closeMenu}
             >
