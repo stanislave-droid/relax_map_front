@@ -29,6 +29,7 @@ import { LocationType } from "@/types/locationType";
 import { Region } from "@/types/region";
 import SetMap from "@/components/Map/SetMap";
 import { PlacesResponse } from "@/app/api/map/route";
+import { SelectFormik } from "@/components/ui/Select/Select";
 
 interface LocationFormProps {
   location?: Location;
@@ -397,10 +398,9 @@ export default function LocationForm2({ location }: LocationFormProps) {
               Тип місця
             </label>
             <Field
-              as="select"
+              component={SelectFormik}
               name="locationType"
               id={`${fieldId}-locationType`}
-              className={css.select}
             >
               <option key="locationTypeEmptykey" value="">
                 Оберіть тип місця
@@ -419,11 +419,10 @@ export default function LocationForm2({ location }: LocationFormProps) {
               Регіон
             </label>
             <Field
-              as="select"
+              component={SelectFormik}
               name="region"
               id={`${fieldId}-region`}
               onChange={handleChange}
-              className={css.select}
             >
               <option key="regionEmptykey" value="">
                 Оберіть регіон
