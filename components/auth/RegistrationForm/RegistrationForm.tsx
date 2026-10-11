@@ -143,10 +143,7 @@ export default function RegistrationForm() {
                                       aria-hidden="true"
                                 />
                             </button>
-
-
                         </div>
-
                         <ErrorMessage
                             name="password"
                             component="span"

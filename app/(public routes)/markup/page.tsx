@@ -8,20 +8,15 @@ import Icon from "@/components/ui/Icon/Icon";
 import Link from "@/components/ui/Link/Link";
 import RatingStars from "@/components/ui/RatingStars/RatingStars";
 import Select, { SelectFormik } from "@/components/ui/Select/Select";
-
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import SignUp from "@/app/(auth routes)/sign-up/page";
-import LoginForm, { type LoginSchema } from "@/components/auth/LoginForm/LoginForm";
 import { Location } from "@/types/location";
 import LocationCard from "@/components/ui/LocationCard/LocationCard";
 import Spinner from "@/components/ui/Spinner/Spinner";
-
 import showToast, { showError } from "@/components/ui/Toast/Toast";
-
 import AddReviewBlock from "@/components/addFeedback/AddReviewModal/AddReviewModal";
 import AuthErrorModal from "@/components/addFeedback/AuthErrorModal/AuthErrorModal";
 import { useAuthStore } from "@/lib/store/authStore";
-
 import { Field, Form, Formik } from "formik";
 
 function FormikSelectForm() {
@@ -55,8 +50,6 @@ function FormikSelectForm() {
 }
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -67,16 +60,6 @@ export default function Home() {
     } else {
       setIsAuthModalOpen(true);
     }
-  };
-
-  const handleSubmit = async (values: LoginSchema) => {
-    setErrorMessage(null);
-    setIsLoading(true);
-
-    await new Promise((resolve) => setTimeout(resolve, 1500)); // імітація запиту
-
-    setIsLoading(false);
-    setErrorMessage("Невірний email або пароль");
   };
 
   const location: Location = {
@@ -297,9 +280,6 @@ export default function Home() {
         </form>
         <div>
           <SignUp />
-        </div>
-        <div>
-          <LoginForm onSubmit={handleSubmit} isLoading={isLoading} errorMessage={errorMessage}></LoginForm>
         </div>
         <LocationCard location={location} locationLink="#" editLink="#" />
         <p> </p>
