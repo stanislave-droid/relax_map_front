@@ -3,7 +3,7 @@
 import {useRouter} from "next/navigation";
 import {useEffect} from "react";
 import AuthNav from "@/components/auth/authNav/AuthNav";
-import { usePathname } from "next/navigation";
+import {usePathname} from "next/navigation";
 import css from "./layout.module.css"
 
 interface AuthLayoutProps {
@@ -21,10 +21,8 @@ const AuthLayout = ({children}: AuthLayoutProps) => {
 
     return (
         <div className={css.authLayout}>
-            <div className={css.contentGroup}>
-                <AuthNav activeTab={activeTab}/>
-                {children}
-            </div>
+            <AuthNav activeTab={activeTab}/>
+            {children}
         </div>
     )
 };
