@@ -61,20 +61,6 @@ export default function LocationDetailsClient({
     refetchOnMount: false,
   });
 
-  const { data: locationTypes } = useQuery({
-    queryKey: ["locations"],
-    queryFn: () => fetchLocationTypes(),
-    enabled: !!location,
-    refetchOnMount: false,
-  });
-
-  const { data: regions } = useQuery({
-    queryKey: ["regions"],
-    queryFn: () => fetchRegions(),
-    enabled: !!location,
-    refetchOnMount: false,
-  });
-
   const { data: author, isError: isAuthorError } = useQuery({
     queryKey: ["author", location?.ownerId],
     queryFn: () => getUserById(location!.ownerId),
