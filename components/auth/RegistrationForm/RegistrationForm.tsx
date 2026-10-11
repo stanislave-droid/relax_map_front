@@ -4,11 +4,16 @@ import * as Yup from "yup";
 import {EMAIL_REGEX} from "@/utils/emailRegex";
 import Button from "@/components/ui/Button/Button";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {useId} from "react";
+import {useId, useState} from "react";
 import Input from "@/components/ui/Input/Input";
 import clsx from "clsx";
-import Spinner from "@/components/ui/Spinner/Spinner"
 import css from "./RegistrationForm.module.css"
+import {useRouter} from "next/navigation";
+import {useAuthStore} from "@/lib/store/authStore";
+import {register} from "@/lib/api/clientApi";
+import toast from "react-hot-toast";
+import {getRegisterErrorMessage} from "@/utils/registerErrorMessage";
+import Icon from "@/components/ui/Icon/Icon";
 
 type RegisterFormValues = {
     name: string,
@@ -45,13 +50,7 @@ const registerValidationSchema = Yup.object().shape({
 
 export type RegisterSchema = Yup.InferType<typeof registerValidationSchema>;
 
-export interface RegistrationFormProps {
-    onSubmit: (value: RegisterSchema) => Promise<void> | void,
-    isLoading?: boolean,
-    errorMessage?: string | null;
-};
-
-export default function RegistrationForm({onSubmit, isLoading, errorMessage}: RegistrationFormProps) {
+export default function RegistrationForm() {
 
     const fieldId = useId();
 
@@ -59,17 +58,39 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
     const emailId = `${fieldId}-email`;
     const passwordId = `${fieldId}-password`;
 
+    const router = useRouter();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const setUser = useAuthStore((state) => state.setUser);
+
+    const handleSubmit = async (values: RegisterSchema) => {
+        setErrorMessage(null);
+
+        try {
+            const user = await register(values);
+            setUser(user);
+            toast.success("Ви успішно зареєструвались!");
+            router.push(`/profile/myProfile`);
+        } catch (error) {
+            toast.error(getRegisterErrorMessage(error));
+        }
+    };
+
+    const handleClick = () => {
+        setShowPassword((prevState) => !prevState)
+    };
+
     return (
         <div>
             <h1 className={clsx(css["title"])}>Реєстрація</h1>
             <Formik initialValues={initialValues}
-                    onSubmit={onSubmit}
+                    onSubmit={handleSubmit}
                     validationSchema={registerValidationSchema}
             >
                 <Form className={css.form}>
                     <div className={css.field}>
                         <label className={css.label} htmlFor={nameId}>Ім’я*</label>
-
                         <Field
                             id={nameId}
                             as={Input}
@@ -86,7 +107,6 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
                     </div>
                     <div className={css.field}>
                         <label className={css.label} htmlFor={emailId}>Пошта*</label>
-
                         <Field
                             id={emailId}
                             as={Input}
@@ -95,6 +115,7 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
                             placeholder="hello@relaxmap.ua"
                             className={css.inputForm}
                         />
+
                         <ErrorMessage
                             name="email"
                             component="span"
@@ -103,15 +124,29 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
                     </div>
                     <div className={css.field}>
                         <label className={css.label} htmlFor={passwordId}>Пароль*</label>
+                        <div className={css.passwordWrapper}>
+                            <Field
+                                id={passwordId}
+                                as={Input}
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="********"
+                                className={css.inputForm}
+                            />
+                            <button
+                                type="button"
+                                onClick={handleClick}
+                                aria-label={showPassword ? "Приховати пароль" : "Показати пароль"}
+                                className={css.buttonEye}
+                            >
+                                <Icon name={showPassword ? "eye-closed" : "eye-open"}
+                                      aria-hidden="true"
+                                />
+                            </button>
 
-                        <Field
-                            id={passwordId}
-                            as={Input}
-                            name="password"
-                            type="password"
-                            placeholder="********"
-                            className={css.inputForm}
-                        />
+
+                        </div>
+
                         <ErrorMessage
                             name="password"
                             component="span"
@@ -121,13 +156,8 @@ export default function RegistrationForm({onSubmit, isLoading, errorMessage}: Re
                     <div>
                         <Button
                             type={"submit"}
-                            disabled={isLoading}
                             className={clsx(css["submitButton"])}
-                        >
-                            {isLoading
-                                ? <Spinner color="white"/>
-                                : "Зареєструватись"}
-
+                        > Зареєструватись
                         </Button>
                     </div>
                     {errorMessage && (

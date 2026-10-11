@@ -53,6 +53,7 @@ export default function LoginForm() {
 
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     const setUser = useAuthStore((state) => state.setUser);
 
@@ -67,6 +68,10 @@ export default function LoginForm() {
         } catch (error) {
             toast.error(getLoginErrorMessage(error));
         }
+    };
+
+    const handleClick = () => {
+        setShowPassword((prevState) => !prevState)
     };
 
     return (
@@ -96,14 +101,26 @@ export default function LoginForm() {
                     </div>
                     <div className={css.field}>
                         <label className={css.label} htmlFor={passwordId}>Пароль*</label>
-                        <Field
-                            id={passwordId}
-                            as={Input}
-                            name="password"
-                            type="password"
-                            placeholder="********"
-                            className={css.inputForm}
-                        />
+                        <div className={css.passwordWrapper}>
+                            <Field
+                                id={passwordId}
+                                as={Input}
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="********"
+                                className={css.inputForm}
+                            />
+                            <button
+                                type="button"
+                                onClick={handleClick}
+                                aria-label={showPassword ? "Приховати пароль" : "Показати пароль"}
+                                className={css.buttonEye}
+                            >
+                                <Icon name={showPassword ? "eye-closed" : "eye-open"}
+                                      aria-hidden="true"
+                                />
+                            </button>
+                        </div>
                         <ErrorMessage
                             name="password"
                             component="span"

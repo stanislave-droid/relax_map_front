@@ -48,7 +48,23 @@
     padding: 10px 0;
 }
 
+.passwordWrapper {
+    position: relative;
+}
 
+.buttonEye {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #cc6534;
+}
 
 @media screen and (min-width: 768px) {
     .title {
