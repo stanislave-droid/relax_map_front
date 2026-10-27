@@ -5,6 +5,7 @@ import {
   Map,
   AdvancedMarker,
   useMap,
+  ColorScheme,
 } from "@vis.gl/react-google-maps";
 import css from "./Map.module.css";
 import clsx from "clsx";
@@ -16,6 +17,8 @@ interface GoogleMapProps {
   lon?: number;
   title?: string;
   className?: string;
+  mapType?: "roadmap" | "satellite" | "hybrid" | "terrain";
+  colorScheme?: ColorScheme;
 }
 
 function MapController({ lat, lon: lng }: Coordinates) {
@@ -35,6 +38,8 @@ export default function GoogleMap({
   lon: lng = 0,
   title,
   className,
+  mapType = "roadmap",
+  colorScheme = "LIGHT",
 }: GoogleMapProps) {
   return (
     <APIProvider apiKey={process.env.NEXT_PRIVATE_MAP_API || ""}>
@@ -43,6 +48,8 @@ export default function GoogleMap({
         defaultCenter={{ lat, lng }}
         defaultZoom={9}
         mapId="LocationsGoogleMap"
+        mapTypeId={mapType}
+        colorScheme={colorScheme}
       >
         <MapController lat={lat} lon={lng} />
         <AdvancedMarker position={{ lat, lng }} title={title} />
